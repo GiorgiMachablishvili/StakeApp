@@ -12,10 +12,9 @@ import Alamofire
 import ProgressHUD
 
 class SignInController: UIViewController {
-
     private lazy var mainImageConsole: UIImageView = {
         let view = UIImageView(frame: .zero)
-        view.image = UIImage(named: "")
+        view.image = UIImage(named: "signinViewImage")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -67,7 +66,7 @@ class SignInController: UIViewController {
         view.setTitle("Skip", for: .normal)
         view.backgroundColor = UIColor.whiteColor.withAlphaComponent(0.15)
         view.makeRoundCorners(16)
-        view.addTarget(self, action: #selector(clickLogInAsGuestButton), for: .touchUpInside)
+        view.addTarget(self, action: #selector(clickSkipButton), for: .touchUpInside)
         return view
     }()
 
@@ -125,12 +124,15 @@ class SignInController: UIViewController {
 
     private func setupConstraints() {
         mainImageConsole.snp.remakeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(325 * Constraint.yCoeff)
+//            make.top.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.snp.top).offset(-20)
+            make.leading.equalTo(view.snp.leading).offset(-20)
+            make.trailing.equalTo(view.snp.trailing).offset(20)
+            make.height.equalTo(380 * Constraint.yCoeff)
         }
 
         signTitle.snp.remakeConstraints { make in
-            make.top.equalTo(mainImageConsole.snp.bottom).offset(31)
+            make.top.equalTo(view.snp.top).offset(368)
             make.leading.trailing.equalToSuperview().inset(32 * Constraint.xCoeff)
             make.height.equalTo(39 * Constraint.yCoeff)
         }
@@ -179,7 +181,9 @@ class SignInController: UIViewController {
 
     }
 
-    @objc private func clickLogInAsGuestButton() {
+    @objc private func clickSkipButton() {
+        let mainViewTabBarController = MainViewControllerTab()
+        navigationController?.pushViewController(mainViewTabBarController, animated: true)
 
     }
 }

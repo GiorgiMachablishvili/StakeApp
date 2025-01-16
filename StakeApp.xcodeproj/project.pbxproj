@@ -9,19 +9,43 @@
 /* Begin PBXBuildFile section */
 		E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */; };
 		E3CED6F82D395B1D00C5D2EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */; };
-		E3CED6FA2D395B1D00C5D2EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F92D395B1D00C5D2EF /* ViewController.swift */; };
 		E3CED6FF2D395B1F00C5D2EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3CED6FE2D395B1F00C5D2EF /* Assets.xcassets */; };
 		E3CED7022D395B1F00C5D2EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3CED7002D395B1F00C5D2EF /* LaunchScreen.storyboard */; };
+		E3CED7102D395CBE00C5D2EF /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED70F2D395CBE00C5D2EF /* SignInController.swift */; };
+		E3CED7132D395CD600C5D2EF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED7122D395CD600C5D2EF /* SnapKit */; };
+		E3CED7152D395CD600C5D2EF /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED7142D395CD600C5D2EF /* SnapKit-Dynamic */; };
+		E3CED7182D395CDE00C5D2EF /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED7172D395CDE00C5D2EF /* SVProgressHUD */; };
+		E3CED71B2D395CE700C5D2EF /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED71A2D395CE700C5D2EF /* ProgressHUD */; };
+		E3CED71E2D395CF100C5D2EF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED71D2D395CF100C5D2EF /* Alamofire */; };
+		E3CED7202D395CF100C5D2EF /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED71F2D395CF100C5D2EF /* AlamofireDynamic */; };
+		E3CED7282D395D6F00C5D2EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7272D395D6F00C5D2EF /* NetworkManager.swift */; };
+		E3CED72B2D395DDE00C5D2EF /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED72A2D395DDE00C5D2EF /* Constraint.swift */; };
+		E3CED72D2D395DF800C5D2EF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED72C2D395DF800C5D2EF /* UIColor+Extension.swift */; };
+		E3CED72F2D395E0500C5D2EF /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED72E2D395E0500C5D2EF /* UIFont+Extension.swift */; };
+		E3CED7312D395E1000C5D2EF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7302D395E1000C5D2EF /* Colors.swift */; };
+		E3CED7332D395E1A00C5D2EF /* UICornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7322D395E1A00C5D2EF /* UICornerRadius.swift */; };
+		E3CED7372D395E5400C5D2EF /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3CED7342D395E5300C5D2EF /* Montserrat-Medium.ttf */; };
+		E3CED7382D395E5400C5D2EF /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3CED7352D395E5400C5D2EF /* Montserrat-Regular.ttf */; };
+		E3CED7392D395E5400C5D2EF /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3CED7362D395E5400C5D2EF /* Montserrat-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E3CED6F22D395B1D00C5D2EF /* StakeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StakeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E3CED6F92D395B1D00C5D2EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E3CED6FE2D395B1F00C5D2EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3CED7012D395B1F00C5D2EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3CED7032D395B1F00C5D2EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3CED70F2D395CBE00C5D2EF /* SignInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
+		E3CED7272D395D6F00C5D2EF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E3CED72A2D395DDE00C5D2EF /* Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
+		E3CED72C2D395DF800C5D2EF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		E3CED72E2D395E0500C5D2EF /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		E3CED7302D395E1000C5D2EF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E3CED7322D395E1A00C5D2EF /* UICornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICornerRadius.swift; sourceTree = "<group>"; };
+		E3CED7342D395E5300C5D2EF /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		E3CED7352D395E5400C5D2EF /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		E3CED7362D395E5400C5D2EF /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +53,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3CED71E2D395CF100C5D2EF /* Alamofire in Frameworks */,
+				E3CED7202D395CF100C5D2EF /* AlamofireDynamic in Frameworks */,
+				E3CED7182D395CDE00C5D2EF /* SVProgressHUD in Frameworks */,
+				E3CED71B2D395CE700C5D2EF /* ProgressHUD in Frameworks */,
+				E3CED7132D395CD600C5D2EF /* SnapKit in Frameworks */,
+				E3CED7152D395CD600C5D2EF /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,14 +84,95 @@
 		E3CED6F42D395B1D00C5D2EF /* StakeApp */ = {
 			isa = PBXGroup;
 			children = (
-				E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */,
-				E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */,
-				E3CED6F92D395B1D00C5D2EF /* ViewController.swift */,
+				E3CED70D2D395C0700C5D2EF /* App */,
+				E3CED7292D395D8B00C5D2EF /* Scenas */,
+				E3CED7212D395D1100C5D2EF /* View */,
+				E3CED7222D395D1900C5D2EF /* Models */,
+				E3CED7232D395D2600C5D2EF /* NetworkManager */,
+				E3CED7242D395D3300C5D2EF /* Constraints */,
+				E3CED7252D395D4000C5D2EF /* Extension */,
+				E3CED7262D395D4A00C5D2EF /* Fonts */,
 				E3CED6FE2D395B1F00C5D2EF /* Assets.xcassets */,
 				E3CED7002D395B1F00C5D2EF /* LaunchScreen.storyboard */,
 				E3CED7032D395B1F00C5D2EF /* Info.plist */,
 			);
 			path = StakeApp;
+			sourceTree = "<group>";
+		};
+		E3CED70D2D395C0700C5D2EF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */,
+				E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E3CED70E2D395C7D00C5D2EF /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				E3CED70F2D395CBE00C5D2EF /* SignInController.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		E3CED7212D395D1100C5D2EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E3CED7222D395D1900C5D2EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E3CED7232D395D2600C5D2EF /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				E3CED7272D395D6F00C5D2EF /* NetworkManager.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		E3CED7242D395D3300C5D2EF /* Constraints */ = {
+			isa = PBXGroup;
+			children = (
+				E3CED72A2D395DDE00C5D2EF /* Constraint.swift */,
+			);
+			path = Constraints;
+			sourceTree = "<group>";
+		};
+		E3CED7252D395D4000C5D2EF /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E3CED72C2D395DF800C5D2EF /* UIColor+Extension.swift */,
+				E3CED72E2D395E0500C5D2EF /* UIFont+Extension.swift */,
+				E3CED7302D395E1000C5D2EF /* Colors.swift */,
+				E3CED7322D395E1A00C5D2EF /* UICornerRadius.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		E3CED7262D395D4A00C5D2EF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E3CED7362D395E5400C5D2EF /* Montserrat-Bold.ttf */,
+				E3CED7342D395E5300C5D2EF /* Montserrat-Medium.ttf */,
+				E3CED7352D395E5400C5D2EF /* Montserrat-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E3CED7292D395D8B00C5D2EF /* Scenas */ = {
+			isa = PBXGroup;
+			children = (
+				E3CED70E2D395C7D00C5D2EF /* SignIn */,
+			);
+			path = Scenas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,6 +191,14 @@
 			dependencies = (
 			);
 			name = StakeApp;
+			packageProductDependencies = (
+				E3CED7122D395CD600C5D2EF /* SnapKit */,
+				E3CED7142D395CD600C5D2EF /* SnapKit-Dynamic */,
+				E3CED7172D395CDE00C5D2EF /* SVProgressHUD */,
+				E3CED71A2D395CE700C5D2EF /* ProgressHUD */,
+				E3CED71D2D395CF100C5D2EF /* Alamofire */,
+				E3CED71F2D395CF100C5D2EF /* AlamofireDynamic */,
+			);
 			productName = StakeApp;
 			productReference = E3CED6F22D395B1D00C5D2EF /* StakeApp.app */;
 			productType = "com.apple.product-type.application";
@@ -108,6 +227,12 @@
 				Base,
 			);
 			mainGroup = E3CED6E92D395B1D00C5D2EF;
+			packageReferences = (
+				E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */,
+				E3CED7162D395CDE00C5D2EF /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
+				E3CED7192D395CE700C5D2EF /* XCRemoteSwiftPackageReference "ProgressHUD" */,
+				E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = E3CED6F32D395B1D00C5D2EF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -122,7 +247,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3CED7392D395E5400C5D2EF /* Montserrat-Bold.ttf in Resources */,
+				E3CED7382D395E5400C5D2EF /* Montserrat-Regular.ttf in Resources */,
 				E3CED7022D395B1F00C5D2EF /* LaunchScreen.storyboard in Resources */,
+				E3CED7372D395E5400C5D2EF /* Montserrat-Medium.ttf in Resources */,
 				E3CED6FF2D395B1F00C5D2EF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,8 +262,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3CED6FA2D395B1D00C5D2EF /* ViewController.swift in Sources */,
+				E3CED72F2D395E0500C5D2EF /* UIFont+Extension.swift in Sources */,
+				E3CED7312D395E1000C5D2EF /* Colors.swift in Sources */,
+				E3CED7282D395D6F00C5D2EF /* NetworkManager.swift in Sources */,
+				E3CED7102D395CBE00C5D2EF /* SignInController.swift in Sources */,
 				E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */,
+				E3CED72D2D395DF800C5D2EF /* UIColor+Extension.swift in Sources */,
+				E3CED72B2D395DDE00C5D2EF /* Constraint.swift in Sources */,
+				E3CED7332D395E1A00C5D2EF /* UICornerRadius.swift in Sources */,
 				E3CED6F82D395B1D00C5D2EF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +419,6 @@
 				INFOPLIST_FILE = StakeApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -318,7 +451,6 @@
 				INFOPLIST_FILE = StakeApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -361,6 +493,74 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		E3CED7162D395CDE00C5D2EF /* XCRemoteSwiftPackageReference "SVProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVProgressHUD/SVProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.1;
+			};
+		};
+		E3CED7192D395CE700C5D2EF /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/relatedcode/ProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.3;
+			};
+		};
+		E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E3CED7122D395CD600C5D2EF /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		E3CED7142D395CD600C5D2EF /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+		E3CED7172D395CDE00C5D2EF /* SVProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3CED7162D395CDE00C5D2EF /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
+			productName = SVProgressHUD;
+		};
+		E3CED71A2D395CE700C5D2EF /* ProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3CED7192D395CE700C5D2EF /* XCRemoteSwiftPackageReference "ProgressHUD" */;
+			productName = ProgressHUD;
+		};
+		E3CED71D2D395CF100C5D2EF /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		E3CED71F2D395CF100C5D2EF /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E3CED6EA2D395B1D00C5D2EF /* Project object */;
 }

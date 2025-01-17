@@ -16,6 +16,8 @@ extension UIColor {
 
     static let whiteColor = UIColor(hexString: "#FFFFFF")
 
+    static let blackColor = UIColor(hexString: "#16181C")
+
     static let pointViewColor = UIColor(hexString: "#20242C")
 
     static let buttonBackgroundColor = UIColor(hexString: "#5F73F8")

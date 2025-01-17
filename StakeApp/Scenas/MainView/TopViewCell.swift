@@ -20,7 +20,7 @@ class TopViewCell: UICollectionViewCell {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
         view.backgroundColor = UIColor.titlesBlack
-        view.layer.cornerRadius = 24
+        view.makeRoundCorners(24)
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "avatar")

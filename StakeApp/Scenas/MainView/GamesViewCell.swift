@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 
 class GamesViewCell: UICollectionViewCell {
+
+    var onMinerGameButtonTapped: (() -> Void)?
+    var onPandaGameButtonTapped: (() -> Void)?
+
     private lazy var backgroundGameView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = UIColor.clear
@@ -27,7 +31,8 @@ class GamesViewCell: UICollectionViewCell {
         view.setImage(UIImage(named: "minersGame"), for: .normal)
         view.backgroundColor = UIColor.clear
         view.makeRoundCorners(16)
-        view.contentMode = .scaleAspectFit
+        view.imageView?.contentMode = .scaleAspectFit
+        view.clipsToBounds = true
         view.addTarget(self, action: #selector(clickMinerGameButton), for: .touchUpInside)
         return view
     }()
@@ -37,7 +42,7 @@ class GamesViewCell: UICollectionViewCell {
         view.setImage(UIImage(named: "pandasGame"), for: .normal)
         view.backgroundColor = UIColor.clear
         view.makeRoundCorners(16)
-        view.imageView?.contentMode = .scaleToFill
+        view.imageView?.contentMode = .scaleAspectFit
         view.clipsToBounds = true
         view.addTarget(self, action: #selector(clickPandaGameButton), for: .touchUpInside)
         return view
@@ -104,11 +109,11 @@ class GamesViewCell: UICollectionViewCell {
     }
 
     @objc private func clickMinerGameButton() {
-
+        onMinerGameButtonTapped?()
     }
 
     @objc private func clickPandaGameButton() {
-
+        onPandaGameButtonTapped?()
     }
 
 }

@@ -232,11 +232,6 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.onMinerGameButtonTapped = { [weak self] in
                 guard let self = self else { return }
                 let gamePreviewView = GamePreviewView()
-
-//                gamePreviewView.goldenBallImage.isHidden = false
-//                gamePreviewView.goldView.isHidden = false
-//                gamePreviewView.minerOrPandaImage.image = UIImage(named: "minerWorker")
-                //                gamePreviewView.minerGameView.isHidden = false
                 gamePreviewView.configureForMinerGame()
                 gamePreviewView.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(gamePreviewView, animated: true)
@@ -245,10 +240,6 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.onPandaGameButtonTapped = { [weak self] in
                 guard let self = self else { return }
                 let gamePreviewView = GamePreviewView()
-                
-//                gamePreviewView.pandaGameDescriptionImage.isHidden = false
-//                gamePreviewView.minerOrPandaImage.image = UIImage(named: "pandaImage")
-//                gamePreviewView.pandaGameView.isHidden = false
                 gamePreviewView.configureForPandaGame()
                 gamePreviewView.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(gamePreviewView, animated: true)

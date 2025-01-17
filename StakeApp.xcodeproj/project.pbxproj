@@ -11,8 +11,15 @@
 		E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D502D3AB6420057D3CF /* MinersView.swift */; };
 		E38D5D532D3AB8920057D3CF /* PandasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D522D3AB8920057D3CF /* PandasView.swift */; };
 		E38D5D562D3AB9930057D3CF /* GoldsImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D552D3AB9930057D3CF /* GoldsImageView.swift */; };
-		E38D5D582D3AC3820057D3CF /* BonusesLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D572D3AC3820057D3CF /* BonusesLabel.swift */; };
+		E38D5D582D3AC3820057D3CF /* BonusesStringAttributed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D572D3AC3820057D3CF /* BonusesStringAttributed.swift */; };
 		E38D5D5A2D3ACCF70057D3CF /* BonusesView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D592D3ACCF70057D3CF /* BonusesView+Extension.swift */; };
+		E38D5D5C2D3AE8600057D3CF /* LeaderBoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D5B2D3AE8600057D3CF /* LeaderBoardCell.swift */; };
+		E38D5D5E2D3AE8EF0057D3CF /* TopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D5D2D3AE8EF0057D3CF /* TopCell.swift */; };
+		E38D5D602D3AE91F0057D3CF /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D5F2D3AE91F0057D3CF /* EditProfileCell.swift */; };
+		E38D5D622D3AE9330057D3CF /* StaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D612D3AE9330057D3CF /* StaticCell.swift */; };
+		E38D5D642D3AE9430057D3CF /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D632D3AE9430057D3CF /* SettingCell.swift */; };
+		E38D5D662D3AF1AA0057D3CF /* ProfileButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */; };
+		E38D5D692D3B05FA0057D3CF /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D682D3B05FA0057D3CF /* EditProfileView.swift */; };
 		E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */; };
 		E3CED6F82D395B1D00C5D2EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */; };
 		E3CED6FF2D395B1F00C5D2EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3CED6FE2D395B1F00C5D2EF /* Assets.xcassets */; };
@@ -50,8 +57,15 @@
 		E38D5D502D3AB6420057D3CF /* MinersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinersView.swift; sourceTree = "<group>"; };
 		E38D5D522D3AB8920057D3CF /* PandasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandasView.swift; sourceTree = "<group>"; };
 		E38D5D552D3AB9930057D3CF /* GoldsImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoldsImageView.swift; sourceTree = "<group>"; };
-		E38D5D572D3AC3820057D3CF /* BonusesLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusesLabel.swift; sourceTree = "<group>"; };
+		E38D5D572D3AC3820057D3CF /* BonusesStringAttributed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusesStringAttributed.swift; sourceTree = "<group>"; };
 		E38D5D592D3ACCF70057D3CF /* BonusesView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BonusesView+Extension.swift"; sourceTree = "<group>"; };
+		E38D5D5B2D3AE8600057D3CF /* LeaderBoardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardCell.swift; sourceTree = "<group>"; };
+		E38D5D5D2D3AE8EF0057D3CF /* TopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCell.swift; sourceTree = "<group>"; };
+		E38D5D5F2D3AE91F0057D3CF /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
+		E38D5D612D3AE9330057D3CF /* StaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCell.swift; sourceTree = "<group>"; };
+		E38D5D632D3AE9430057D3CF /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileButton+Extension.swift"; sourceTree = "<group>"; };
+		E38D5D682D3B05FA0057D3CF /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		E3CED6F22D395B1D00C5D2EF /* StakeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StakeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +120,14 @@
 				E38D5D552D3AB9930057D3CF /* GoldsImageView.swift */,
 			);
 			path = GamePreview;
+			sourceTree = "<group>";
+		};
+		E38D5D672D3B05BE0057D3CF /* EditProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				E38D5D682D3B05FA0057D3CF /* EditProfileView.swift */,
+			);
+			path = EditProfileView;
 			sourceTree = "<group>";
 		};
 		E3CED6E92D395B1D00C5D2EF = {
@@ -164,7 +186,9 @@
 			children = (
 				E3CED7482D3976D200C5D2EF /* PointsView.swift */,
 				E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */,
-				E38D5D572D3AC3820057D3CF /* BonusesLabel.swift */,
+				E38D5D572D3AC3820057D3CF /* BonusesStringAttributed.swift */,
+				E38D5D592D3ACCF70057D3CF /* BonusesView+Extension.swift */,
+				E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -199,7 +223,6 @@
 				E3CED72E2D395E0500C5D2EF /* UIFont+Extension.swift */,
 				E3CED7302D395E1000C5D2EF /* Colors.swift */,
 				E3CED7322D395E1A00C5D2EF /* UICornerRadius.swift */,
-				E38D5D592D3ACCF70057D3CF /* BonusesView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -259,6 +282,12 @@
 			isa = PBXGroup;
 			children = (
 				E3CED7422D39612C00C5D2EF /* ProfileView.swift */,
+				E38D5D5D2D3AE8EF0057D3CF /* TopCell.swift */,
+				E38D5D5F2D3AE91F0057D3CF /* EditProfileCell.swift */,
+				E38D5D612D3AE9330057D3CF /* StaticCell.swift */,
+				E38D5D632D3AE9430057D3CF /* SettingCell.swift */,
+				E38D5D5B2D3AE8600057D3CF /* LeaderBoardCell.swift */,
+				E38D5D672D3B05BE0057D3CF /* EditProfileView */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -352,29 +381,36 @@
 			files = (
 				E3CED74F2D39A9DD00C5D2EF /* GamesViewCell.swift in Sources */,
 				E3CED7472D39702500C5D2EF /* TopViewCell.swift in Sources */,
+				E38D5D692D3B05FA0057D3CF /* EditProfileView.swift in Sources */,
 				E38D5D562D3AB9930057D3CF /* GoldsImageView.swift in Sources */,
 				E3CED72F2D395E0500C5D2EF /* UIFont+Extension.swift in Sources */,
+				E38D5D662D3AF1AA0057D3CF /* ProfileButton+Extension.swift in Sources */,
 				E3CED7492D3976D200C5D2EF /* PointsView.swift in Sources */,
 				E3CED7312D395E1000C5D2EF /* Colors.swift in Sources */,
 				E3CED7282D395D6F00C5D2EF /* NetworkManager.swift in Sources */,
 				E3CED73F2D39610900C5D2EF /* MainView.swift in Sources */,
+				E38D5D642D3AE9430057D3CF /* SettingCell.swift in Sources */,
 				E38D5D4E2D3AB3960057D3CF /* GamePreviewView.swift in Sources */,
 				E3CED7432D39612C00C5D2EF /* ProfileView.swift in Sources */,
 				E3CED7102D395CBE00C5D2EF /* SignInController.swift in Sources */,
 				E38D5D5A2D3ACCF70057D3CF /* BonusesView+Extension.swift in Sources */,
 				E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */,
-				E38D5D582D3AC3820057D3CF /* BonusesLabel.swift in Sources */,
+				E38D5D582D3AC3820057D3CF /* BonusesStringAttributed.swift in Sources */,
 				E3CED74B2D39972C00C5D2EF /* DailyBonusViewCell.swift in Sources */,
 				E3CED7452D3961BB00C5D2EF /* MainViewControllerTab.swift in Sources */,
+				E38D5D5E2D3AE8EF0057D3CF /* TopCell.swift in Sources */,
 				E38D5D532D3AB8920057D3CF /* PandasView.swift in Sources */,
 				E3CED7412D39611C00C5D2EF /* HistoryView.swift in Sources */,
 				E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */,
 				E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */,
 				E3CED72D2D395DF800C5D2EF /* UIColor+Extension.swift in Sources */,
 				E3CED72B2D395DDE00C5D2EF /* Constraint.swift in Sources */,
+				E38D5D602D3AE91F0057D3CF /* EditProfileCell.swift in Sources */,
+				E38D5D622D3AE9330057D3CF /* StaticCell.swift in Sources */,
 				E3CED7332D395E1A00C5D2EF /* UICornerRadius.swift in Sources */,
 				E3CED7512D39AE1500C5D2EF /* LeaderBoardViewCell.swift in Sources */,
 				E3CED6F82D395B1D00C5D2EF /* SceneDelegate.swift in Sources */,
+				E38D5D5C2D3AE8600057D3CF /* LeaderBoardCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

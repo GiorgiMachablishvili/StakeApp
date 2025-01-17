@@ -1,5 +1,5 @@
 //
-//  LeaderBoardViewCell.swift
+//  LeaderBoardCell.swift
 //  StakeApp
 //
 //  Created by Gio's Mac on 17.01.25.
@@ -8,16 +8,15 @@
 import UIKit
 import SnapKit
 
-class LeaderBoardViewCell: UICollectionViewCell {
+class LeaderBoardCell: UICollectionViewCell {
 
-    private lazy var leaderBoardImageView: UIImageView = {
-        let view = UIImageView(frame: .zero)
-        view.image = UIImage(named: "leaderBoard")
-        view.contentMode = .scaleAspectFit
+    private lazy var bonusesLabel: BonusesStringAttributed = {
+        let view = BonusesStringAttributed()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.labelText = "LEADER BOARD"
         return view
     }()
-
-    
 
     private lazy var backgroundLeaderBoardView: LeaderBoardView = {
         let view = LeaderBoardView()
@@ -36,23 +35,24 @@ class LeaderBoardViewCell: UICollectionViewCell {
     }
 
     private func setup() {
-        addSubview(leaderBoardImageView)
+        addSubview(bonusesLabel)
         addSubview(backgroundLeaderBoardView)
 
     }
 
     private func setupConstraints() {
-        leaderBoardImageView.snp.remakeConstraints { make in
+        bonusesLabel.snp.remakeConstraints { make in
             make.top.equalTo(snp.top).offset(2)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(15)
         }
 
         backgroundLeaderBoardView.snp.remakeConstraints { make in
-            make.top.equalTo(leaderBoardImageView.snp.bottom).offset(16)
+            make.top.equalTo(bonusesLabel.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(64)
         }
 
     }
 }
+

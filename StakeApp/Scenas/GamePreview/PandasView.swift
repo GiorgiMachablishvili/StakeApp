@@ -48,8 +48,8 @@ class PandasView: UIView {
         return view
     }()
 
-    private lazy var bonusesLabel: BonusesLabel = {
-        let view = BonusesLabel()
+    private lazy var bonusesLabel: BonusesStringAttributed = {
+        let view = BonusesStringAttributed()
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         view.labelText = "BONUSES"

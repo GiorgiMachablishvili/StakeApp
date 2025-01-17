@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BonusesLabel: UILabel {
+class BonusesStringAttributed: UILabel {
 
     // Custom text property to update and redraw
     var labelText: String = "Bonuses" {

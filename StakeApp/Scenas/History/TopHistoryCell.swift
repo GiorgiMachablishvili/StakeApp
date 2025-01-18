@@ -1,14 +1,14 @@
 //
-//  TopCell.swift
+//  TopHistoryCell.swift
 //  StakeApp
 //
-//  Created by Gio's Mac on 17.01.25.
+//  Created by Gio's Mac on 18.01.25.
 //
 
 import UIKit
 import SnapKit
 
-class TopCell: UICollectionViewCell {
+class TopHistoryCell: UICollectionViewCell {
     private lazy var backgroundTopView: UIView = {
         let view = UIView(frame: .zero)
         view.makeRoundCorners(24)
@@ -24,7 +24,6 @@ class TopCell: UICollectionViewCell {
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "avatar")
-//        view.isUserInteractionEnabled = true
         return view
     }()
 
@@ -102,7 +101,7 @@ class TopCell: UICollectionViewCell {
         }
     }
 
-    
+
 
     func createExpAttributedString() -> NSAttributedString {
         let expAttributes: [NSAttributedString.Key: Any] = [
@@ -123,4 +122,3 @@ class TopCell: UICollectionViewCell {
         return combinedString
     }
 }
-

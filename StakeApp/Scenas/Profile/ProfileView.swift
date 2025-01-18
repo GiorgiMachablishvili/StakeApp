@@ -64,7 +64,8 @@ class ProfileView: UIViewController {
         }
 
         profileView.snp.remakeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.snp.bottom)
             make.height.equalTo(478)
         }
     }
@@ -230,6 +231,7 @@ class ProfileView: UIViewController {
     @objc private func hideView() {
         backgroundProfileView.isHidden = true
         profileView.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
     }
 }
 
@@ -272,10 +274,9 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             cell.didPressEditProfileButton = { [weak self] in
                 guard let self = self else { return }
-                let gamePreviewView = GamePreviewView()
                 backgroundProfileView.isHidden = false
                 profileView.isHidden = false
-                gamePreviewView.hidesBottomBarWhenPushed = true
+                self.tabBarController?.tabBar.isHidden = true
             }
             return cell
         case 2:

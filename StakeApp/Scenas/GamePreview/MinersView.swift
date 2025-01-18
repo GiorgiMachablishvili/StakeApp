@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 class MinerView: UIView {
-
+    
+    var onStartButton: (() -> Void)?
     var onCancelButtonTapped: (() -> Void)?
 
     private lazy var backgroundMinerView: UIView = {
@@ -98,6 +99,7 @@ class MinerView: UIView {
         view.setTitle("Start the game", for: .normal)
         view.setTitleColor(UIColor.whiteColor, for: .normal)
         view.makeRoundCorners(16)
+        view.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         return view
     }()
 
@@ -175,6 +177,11 @@ class MinerView: UIView {
             make.height.equalTo(52)
         }
     }
+
+    @objc private func pressStartButton() {
+        onStartButton?()
+    }
+
 
     @objc private func didPressCancelButton() {
         onCancelButtonTapped?()

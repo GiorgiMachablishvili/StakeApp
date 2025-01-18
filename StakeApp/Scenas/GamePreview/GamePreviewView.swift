@@ -52,6 +52,9 @@ class GamePreviewView: UIViewController {
         let view = MinerView()
         view.contentMode = .scaleAspectFit
         view.isHidden = true
+        view.onStartButton = { [weak self] in
+            self?.goMainerGameView()
+        }
         view.onCancelButtonTapped = { [weak self] in
             self?.goBackView()
         }
@@ -129,6 +132,11 @@ class GamePreviewView: UIViewController {
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(583)
         }
+    }
+
+    func goMainerGameView() {
+        let minerGameVC = MinerGameController()
+        navigationController?.pushViewController(minerGameVC, animated: true)
     }
 
     func configureForMinerGame() {

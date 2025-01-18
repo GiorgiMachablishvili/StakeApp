@@ -22,6 +22,8 @@ extension UIColor {
 
     static let buttonBackgroundColor = UIColor(hexString: "#5F73F8")
 
+    static let backgroundColorGamePointView = UIColor(hexString: "#00000033")
+
 }
 
 

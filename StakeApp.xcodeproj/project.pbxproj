@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E361A2512D3BA2E700E27466 /* TopHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2502D3BA2E700E27466 /* TopHistoryCell.swift */; };
+		E361A2532D3BA36300E27466 /* DailyGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2522D3BA36300E27466 /* DailyGameCell.swift */; };
+		E361A2552D3BA5A000E27466 /* LeftGamePointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2542D3BA5A000E27466 /* LeftGamePointView.swift */; };
+		E361A2572D3BA5B300E27466 /* RightGamePointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2562D3BA5B300E27466 /* RightGamePointView.swift */; };
+		E361A25A2D3C312400E27466 /* MinerGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2592D3C312400E27466 /* MinerGameController.swift */; };
+		E361A25C2D3C34C000E27466 /* GameTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A25B2D3C34C000E27466 /* GameTopView.swift */; };
+		E361A25E2D3C4D5600E27466 /* GameTimerScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */; };
+		E361A2622D3C556E00E27466 /* GameStartTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2612D3C556E00E27466 /* GameStartTimerView.swift */; };
 		E38D5D4E2D3AB3960057D3CF /* GamePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */; };
 		E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D502D3AB6420057D3CF /* MinersView.swift */; };
 		E38D5D532D3AB8920057D3CF /* PandasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D522D3AB8920057D3CF /* PandasView.swift */; };
@@ -53,6 +61,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E361A2502D3BA2E700E27466 /* TopHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHistoryCell.swift; sourceTree = "<group>"; };
+		E361A2522D3BA36300E27466 /* DailyGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGameCell.swift; sourceTree = "<group>"; };
+		E361A2542D3BA5A000E27466 /* LeftGamePointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftGamePointView.swift; sourceTree = "<group>"; };
+		E361A2562D3BA5B300E27466 /* RightGamePointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightGamePointView.swift; sourceTree = "<group>"; };
+		E361A2592D3C312400E27466 /* MinerGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerGameController.swift; sourceTree = "<group>"; };
+		E361A25B2D3C34C000E27466 /* GameTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTopView.swift; sourceTree = "<group>"; };
+		E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerScoreView.swift; sourceTree = "<group>"; };
+		E361A2612D3C556E00E27466 /* GameStartTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStartTimerView.swift; sourceTree = "<group>"; };
 		E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePreviewView.swift; sourceTree = "<group>"; };
 		E38D5D502D3AB6420057D3CF /* MinersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinersView.swift; sourceTree = "<group>"; };
 		E38D5D522D3AB8920057D3CF /* PandasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandasView.swift; sourceTree = "<group>"; };
@@ -111,6 +127,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E361A2582D3C30E200E27466 /* MinerGameView */ = {
+			isa = PBXGroup;
+			children = (
+				E361A2592D3C312400E27466 /* MinerGameController.swift */,
+			);
+			path = MinerGameView;
+			sourceTree = "<group>";
+		};
 		E38D5D4B2D3AB3400057D3CF /* GamePreview */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,10 +209,15 @@
 			isa = PBXGroup;
 			children = (
 				E3CED7482D3976D200C5D2EF /* PointsView.swift */,
+				E361A2542D3BA5A000E27466 /* LeftGamePointView.swift */,
+				E361A2562D3BA5B300E27466 /* RightGamePointView.swift */,
 				E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */,
 				E38D5D572D3AC3820057D3CF /* BonusesStringAttributed.swift */,
 				E38D5D592D3ACCF70057D3CF /* BonusesView+Extension.swift */,
 				E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */,
+				E361A25B2D3C34C000E27466 /* GameTopView.swift */,
+				E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */,
+				E361A2612D3C556E00E27466 /* GameStartTimerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -246,6 +275,7 @@
 				E38D5D4B2D3AB3400057D3CF /* GamePreview */,
 				E3CED73C2D3960DB00C5D2EF /* History */,
 				E3CED73D2D3960E900C5D2EF /* Profile */,
+				E361A2582D3C30E200E27466 /* MinerGameView */,
 			);
 			path = Scenas;
 			sourceTree = "<group>";
@@ -274,6 +304,8 @@
 			isa = PBXGroup;
 			children = (
 				E3CED7402D39611C00C5D2EF /* HistoryView.swift */,
+				E361A2502D3BA2E700E27466 /* TopHistoryCell.swift */,
+				E361A2522D3BA36300E27466 /* DailyGameCell.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -379,10 +411,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E361A25A2D3C312400E27466 /* MinerGameController.swift in Sources */,
 				E3CED74F2D39A9DD00C5D2EF /* GamesViewCell.swift in Sources */,
+				E361A25E2D3C4D5600E27466 /* GameTimerScoreView.swift in Sources */,
+				E361A2532D3BA36300E27466 /* DailyGameCell.swift in Sources */,
 				E3CED7472D39702500C5D2EF /* TopViewCell.swift in Sources */,
+				E361A2512D3BA2E700E27466 /* TopHistoryCell.swift in Sources */,
 				E38D5D692D3B05FA0057D3CF /* EditProfileView.swift in Sources */,
+				E361A2622D3C556E00E27466 /* GameStartTimerView.swift in Sources */,
 				E38D5D562D3AB9930057D3CF /* GoldsImageView.swift in Sources */,
+				E361A2552D3BA5A000E27466 /* LeftGamePointView.swift in Sources */,
 				E3CED72F2D395E0500C5D2EF /* UIFont+Extension.swift in Sources */,
 				E38D5D662D3AF1AA0057D3CF /* ProfileButton+Extension.swift in Sources */,
 				E3CED7492D3976D200C5D2EF /* PointsView.swift in Sources */,
@@ -400,6 +438,8 @@
 				E3CED7452D3961BB00C5D2EF /* MainViewControllerTab.swift in Sources */,
 				E38D5D5E2D3AE8EF0057D3CF /* TopCell.swift in Sources */,
 				E38D5D532D3AB8920057D3CF /* PandasView.swift in Sources */,
+				E361A2572D3BA5B300E27466 /* RightGamePointView.swift in Sources */,
+				E361A25C2D3C34C000E27466 /* GameTopView.swift in Sources */,
 				E3CED7412D39611C00C5D2EF /* HistoryView.swift in Sources */,
 				E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */,
 				E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */,

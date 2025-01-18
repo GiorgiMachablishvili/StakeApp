@@ -62,9 +62,9 @@ class MinerView: UIView {
         view.makeRoundCorners(24)
         view.backgroundColor = .whiteColor.withAlphaComponent(0.25)
         view.configureView(
-            image: UIImage(named: "x2"),
-            title: "X2",
-            viewInfo: "Double your loot if you find a bamboo."
+            image: UIImage(named: "doublePickAxe"),
+            title: "Double Pickaxe",
+            viewInfo: "Doubles gold for clicking for 5 seconds."
         )
         return view
     }()
@@ -74,9 +74,9 @@ class MinerView: UIView {
         view.makeRoundCorners(24)
         view.backgroundColor = .whiteColor.withAlphaComponent(0.25)
         view.configureView(
-            image: UIImage(named: "trap"),
-            title: "Trap",
-            viewInfo: "Set it on a cell. If your opponent gets caught, they will miss a turn."
+            image: UIImage(named: "bomb"),
+            title: "Bomb",
+            viewInfo: "Block your opponent - he won't be able to mine gold for 5 seconds."
         )
         return view
     }()
@@ -86,9 +86,9 @@ class MinerView: UIView {
         view.makeRoundCorners(24)
         view.backgroundColor = .whiteColor.withAlphaComponent(0.25)
         view.configureView(
-            image: UIImage(named: "mix"),
-            title: "Mix",
-            viewInfo: "Mixes all closed cells, including traps and bonuses."
+            image: UIImage(named: "autoPickAxe"),
+            title: "Auto Pickaxe",
+            viewInfo: "Mines 1 gold every second automatically."
         )
         return view
     }()

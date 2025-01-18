@@ -58,6 +58,7 @@
 		E3CED74F2D39A9DD00C5D2EF /* GamesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED74E2D39A9DD00C5D2EF /* GamesViewCell.swift */; };
 		E3CED7512D39AE1500C5D2EF /* LeaderBoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7502D39AE1500C5D2EF /* LeaderBoardViewCell.swift */; };
 		E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */; };
+		E3DDA1092D3C6280000F7EA7 /* GameBonuseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,7 @@
 		E3CED74E2D39A9DD00C5D2EF /* GamesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewCell.swift; sourceTree = "<group>"; };
 		E3CED7502D39AE1500C5D2EF /* LeaderBoardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardViewCell.swift; sourceTree = "<group>"; };
 		E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardView.swift; sourceTree = "<group>"; };
+		E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBonuseButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 				E361A25B2D3C34C000E27466 /* GameTopView.swift */,
 				E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */,
 				E361A2612D3C556E00E27466 /* GameStartTimerView.swift */,
+				E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */,
 				E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */,
 				E3CED72D2D395DF800C5D2EF /* UIColor+Extension.swift in Sources */,
+				E3DDA1092D3C6280000F7EA7 /* GameBonuseButton.swift in Sources */,
 				E3CED72B2D395DDE00C5D2EF /* Constraint.swift in Sources */,
 				E38D5D602D3AE91F0057D3CF /* EditProfileCell.swift in Sources */,
 				E38D5D622D3AE9330057D3CF /* StaticCell.swift in Sources */,

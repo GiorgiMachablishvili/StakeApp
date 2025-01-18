@@ -33,7 +33,7 @@ extension UIView {
         infoLabel.font = UIFont.montserratMedium(size: 10)
         infoLabel.textColor = .grayLabel
         infoLabel.textAlignment = .left
-        infoLabel.numberOfLines = 0
+        infoLabel.numberOfLines = 2
 
         // Add subviews
         addSubview(imageView)

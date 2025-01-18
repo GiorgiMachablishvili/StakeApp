@@ -41,6 +41,14 @@ class MinerGameController: UIViewController {
         view.backgroundColor = .clear
         return view
     }()
+
+    private lazy var doublePickAxeButtons: UIButton = {
+        let view = UIButton(frame: .zero)
+        view.gameBonusButton(gameBonusImage: UIImage(named: "doublePickAxe"))
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -55,6 +63,7 @@ class MinerGameController: UIViewController {
         gameBackgroundImage.addSubview(gameGoldImage)
         gameBackgroundImage.addSubview(gameTimerView)
         view.addSubview(gameStartTimerView)
+        gameBackgroundImage.addSubview(doublePickAxeButtons)
     }
 
     private func setupConstraints() {
@@ -83,6 +92,12 @@ class MinerGameController: UIViewController {
             make.top.equalTo(gameTopView.snp.bottom).offset(49)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(60)
+        }
+
+        doublePickAxeButtons.snp.remakeConstraints { make in
+            make.leading.equalTo(view.snp.leading).offset(71)
+            make.bottom.equalTo(view.snp.bottom).offset(-51)
+            make.height.width.equalTo(72)
         }
     }
 

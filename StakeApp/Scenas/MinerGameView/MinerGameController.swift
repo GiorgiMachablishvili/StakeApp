@@ -17,7 +17,6 @@ class MinerGameController: UIViewController {
         let view = GameStartTimerView(frame: .zero)
         view.timerDidFinish = { [weak self] in
             self?.hideGameTimerView()
-
         }
         return view
     }()
@@ -98,7 +97,20 @@ class MinerGameController: UIViewController {
         view.gameImage.image = UIImage(named: "gold")
         view.pointLabel.text = "+ \(randomNumber)"
         view.backgroundGamePointView.backgroundColor = .clear
+        return view
+    }()
 
+    private lazy var winOrLoseView: WinOrLoseView = {
+        let view = WinOrLoseView(frame: .zero)
+        view.backgroundColor = UIColor(hexString: "#16171A")
+        view.makeRoundCorners(20)
+        view.isHidden = true
+        view.didPressStartGameButton = { [weak self] in
+            self?.pressStartGameButton()
+        }
+        view.didPressContinueButton = { [weak self] in
+            self?.pressContinueButton()
+        }
         return view
     }()
 
@@ -121,6 +133,7 @@ class MinerGameController: UIViewController {
         view.addSubview(doublePickAxeCost)
         view.addSubview(bombCost)
         view.addSubview(autoPickAxeCost)
+        view.addSubview(winOrLoseView)
         view.addSubview(gameStartTimerView)
     }
 
@@ -190,6 +203,11 @@ class MinerGameController: UIViewController {
             make.height.equalTo(19 * Constraint.yCoeff)
             make.width.greaterThanOrEqualTo(34 * Constraint.xCoeff)
         }
+
+        winOrLoseView.snp.remakeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(652 * Constraint.yCoeff)
+        }
     }
 
     private func hideGameTimerView() {
@@ -199,27 +217,38 @@ class MinerGameController: UIViewController {
 
     private func makeGameGoldButtonUnenabled() {
         gameBackgroundImage.isUserInteractionEnabled = false
+
+        //TODO: what happens in case draw? 
+        guard let userPointsText = gameTimerView.leftPointView.pointLabel.text,
+              let opponentCostText = gameTimerView.rightPointView.pointLabel.text,
+              let userPoints = Int(userPointsText),
+              let opponentCost = Int(opponentCostText) else {
+            return
+        }
+        if userPoints > opponentCost {
+            winOrLoseView.winOrLoseLabel.text = "WIN!"
+            winOrLoseView.bonusButton.isHidden = false
+            winOrLoseView.bonusPoints.isHidden = false
+            winOrLoseView.expButton.isHidden = false
+            winOrLoseView.expPoints.isHidden = false
+            winOrLoseView.isHidden = false
+        } else {
+            winOrLoseView.winOrLoseLabel.text = "LOSE"
+            winOrLoseView.winOrLoseLabel.textColor = .red
+            winOrLoseView.redExpButton.isHidden = false
+            winOrLoseView.redExpPoints.isHidden = false
+            winOrLoseView.isHidden = false
+        }
     }
 
     @objc func pressGameGoldButton () {
-        // Generate a random number between 1 and 10
         let randomNumber = Int.random(in: 1...10)
-
-        // Add the random number to the current total
         currentGoldPoints += randomNumber
-
-        // Update the `leftPointView.pointLabel` to show the total
         gameTimerView.leftPointView.pointLabel.text = "\(currentGoldPoints)"
-
-        // Update the `randomGoldsLabel` with the random number
         randomGoldsLabel.pointLabel.text = "+ \(randomNumber)"
-
-        // Ensure the label is added to the view if not already added
         if randomGoldsLabel.superview == nil {
             view.addSubview(randomGoldsLabel)
         }
-
-        // Remove any existing constraints and apply new random constraints
         randomGoldsLabel.snp.removeConstraints()
         let randomXOffset = CGFloat.random(in: -150...150)
         let randomYOffset = CGFloat.random(in: -150...150)
@@ -228,8 +257,6 @@ class MinerGameController: UIViewController {
             make.centerY.equalTo(view.snp.centerY).offset(randomYOffset)
             make.height.width.equalTo(50 * Constraint.xCoeff)
         }
-
-        // Reset alpha and animate the label
         randomGoldsLabel.alpha = 1
         UIView.animate(withDuration: 0.5, delay: 0.5, options: [], animations: {
             self.randomGoldsLabel.alpha = 0
@@ -254,5 +281,29 @@ class MinerGameController: UIViewController {
         } else {
             print("Not enough points!")
         }
+    }
+
+    private func pressStartGameButton() {
+        // Restart the MinerGameController
+        if let navigationController = navigationController {
+            let newGameController = MinerGameController()
+            navigationController.pushViewController(newGameController, animated: true)
+        } else {
+            // Fallback in case there is no navigation controller
+            let newGameController = MinerGameController()
+            present(newGameController, animated: true, completion: nil)
+        }
+    }
+
+    private func pressContinueButton() {
+        for controller in navigationController?.viewControllers ?? [] {
+            if controller is MainView {
+                navigationController?.popToViewController(controller, animated: true)
+                return
+            }
+        }
+        let mainView = MainView()
+        let navigationController = UINavigationController(rootViewController: mainView)
+        UIApplication.shared.keyWindow?.rootViewController = navigationController
     }
 }

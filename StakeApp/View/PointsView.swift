@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class PointsView: UIView {
-    private lazy var pointLabel: UILabel = {
+    lazy var pointLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "100"
         view.textColor = UIColor.whiteColor
@@ -49,23 +49,23 @@ class PointsView: UIView {
 
     private func setupConstraints() {
         pointLabel.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(11.5)
-            make.leading.equalTo(snp.leading).offset(12)
-            make.width.equalTo(25)
-            make.height.equalTo(17)
+            make.top.equalTo(snp.top).offset(11.5 * Constraint.yCoeff)
+            make.leading.equalTo(snp.leading).offset(12 * Constraint.xCoeff)
+            make.width.equalTo(25 * Constraint.xCoeff)
+            make.height.equalTo(17 * Constraint.yCoeff)
         }
 
         verticalLine.snp.remakeConstraints { make in
             make.centerY.equalTo(pointLabel.snp.centerY)
-            make.trailing.equalTo(consoleImage.snp.leading).offset(-8)
-            make.height.equalTo(16)
-            make.width.equalTo(0.5)
+            make.trailing.equalTo(consoleImage.snp.leading).offset(-8 * Constraint.xCoeff)
+            make.height.equalTo(16 * Constraint.yCoeff)
+            make.width.equalTo(0.5 * Constraint.xCoeff)
         }
 
         consoleImage.snp.remakeConstraints { make in
             make.centerY.equalTo(pointLabel.snp.centerY)
-            make.trailing.equalTo(snp.trailing).offset(-8)
-            make.height.width.equalTo(24)
+            make.trailing.equalTo(snp.trailing).offset(-8 * Constraint.xCoeff)
+            make.height.width.equalTo(24 * Constraint.yCoeff)
         }
     }
 }

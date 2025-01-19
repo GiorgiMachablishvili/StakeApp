@@ -229,6 +229,21 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? GamesViewCell else {
                 return UICollectionViewCell()
             }
+            cell.onMinerGameButtonTapped = { [weak self] in
+                guard let self = self else { return }
+                let gamePreviewView = GamePreviewView()
+                gamePreviewView.configureForMinerGame()
+                gamePreviewView.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(gamePreviewView, animated: true)
+            }
+
+            cell.onPandaGameButtonTapped = { [weak self] in
+                guard let self = self else { return }
+                let gamePreviewView = GamePreviewView()
+                gamePreviewView.configureForPandaGame()
+                gamePreviewView.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(gamePreviewView, animated: true)
+            }
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(
@@ -240,5 +255,12 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
         default:
             return UICollectionViewCell()
         }
+    }
+
+    private func navigateToGamePreviewView() {
+        let gamePreviewView = GamePreviewView()
+
+        gamePreviewView.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(gamePreviewView, animated: true)
     }
 }

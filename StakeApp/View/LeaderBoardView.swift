@@ -96,40 +96,40 @@ class LeaderBoardView: UIView {
 
         ratingNumber.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundLeaderBoardView.snp.centerY)
-            make.leading.equalTo(backgroundLeaderBoardView.snp.leading).offset(12)
-            make.height.equalTo(17)
-            make.width.equalTo(30)
+            make.leading.equalTo(backgroundLeaderBoardView.snp.leading).offset(12 * Constraint.xCoeff)
+            make.height.equalTo(17 * Constraint.yCoeff)
+            make.width.equalTo(30 * Constraint.xCoeff)
         }
 
         workoutImage.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundLeaderBoardView.snp.centerY)
-            make.leading.equalTo(ratingNumber.snp.trailing).offset(8)
-            make.height.width.equalTo(48)
+            make.leading.equalTo(ratingNumber.snp.trailing).offset(8 * Constraint.xCoeff)
+            make.height.width.equalTo(48 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundLeaderBoardView.snp.centerY)
-            make.leading.equalTo(workoutImage.snp.trailing).offset(8)
-            make.height.equalTo(16)
+            make.leading.equalTo(workoutImage.snp.trailing).offset(8 * Constraint.xCoeff)
+            make.height.equalTo(16 * Constraint.yCoeff)
         }
 
         expLabel.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundLeaderBoardView.snp.centerY)
-            make.leading.equalTo(workoutImage.snp.trailing).offset(8)
-            make.height.equalTo(16)
+            make.leading.equalTo(workoutImage.snp.trailing).offset(8 * Constraint.xCoeff)
+            make.height.equalTo(16 * Constraint.yCoeff)
         }
 
         pointLabel.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundLeaderBoardView.snp.centerY)
-            make.trailing.equalTo(backgroundLeaderBoardView.snp.trailing).offset(-52)
-            make.height.equalTo(17)
-            make.width.equalTo(40)
+            make.trailing.equalTo(backgroundLeaderBoardView.snp.trailing).offset(-52 * Constraint.xCoeff)
+            make.height.equalTo(17 * Constraint.yCoeff)
+            make.width.equalTo(40 * Constraint.xCoeff)
         }
 
         gameConcoleImage.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundLeaderBoardView.snp.centerY)
-            make.leading.equalTo(pointLabel.snp.trailing).offset(16)
-            make.height.width.equalTo(24)
+            make.leading.equalTo(pointLabel.snp.trailing).offset(16 * Constraint.xCoeff)
+            make.height.width.equalTo(24 * Constraint.yCoeff)
         }
     }
 

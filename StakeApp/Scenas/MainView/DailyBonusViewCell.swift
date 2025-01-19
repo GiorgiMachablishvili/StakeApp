@@ -82,31 +82,31 @@ class DailyBonusViewCell: UICollectionViewCell {
         }
 
         consoleImage.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundTopView.snp.top).offset(-20)
-            make.leading.equalTo(backgroundTopView.snp.leading).offset(-200)
-            make.bottom.equalTo(backgroundTopView.snp.bottom).offset(20)
-            make.width.equalTo(430)
+            make.top.equalTo(backgroundTopView.snp.top).offset(-20 * Constraint.yCoeff)
+            make.leading.equalTo(backgroundTopView.snp.leading).offset(-200 * Constraint.xCoeff)
+            make.bottom.equalTo(backgroundTopView.snp.bottom).offset(20 * Constraint.yCoeff)
+            make.width.equalTo(430 * Constraint.xCoeff)
         }
 
         bonusTitle.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundTopView.snp.top).offset(17)
-            make.trailing.equalTo(backgroundTopView.snp.trailing).offset(-56)
-            make.height.equalTo(40)
-            make.width.equalTo(123)
+            make.top.equalTo(backgroundTopView.snp.top).offset(17 * Constraint.yCoeff)
+            make.trailing.equalTo(backgroundTopView.snp.trailing).offset(-56 * Constraint.xCoeff)
+            make.height.equalTo(40 * Constraint.yCoeff)
+            make.width.equalTo(123 * Constraint.xCoeff)
         }
 
         timerLabel.snp.remakeConstraints { make in
-            make.top.equalTo(bonusTitle.snp.bottom).offset(8)
+            make.top.equalTo(bonusTitle.snp.bottom).offset(8 * Constraint.yCoeff)
             make.leading.equalTo(bonusTitle.snp.leading)
-            make.height.equalTo(25)
-            make.width.equalTo(78)
+            make.height.equalTo(25 * Constraint.yCoeff)
+            make.width.equalTo(78 * Constraint.xCoeff)
         }
 
         getDailyBonus.snp.remakeConstraints { make in
-            make.trailing.equalTo(backgroundTopView.snp.trailing).offset(-16)
-            make.bottom.equalTo(backgroundTopView.snp.bottom).offset(-16)
-            make.height.equalTo(39)
-            make.width.equalTo(163)
+            make.trailing.equalTo(backgroundTopView.snp.trailing).offset(-16 * Constraint.xCoeff)
+            make.bottom.equalTo(backgroundTopView.snp.bottom).offset(-16 * Constraint.yCoeff)
+            make.height.equalTo(39 * Constraint.yCoeff)
+            make.width.equalTo(163 * Constraint.xCoeff)
         }
     }
 

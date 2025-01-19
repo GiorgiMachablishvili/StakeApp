@@ -131,50 +131,50 @@ class MinerView: UIView {
         }
 
         gameTitle.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundMinerView.snp.top).offset(20)
-            make.leading.equalTo(backgroundMinerView.snp.leading).offset(20)
-            make.height.equalTo(24)
+            make.top.equalTo(backgroundMinerView.snp.top).offset(20 * Constraint.yCoeff)
+            make.leading.equalTo(backgroundMinerView.snp.leading).offset(20 * Constraint.xCoeff)
+            make.height.equalTo(24 * Constraint.yCoeff)
         }
 
         gameInfo.snp.remakeConstraints { make in
-            make.top.equalTo(gameTitle.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(gameTitle.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
         }
 
         cancelButton.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundMinerView.snp.top).offset(20)
-            make.trailing.equalTo(backgroundMinerView.snp.trailing).offset(-20)
-            make.height.width.equalTo(24)
+            make.top.equalTo(backgroundMinerView.snp.top).offset(20 * Constraint.yCoeff)
+            make.trailing.equalTo(backgroundMinerView.snp.trailing).offset(-20 * Constraint.xCoeff)
+            make.height.width.equalTo(24 * Constraint.yCoeff)
         }
 
         bonusesLabel.snp.remakeConstraints { make in
-            make.top.equalTo(gameInfo.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(15)
+            make.top.equalTo(gameInfo.snp.bottom).offset(20 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         doublePickaxeView.snp.remakeConstraints { make in
-            make.top.equalTo(bonusesLabel.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(68)
+            make.top.equalTo(bonusesLabel.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(68 * Constraint.yCoeff)
         }
 
         bombView.snp.remakeConstraints { make in
-            make.top.equalTo(doublePickaxeView.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(68)
+            make.top.equalTo(doublePickaxeView.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(68 * Constraint.yCoeff)
         }
 
         autoPickaxeView.snp.remakeConstraints { make in
-            make.top.equalTo(bombView.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(68)
+            make.top.equalTo(bombView.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(68 * Constraint.yCoeff)
         }
 
         startGameButton.snp.remakeConstraints { make in
-            make.bottom.equalTo(snp.bottom).offset(-44)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(52)
+            make.bottom.equalTo(snp.bottom).offset(-44 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
     }
 

@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class GameTimerScoreView: UIView {
+    var timerDidFinish: (() -> Void)?
+
     private lazy var timerLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "60"
@@ -62,14 +64,14 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    private lazy var leftPointView: LeftGamePointView = {
+    lazy var leftPointView: LeftGamePointView = {
         let view = LeftGamePointView()
         view.gameImage.image = UIImage(named: "gold")
         view.contentMode = .scaleAspectFit
         return view
     }()
 
-    private lazy var rightPointView: RightGamePointView = {
+    lazy var rightPointView: RightGamePointView = {
         let view = RightGamePointView()
         view.gameImage.image = UIImage(named: "gold")
         view.contentMode = .scaleAspectFit
@@ -103,45 +105,45 @@ class GameTimerScoreView: UIView {
     private func setupConstraints() {
         timerLabel.snp.remakeConstraints { make in
             make.center.equalToSuperview()
-            make.height.width.equalTo(44)
+            make.height.width.equalTo(44 * Constraint.yCoeff)
         }
 
         userImage.snp.remakeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(16 * Constraint.xCoeff)
             make.centerY.equalToSuperview()
-            make.height.width.equalTo(60)
+            make.height.width.equalTo(60 * Constraint.yCoeff)
         }
 
         userName.snp.remakeConstraints { make in
             make.top.equalTo(userImage.snp.top)
-            make.leading.equalTo(userImage.snp.trailing).offset(8)
-            make.height.equalTo(15)
+            make.leading.equalTo(userImage.snp.trailing).offset(8 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         leftPointView.snp.remakeConstraints { make in
-            make.top.equalTo(userName.snp.bottom).offset(4)
-            make.leading.equalTo(userImage.snp.trailing).offset(8)
-            make.height.equalTo(15)
-            make.width.equalTo(65)
+            make.top.equalTo(userName.snp.bottom).offset(4 * Constraint.yCoeff)
+            make.leading.equalTo(userImage.snp.trailing).offset(8 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
+            make.width.equalTo(65 * Constraint.xCoeff)
         }
 
         opponentImage.snp.remakeConstraints { make in
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-16 * Constraint.xCoeff)
             make.centerY.equalToSuperview()
-            make.height.width.equalTo(60)
+            make.height.width.equalTo(60 * Constraint.yCoeff)
         }
 
         opponentName.snp.remakeConstraints { make in
             make.top.equalTo(opponentImage.snp.top)
-            make.trailing.equalTo(opponentImage.snp.leading).offset(-8)
-            make.height.equalTo(15)
+            make.trailing.equalTo(opponentImage.snp.leading).offset(-8 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         rightPointView.snp.remakeConstraints { make in
-            make.top.equalTo(opponentName.snp.bottom).offset(4)
-            make.trailing.equalTo(opponentImage.snp.leading).offset(-8)
-            make.height.equalTo(15)
-            make.width.equalTo(65)
+            make.top.equalTo(opponentName.snp.bottom).offset(4 * Constraint.yCoeff)
+            make.trailing.equalTo(opponentImage.snp.leading).offset(-8 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
+            make.width.equalTo(65 * Constraint.xCoeff)
         }
     }
 
@@ -161,6 +163,7 @@ class GameTimerScoreView: UIView {
             timerLabel.text = "\(remainingSeconds)"
         } else {
             pauseTimer()
+            timerDidFinish?()
         }
     }
 

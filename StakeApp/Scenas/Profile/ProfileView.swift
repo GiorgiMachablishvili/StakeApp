@@ -66,7 +66,7 @@ class ProfileView: UIViewController {
         profileView.snp.remakeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.snp.bottom)
-            make.height.equalTo(478)
+            make.height.equalTo(478 * Constraint.yCoeff)
         }
     }
 

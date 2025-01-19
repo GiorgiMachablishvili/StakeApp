@@ -15,6 +15,7 @@
 		E361A25C2D3C34C000E27466 /* GameTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A25B2D3C34C000E27466 /* GameTopView.swift */; };
 		E361A25E2D3C4D5600E27466 /* GameTimerScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */; };
 		E361A2622D3C556E00E27466 /* GameStartTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2612D3C556E00E27466 /* GameStartTimerView.swift */; };
+		E36789992D3D0B09009E2831 /* BonusCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36789982D3D0B09009E2831 /* BonusCostView.swift */; };
 		E38D5D4E2D3AB3960057D3CF /* GamePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */; };
 		E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D502D3AB6420057D3CF /* MinersView.swift */; };
 		E38D5D532D3AB8920057D3CF /* PandasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D522D3AB8920057D3CF /* PandasView.swift */; };
@@ -70,6 +71,7 @@
 		E361A25B2D3C34C000E27466 /* GameTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTopView.swift; sourceTree = "<group>"; };
 		E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerScoreView.swift; sourceTree = "<group>"; };
 		E361A2612D3C556E00E27466 /* GameStartTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStartTimerView.swift; sourceTree = "<group>"; };
+		E36789982D3D0B09009E2831 /* BonusCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusCostView.swift; sourceTree = "<group>"; };
 		E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePreviewView.swift; sourceTree = "<group>"; };
 		E38D5D502D3AB6420057D3CF /* MinersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinersView.swift; sourceTree = "<group>"; };
 		E38D5D522D3AB8920057D3CF /* PandasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandasView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				E361A2592D3C312400E27466 /* MinerGameController.swift */,
+				E361A2612D3C556E00E27466 /* GameStartTimerView.swift */,
 			);
 			path = MinerGameView;
 			sourceTree = "<group>";
@@ -219,8 +222,8 @@
 				E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */,
 				E361A25B2D3C34C000E27466 /* GameTopView.swift */,
 				E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */,
-				E361A2612D3C556E00E27466 /* GameStartTimerView.swift */,
 				E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */,
+				E36789982D3D0B09009E2831 /* BonusCostView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				E3CED72B2D395DDE00C5D2EF /* Constraint.swift in Sources */,
 				E38D5D602D3AE91F0057D3CF /* EditProfileCell.swift in Sources */,
 				E38D5D622D3AE9330057D3CF /* StaticCell.swift in Sources */,
+				E36789992D3D0B09009E2831 /* BonusCostView.swift in Sources */,
 				E3CED7332D395E1A00C5D2EF /* UICornerRadius.swift in Sources */,
 				E3CED7512D39AE1500C5D2EF /* LeaderBoardViewCell.swift in Sources */,
 				E3CED6F82D395B1D00C5D2EF /* SceneDelegate.swift in Sources */,

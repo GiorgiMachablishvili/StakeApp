@@ -9,19 +9,18 @@ import UIKit
 import SnapKit
 
 class RightGamePointView: UIView {
-    private lazy var backgroundGamePointView: UIView = {
+    lazy var backgroundGamePointView: UIView = {
         let view = UIView(frame: .zero)
-        view.makeRoundCorners(20)
         view.backgroundColor = UIColor.backgroundColorGamePointView.withAlphaComponent(0.2)
         return view
     }()
 
-    private lazy var pointLabel: UILabel = {
+    lazy var pointLabel: UILabel = {
         let view = UILabel(frame: .zero)
-        view.text = "60"
+        view.text = "0"
         view.textColor = UIColor.whiteColor
         view.font = UIFont.montserratBold(size: 14)
-        view.textAlignment = .left
+        view.textAlignment = .right
         return view
     }()
 
@@ -55,15 +54,15 @@ class RightGamePointView: UIView {
 
         pointLabel.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundGamePointView.snp.centerY)
-            make.trailing.equalTo(gameImage.snp.leading).offset(-2)
-//            make.width.equalTo(25)
-            make.height.equalTo(17)
+            make.trailing.equalTo(gameImage.snp.leading).offset(-2 * Constraint.xCoeff)
+            make.width.equalTo(45 * Constraint.xCoeff)
+            make.height.equalTo(17 * Constraint.yCoeff)
         }
 
         gameImage.snp.remakeConstraints { make in
             make.centerY.equalTo(backgroundGamePointView.snp.centerY)
-            make.trailing.equalTo(backgroundGamePointView.snp.trailing).offset(-4)
-            make.height.width.equalTo(28)
+            make.trailing.equalTo(backgroundGamePointView.snp.trailing).offset(-4 * Constraint.xCoeff)
+            make.height.width.equalTo(28 * Constraint.yCoeff)
         }
     }
 }

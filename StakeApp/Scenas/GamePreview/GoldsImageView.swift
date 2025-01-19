@@ -51,19 +51,19 @@ class GoldsImageView: UIView {
         bigGoldImage.snp.remakeConstraints { make in
             make.leading.equalTo(snp.leading)
             make.bottom.equalTo(snp.bottom)
-            make.width.height.equalTo(92)
+            make.width.height.equalTo(92 * Constraint.xCoeff)
         }
 
         middleGoldImage.snp.remakeConstraints { make in
             make.top.equalTo(snp.top)
-            make.leading.equalTo(snp.leading).offset(88)
-            make.width.height.equalTo(53)
+            make.leading.equalTo(snp.leading).offset(88 * Constraint.xCoeff)
+            make.width.height.equalTo(53 * Constraint.yCoeff)
         }
 
         smallGoldImage.snp.remakeConstraints { make in
-            make.trailing.equalTo(snp.trailing).offset(-2)
-            make.top.equalTo(snp.top).offset(31)
-            make.height.width.equalTo(40)
+            make.trailing.equalTo(snp.trailing).offset(-2 * Constraint.xCoeff)
+            make.top.equalTo(snp.top).offset(31 * Constraint.xCoeff)
+            make.height.width.equalTo(40 * Constraint.yCoeff)
         }
     }
 

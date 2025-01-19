@@ -44,20 +44,20 @@ extension UIView {
 
         imageView.snp.remakeConstraints { make in
             make.centerY.equalTo(snp.centerY)
-            make.leading.equalTo(snp.leading).offset(12)
-            make.height.width.equalTo(44)
+            make.leading.equalTo(snp.leading).offset(12 * Constraint.xCoeff)
+            make.height.width.equalTo(44 * Constraint.yCoeff)
         }
 
         titleLabel.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(18.5)
-            make.leading.equalTo(imageView.snp.trailing).offset(12)
-            make.height.equalTo(15)
+            make.top.equalTo(snp.top).offset(18.5 * Constraint.yCoeff)
+            make.leading.equalTo(imageView.snp.trailing).offset(12 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         infoLabel.snp.remakeConstraints { make in
-            make.bottom.equalTo(snp.bottom).offset(-18.5)
-            make.leading.equalTo(imageView.snp.trailing).offset(12)
-            make.height.equalTo(12)
+            make.bottom.equalTo(snp.bottom).offset(-18.5 * Constraint.yCoeff)
+            make.leading.equalTo(imageView.snp.trailing).offset(12 * Constraint.xCoeff)
+            make.height.equalTo(12 * Constraint.yCoeff)
         }
     }
 }

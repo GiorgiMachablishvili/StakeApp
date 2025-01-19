@@ -43,15 +43,15 @@ class LeaderBoardViewCell: UICollectionViewCell {
 
     private func setupConstraints() {
         leaderBoardImageView.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(2)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(15)
+            make.top.equalTo(snp.top).offset(2 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         backgroundLeaderBoardView.snp.remakeConstraints { make in
-            make.top.equalTo(leaderBoardImageView.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(64)
+            make.top.equalTo(leaderBoardImageView.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(64 * Constraint.yCoeff)
         }
 
     }

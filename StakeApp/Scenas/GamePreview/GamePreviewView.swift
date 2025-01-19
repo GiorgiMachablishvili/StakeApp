@@ -92,35 +92,35 @@ class GamePreviewView: UIViewController {
         goldenBallImage.snp.remakeConstraints { make in
             make.top.equalTo(view.snp.top)
             make.leading.equalTo(view.snp.leading)
-            make.height.width.equalTo(178)
+            make.height.width.equalTo(178 * Constraint.yCoeff)
         }
 
         minerImage.snp.remakeConstraints { make in
-            make.top.equalTo(minerGameView.snp.top).offset(-306)
-            make.leading.equalTo(view.snp.leading).offset(195)
-            make.height.equalTo(373)
-            make.width.equalTo(192)
+            make.top.equalTo(minerGameView.snp.top).offset(-306 * Constraint.yCoeff)
+            make.leading.equalTo(view.snp.leading).offset(195 * Constraint.xCoeff)
+            make.height.equalTo(373 * Constraint.yCoeff)
+            make.width.equalTo(192 * Constraint.xCoeff)
         }
 
         goldView.snp.remakeConstraints { make in
-            make.top.equalTo(minerGameView.snp.top).offset(-82)
-            make.leading.equalTo(view.snp.leading).offset(-5)
-            make.height.equalTo(97)
-            make.width.equalTo(163)
+            make.top.equalTo(minerGameView.snp.top).offset(-82 * Constraint.yCoeff)
+            make.leading.equalTo(view.snp.leading).offset(-5 * Constraint.xCoeff)
+            make.height.equalTo(97 * Constraint.yCoeff)
+            make.width.equalTo(163 * Constraint.xCoeff)
         }
 
         pandaImage.snp.remakeConstraints { make in
-            make.top.equalTo(pandaGameView.snp.top).offset(-306)
-            make.leading.equalTo(view.snp.leading).offset(195)
-            make.height.equalTo(373)
-            make.width.equalTo(215)
+            make.top.equalTo(pandaGameView.snp.top).offset(-306 * Constraint.yCoeff)
+            make.leading.equalTo(view.snp.leading).offset(195 * Constraint.xCoeff)
+            make.height.equalTo(373 * Constraint.yCoeff)
+            make.width.equalTo(215 * Constraint.xCoeff)
         }
 
         pandaGameDescriptionImage.snp.remakeConstraints { make in
-            make.top.equalTo(view.snp.top).offset(101)
-            make.trailing.equalTo(pandaImage.snp.leading).offset(120)
-            make.height.equalTo(196)
-            make.height.equalTo(210)
+            make.top.equalTo(view.snp.top).offset(101 * Constraint.yCoeff)
+            make.trailing.equalTo(pandaImage.snp.leading).offset(120 * Constraint.xCoeff)
+            make.height.equalTo(196 * Constraint.yCoeff)
+            make.height.equalTo(210 * Constraint.xCoeff)
         }
 
         minerGameView.snp.remakeConstraints { make in

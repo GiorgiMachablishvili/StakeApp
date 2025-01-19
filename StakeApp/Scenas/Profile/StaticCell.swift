@@ -88,45 +88,45 @@ class StaticCell: UICollectionViewCell {
 
     private func setupConstraints() {
         bonusesLabel.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(2)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(15)
+            make.top.equalTo(snp.top).offset(2 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         backgroundStatisticView.snp.remakeConstraints { make in
-            make.top.equalTo(bonusesLabel.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(69)
+            make.top.equalTo(bonusesLabel.snp.bottom).offset(24 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(69 * Constraint.yCoeff)
         }
 
         verticalLine.snp.remakeConstraints { make in
             make.center.equalToSuperview()
-            make.height.equalTo(37)
-            make.width.equalTo(0.5)
+            make.height.equalTo(37 * Constraint.yCoeff)
+            make.width.equalTo(0.5 * Constraint.xCoeff)
         }
 
         gamePlayedTitle.snp.remakeConstraints { make in
             make.top.equalTo(verticalLine.snp.top)
-            make.trailing.equalTo(verticalLine.snp.leading).offset(-12)
-            make.height.equalTo(15)
+            make.trailing.equalTo(verticalLine.snp.leading).offset(-12 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         gamePlayedScore.snp.remakeConstraints { make in
             make.bottom.equalTo(verticalLine.snp.bottom)
-            make.trailing.equalTo(verticalLine.snp.leading).offset(-12)
-            make.height.equalTo(17)
+            make.trailing.equalTo(verticalLine.snp.leading).offset(-12 * Constraint.xCoeff)
+            make.height.equalTo(17 * Constraint.yCoeff)
         }
 
         gameWonTitle.snp.remakeConstraints { make in
             make.top.equalTo(verticalLine.snp.top)
-            make.leading.equalTo(verticalLine.snp.trailing).offset(12)
-            make.height.equalTo(15)
+            make.leading.equalTo(verticalLine.snp.trailing).offset(12 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         gameWonScore.snp.remakeConstraints { make in
             make.bottom.equalTo(verticalLine.snp.bottom)
-            make.leading.equalTo(verticalLine.snp.trailing).offset(12)
-            make.height.equalTo(17)
+            make.leading.equalTo(verticalLine.snp.trailing).offset(12 * Constraint.xCoeff)
+            make.height.equalTo(17 * Constraint.yCoeff)
         }
     }
 }

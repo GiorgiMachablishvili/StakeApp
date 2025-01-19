@@ -24,6 +24,8 @@ extension UIColor {
 
     static let backgroundColorGamePointView = UIColor(hexString: "#00000033")
 
+    static let bonusCostViewBackground = UIColor(hexString: "#4E65FD")
+
 }
 
 

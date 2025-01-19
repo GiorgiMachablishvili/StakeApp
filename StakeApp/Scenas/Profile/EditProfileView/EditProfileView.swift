@@ -117,51 +117,51 @@ class EditProfileView: UIView {
 
     private func setupConstraints() {
         viewTitle.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(20)
-            make.leading.equalTo(snp.leading).offset(20)
-            make.height.equalTo(24)
+            make.top.equalTo(snp.top).offset(20 * Constraint.yCoeff)
+            make.leading.equalTo(snp.leading).offset(20 * Constraint.xCoeff)
+            make.height.equalTo(24 * Constraint.yCoeff)
         }
 
         workoutImage.snp.remakeConstraints { make in
-            make.top.equalTo(viewTitle.snp.bottom).offset(20)
+            make.top.equalTo(viewTitle.snp.bottom).offset(20 * Constraint.yCoeff)
             make.centerX.equalTo(snp.centerX)
-            make.height.width.equalTo(100)
+            make.height.width.equalTo(100 * Constraint.yCoeff)
         }
 
         nicknameBackgroundView.snp.remakeConstraints { make in
-            make.top.equalTo(workoutImage.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(55)
+            make.top.equalTo(workoutImage.snp.bottom).offset(20 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(55 * Constraint.yCoeff)
         }
 
         nicknameTextField.snp.remakeConstraints { make in
             make.centerY.equalTo(nicknameBackgroundView.snp.centerY)
-            make.leading.trailing.equalToSuperview().inset(12)
-            make.height.equalTo(40)
+            make.leading.trailing.equalToSuperview().inset(12 * Constraint.xCoeff)
+            make.height.equalTo(40 * Constraint.yCoeff)
         }
 
         birthdayBackgroundView.snp.remakeConstraints { make in
-            make.top.equalTo(nicknameBackgroundView.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(55)
+            make.top.equalTo(nicknameBackgroundView.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(55 * Constraint.yCoeff)
         }
 
         birthdayTextField.snp.remakeConstraints { make in
             make.centerY.equalTo(birthdayBackgroundView.snp.centerY)
-            make.leading.trailing.equalToSuperview().inset(12)
-            make.height.equalTo(40)
+            make.leading.trailing.equalToSuperview().inset(12 * Constraint.xCoeff)
+            make.height.equalTo(40 * Constraint.yCoeff)
         }
 
         saveButton.snp.remakeConstraints { make in
-            make.top.equalTo(birthdayBackgroundView.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(52)
+            make.top.equalTo(birthdayBackgroundView.snp.bottom).offset(20 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
 
         cancelButton.snp.remakeConstraints { make in
-            make.top.equalTo(saveButton.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(52)
+            make.top.equalTo(saveButton.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
     }
 

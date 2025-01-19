@@ -121,45 +121,45 @@ class SettingCell: UICollectionViewCell {
 
     private func setupConstraints() {
         bonusesLabel.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(2)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(15)
+            make.top.equalTo(snp.top).offset(2 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         termOfUse.snp.remakeConstraints { make in
-            make.top.equalTo(bonusesLabel.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(64)
+            make.top.equalTo(bonusesLabel.snp.bottom).offset(24 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(64 * Constraint.yCoeff)
         }
 
         privacyAndPolicy.snp.remakeConstraints { make in
-            make.top.equalTo(termOfUse.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(64)
+            make.top.equalTo(termOfUse.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(64 * Constraint.yCoeff)
         }
 
         rateUs.snp.remakeConstraints { make in
-            make.top.equalTo(privacyAndPolicy.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(64)
+            make.top.equalTo(privacyAndPolicy.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(64 * Constraint.yCoeff)
         }
 
         support.snp.remakeConstraints { make in
-            make.top.equalTo(rateUs.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(64)
+            make.top.equalTo(rateUs.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(64 * Constraint.yCoeff)
         }
 
         signInWithAppleButton.snp.remakeConstraints { make in
-            make.top.equalTo(support.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(52)
+            make.top.equalTo(support.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
 
         deleteButton.snp.remakeConstraints { make in
-            make.top.equalTo(support.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(52)
+            make.top.equalTo(support.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
     }
 

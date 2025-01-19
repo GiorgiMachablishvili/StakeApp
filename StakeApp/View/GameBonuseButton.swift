@@ -28,8 +28,8 @@ extension UIButton {
 
         gameImageView.snp.makeConstraints { make in
             make.center.equalTo(imageBackgroundView.snp.center)
-            make.height.equalTo(50)
-            make.width.equalTo(46)
+            make.height.equalTo(50 * Constraint.yCoeff)
+            make.width.equalTo(46 * Constraint.xCoeff)
         }
 
         self.clipsToBounds = true

@@ -77,28 +77,28 @@ class TopCell: UICollectionViewCell {
         }
 
         workoutImage.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(48)
-            make.leading.equalTo(snp.leading).offset(16)
-            make.height.width.equalTo(48)
+            make.top.equalTo(snp.top).offset(48 * Constraint.yCoeff)
+            make.leading.equalTo(snp.leading).offset(16 * Constraint.xCoeff)
+            make.height.width.equalTo(48 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in
-            make.top.equalTo(workoutImage.snp.top).offset(9)
-            make.leading.equalTo(workoutImage.snp.trailing).offset(8)
-            make.height.equalTo(16)
+            make.top.equalTo(workoutImage.snp.top).offset(9 * Constraint.yCoeff)
+            make.leading.equalTo(workoutImage.snp.trailing).offset(8 * Constraint.xCoeff)
+            make.height.equalTo(16 * Constraint.yCoeff)
         }
 
         expLabel.snp.remakeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(2)
-            make.leading.equalTo(workoutImage.snp.trailing).offset(8)
-            make.height.equalTo(12)
+            make.top.equalTo(nameLabel.snp.bottom).offset(2 * Constraint.yCoeff)
+            make.leading.equalTo(workoutImage.snp.trailing).offset(8 * Constraint.xCoeff)
+            make.height.equalTo(12 * Constraint.yCoeff)
         }
 
         pointView.snp.remakeConstraints { make in
             make.centerY.equalTo(workoutImage.snp.centerY)
-            make.trailing.equalTo(snp.trailing).offset(-16)
-            make.height.equalTo(40)
-            make.width.equalTo(85)
+            make.trailing.equalTo(snp.trailing).offset(-16 * Constraint.xCoeff)
+            make.height.equalTo(40 * Constraint.yCoeff)
+            make.width.equalTo(85 * Constraint.yCoeff)
         }
     }
 

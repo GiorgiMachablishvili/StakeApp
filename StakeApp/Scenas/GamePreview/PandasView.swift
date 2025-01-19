@@ -142,56 +142,56 @@ class PandasView: UIView {
         }
 
         gameTitle.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundMinerView.snp.top).offset(20)
-            make.leading.equalTo(backgroundMinerView.snp.leading).offset(20)
-            make.height.equalTo(24)
+            make.top.equalTo(backgroundMinerView.snp.top).offset(20 * Constraint.yCoeff)
+            make.leading.equalTo(backgroundMinerView.snp.leading).offset(20 * Constraint.xCoeff)
+            make.height.equalTo(24 * Constraint.yCoeff)
         }
 
         gameInfo.snp.remakeConstraints { make in
-            make.top.equalTo(gameTitle.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(gameTitle.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
         }
 
         cancelButton.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundMinerView.snp.top).offset(20)
-            make.trailing.equalTo(backgroundMinerView.snp.trailing).offset(-20)
-            make.height.width.equalTo(24)
+            make.top.equalTo(backgroundMinerView.snp.top).offset(20 * Constraint.yCoeff)
+            make.trailing.equalTo(backgroundMinerView.snp.trailing).offset(-20 * Constraint.xCoeff)
+            make.height.width.equalTo(24 * Constraint.yCoeff)
         }
 
         bonusesLabel.snp.remakeConstraints { make in
-            make.top.equalTo(gameInfo.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(15)
+            make.top.equalTo(gameInfo.snp.bottom).offset(20 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         x2View.snp.remakeConstraints { make in
-            make.top.equalTo(bonusesLabel.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(68)
+            make.top.equalTo(bonusesLabel.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(68 * Constraint.yCoeff)
         }
 
         trapView.snp.remakeConstraints { make in
-            make.top.equalTo(x2View.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(68)
+            make.top.equalTo(x2View.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(68 * Constraint.yCoeff)
         }
 
         mixView.snp.remakeConstraints { make in
-            make.top.equalTo(trapView.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(68)
+            make.top.equalTo(trapView.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(68 * Constraint.yCoeff)
         }
 
         scannerView.snp.remakeConstraints { make in
-            make.top.equalTo(mixView.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(68)
+            make.top.equalTo(mixView.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(68 * Constraint.yCoeff)
         }
 
         startGameButton.snp.remakeConstraints { make in
-            make.bottom.equalTo(snp.bottom).offset(-44)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(52)
+            make.bottom.equalTo(snp.bottom).offset(-44 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
     }
 

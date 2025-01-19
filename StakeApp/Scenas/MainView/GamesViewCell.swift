@@ -82,29 +82,29 @@ class GamesViewCell: UICollectionViewCell {
         }
         
         gameConsolerImage.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundGameView.snp.top).offset(2)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(15)
+            make.top.equalTo(backgroundGameView.snp.top).offset(2 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         minerGameButton.snp.remakeConstraints { make in
-            make.top.equalTo(gameConsolerImage.snp.bottom).offset(16)
-            make.leading.equalTo(backgroundGameView.snp.leading).offset(16)
-            make.height.equalTo(207)
-            make.width.equalTo(171)
+            make.top.equalTo(gameConsolerImage.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.equalTo(backgroundGameView.snp.leading).offset(16 * Constraint.xCoeff)
+            make.height.equalTo(207 * Constraint.yCoeff)
+            make.width.equalTo(171 * Constraint.xCoeff)
         }
 
         pandaGameButton.snp.remakeConstraints { make in
-            make.top.equalTo(gameConsolerImage.snp.bottom).offset(16)
-            make.trailing.equalTo(backgroundGameView.snp.trailing).offset(-16)
-            make.height.equalTo(207)
-            make.width.equalTo(171)
+            make.top.equalTo(gameConsolerImage.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.trailing.equalTo(backgroundGameView.snp.trailing).offset(-16 * Constraint.xCoeff)
+            make.height.equalTo(207 * Constraint.yCoeff)
+            make.width.equalTo(171 * Constraint.xCoeff)
         }
 
         newGameButton.snp.remakeConstraints { make in
-            make.top.equalTo(minerGameButton.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(111)
+            make.top.equalTo(minerGameButton.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(111 * Constraint.yCoeff)
         }
     }
 

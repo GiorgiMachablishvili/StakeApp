@@ -70,28 +70,28 @@ class EditProfileCell: UICollectionViewCell {
 
     private func setupConstraints() {
         workoutImage.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(2)
+            make.top.equalTo(snp.top).offset(2 * Constraint.yCoeff)
             make.centerX.equalTo(snp.centerX)
-            make.height.width.equalTo(100)
+            make.height.width.equalTo(100 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in
             make.centerX.equalTo(workoutImage.snp.centerX)
-            make.top.equalTo(workoutImage.snp.bottom).offset(8)
-            make.height.equalTo(20)
+            make.top.equalTo(workoutImage.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.height.equalTo(20 * Constraint.yCoeff)
         }
 
         expLabel.snp.remakeConstraints { make in
             make.centerX.equalTo(workoutImage.snp.centerX)
-            make.top.equalTo(nameLabel.snp.bottom).offset(8)
-            make.height.equalTo(12)
+            make.top.equalTo(nameLabel.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.height.equalTo(12 * Constraint.yCoeff)
         }
 
         editProfileButton.snp.remakeConstraints { make in
             make.centerX.equalTo(workoutImage.snp.centerX)
-            make.top.equalTo(expLabel.snp.bottom).offset(8)
-            make.height.equalTo(39)
-            make.width.equalTo(163)
+            make.top.equalTo(expLabel.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.height.equalTo(39 * Constraint.yCoeff)
+            make.width.equalTo(163 * Constraint.xCoeff)
         }
     }
 

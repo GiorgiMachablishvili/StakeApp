@@ -55,8 +55,8 @@ class GameStartTimerView: UIView {
 
         timerLabel.snp.remakeConstraints { make in
             make.center.equalTo(backgroundGameStartTimerView.snp.center)
-            make.height.equalTo(73)
-            make.width.equalTo(36)
+            make.height.equalTo(73 * Constraint.yCoeff)
+            make.width.equalTo(36 * Constraint.xCoeff)
         }
     }
 

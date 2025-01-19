@@ -18,7 +18,7 @@ class GameTopView: UIView {
         return view
     }()
 
-    private lazy var pointView: PointsView = {
+    lazy var pointView: PointsView = {
         let view = PointsView()
         view.backgroundColor = .pointViewColor
         view.makeRoundCorners(16)
@@ -42,16 +42,16 @@ class GameTopView: UIView {
 
     private func setupConstraints() {
         startPauseButton.snp.remakeConstraints { make in
-            make.bottom.equalTo(snp.bottom).offset(-16)
-            make.leading.equalTo(snp.leading).offset(16)
-            make.width.height.equalTo(40)
+            make.bottom.equalTo(snp.bottom).offset(-16 * Constraint.yCoeff)
+            make.leading.equalTo(snp.leading).offset(16 * Constraint.xCoeff)
+            make.width.height.equalTo(40 * Constraint.yCoeff)
         }
 
         pointView.snp.remakeConstraints { make in
             make.centerY.equalTo(startPauseButton.snp.centerY)
-            make.trailing.equalTo(snp.trailing).offset(-16)
-            make.height.equalTo(40)
-            make.width.equalTo(85)
+            make.trailing.equalTo(snp.trailing).offset(-16 * Constraint.xCoeff)
+            make.height.equalTo(40 * Constraint.yCoeff)
+            make.width.equalTo(85 * Constraint.xCoeff)
         }
     }
 

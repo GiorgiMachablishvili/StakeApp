@@ -140,78 +140,78 @@ class DailyGameCell: UICollectionViewCell {
 
     private func setupConstraints() {
         dataLabel.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(3)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(15)
+            make.top.equalTo(snp.top).offset(3 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         backgroundDailyGameView.snp.remakeConstraints { make in
-            make.top.equalTo(dataLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(160)
+            make.top.equalTo(dataLabel.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+            make.height.equalTo(160 * Constraint.yCoeff)
         }
 
         timeLabel.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundDailyGameView.snp.top).offset(16)
-            make.leading.equalTo(backgroundDailyGameView.snp.leading).offset(24)
-            make.height.equalTo(12)
+            make.top.equalTo(backgroundDailyGameView.snp.top).offset(16 * Constraint.yCoeff)
+            make.leading.equalTo(backgroundDailyGameView.snp.leading).offset(24 * Constraint.xCoeff)
+            make.height.equalTo(12 * Constraint.yCoeff)
         }
 
         gameTitle.snp.remakeConstraints { make in
             make.centerX.equalTo(backgroundDailyGameView.snp.centerX)
             make.centerY.equalTo(timeLabel.snp.centerY)
-            make.height.equalTo(12)
+            make.height.equalTo(12 * Constraint.yCoeff)
         }
 
         winOrLossLabel.snp.remakeConstraints { make in
             make.centerY.equalTo(timeLabel.snp.centerY)
-            make.trailing.equalTo(backgroundDailyGameView.snp.trailing).offset(-24)
-            make.height.equalTo(12)
+            make.trailing.equalTo(backgroundDailyGameView.snp.trailing).offset(-24 * Constraint.xCoeff)
+            make.height.equalTo(12 * Constraint.yCoeff)
         }
 
         vsLabel.snp.remakeConstraints { make in
-            make.top.equalTo(gameTitle.snp.bottom).offset(30)
+            make.top.equalTo(gameTitle.snp.bottom).offset(30 * Constraint.yCoeff)
             make.centerX.equalTo(backgroundDailyGameView.snp.centerX)
-            make.height.equalTo(20)
-            make.width.equalTo(22)
+            make.height.equalTo(20 * Constraint.yCoeff)
+            make.width.equalTo(22 * Constraint.xCoeff)
         }
 
         userName.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.trailing.equalTo(vsLabel.snp.leading).offset(-23)
-            make.height.equalTo(15)
+            make.trailing.equalTo(vsLabel.snp.leading).offset(-23 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         userImage.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.trailing.equalTo(userName.snp.leading).offset(-12)
-            make.height.width.equalTo(56)
+            make.trailing.equalTo(userName.snp.leading).offset(-12 * Constraint.xCoeff)
+            make.height.width.equalTo(56 * Constraint.yCoeff)
         }
 
         opponentName.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.leading.equalTo(vsLabel.snp.trailing).offset(23)
-            make.height.equalTo(15)
+            make.leading.equalTo(vsLabel.snp.trailing).offset(23 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         opponentImage.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.leading.equalTo(opponentName.snp.trailing).offset(12)
-            make.height.width.equalTo(56)
+            make.leading.equalTo(opponentName.snp.trailing).offset(12 * Constraint.xCoeff)
+            make.height.width.equalTo(56 * Constraint.yCoeff)
         }
 
         leftPointView.snp.remakeConstraints { make in
-            make.top.equalTo(userImage.snp.bottom).offset(12)
-            make.leading.equalTo(backgroundDailyGameView.snp.leading).offset(16)
-            make.height.equalTo(36)
-            make.width.equalTo(65)
+            make.top.equalTo(userImage.snp.bottom).offset(12 * Constraint.yCoeff)
+            make.leading.equalTo(backgroundDailyGameView.snp.leading).offset(16 * Constraint.xCoeff)
+            make.height.equalTo(36 * Constraint.yCoeff)
+            make.width.equalTo(65 * Constraint.xCoeff)
         }
 
         rightPointView.snp.remakeConstraints { make in
-            make.top.equalTo(opponentImage.snp.bottom).offset(12)
-            make.trailing.equalTo(backgroundDailyGameView.snp.trailing).offset(-16)
-            make.height.equalTo(36)
-            make.width.equalTo(65)
+            make.top.equalTo(opponentImage.snp.bottom).offset(12 * Constraint.yCoeff)
+            make.trailing.equalTo(backgroundDailyGameView.snp.trailing).offset(-16 * Constraint.xCoeff)
+            make.height.equalTo(36 * Constraint.yCoeff)
+            make.width.equalTo(65 * Constraint.yCoeff)
         }
     }
 }

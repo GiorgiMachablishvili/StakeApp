@@ -17,6 +17,7 @@
 		E361A2622D3C556E00E27466 /* GameStartTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E361A2612D3C556E00E27466 /* GameStartTimerView.swift */; };
 		E36789992D3D0B09009E2831 /* BonusCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36789982D3D0B09009E2831 /* BonusCostView.swift */; };
 		E367899B2D3D7FB1009E2831 /* WinOrLoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */; };
+		E367899E2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */; };
 		E38D5D4E2D3AB3960057D3CF /* GamePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */; };
 		E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D502D3AB6420057D3CF /* MinersView.swift */; };
 		E38D5D532D3AB8920057D3CF /* PandasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D522D3AB8920057D3CF /* PandasView.swift */; };
@@ -74,6 +75,7 @@
 		E361A2612D3C556E00E27466 /* GameStartTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStartTimerView.swift; sourceTree = "<group>"; };
 		E36789982D3D0B09009E2831 /* BonusCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusCostView.swift; sourceTree = "<group>"; };
 		E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOrLoseView.swift; sourceTree = "<group>"; };
+		E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandaAndBaboonsGameController.swift; sourceTree = "<group>"; };
 		E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePreviewView.swift; sourceTree = "<group>"; };
 		E38D5D502D3AB6420057D3CF /* MinersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinersView.swift; sourceTree = "<group>"; };
 		E38D5D522D3AB8920057D3CF /* PandasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandasView.swift; sourceTree = "<group>"; };
@@ -137,10 +139,16 @@
 			isa = PBXGroup;
 			children = (
 				E361A2592D3C312400E27466 /* MinerGameController.swift */,
-				E361A2612D3C556E00E27466 /* GameStartTimerView.swift */,
-				E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */,
 			);
 			path = MinerGameView;
+			sourceTree = "<group>";
+		};
+		E367899C2D3D9622009E2831 /* PandasAndBaboons */ = {
+			isa = PBXGroup;
+			children = (
+				E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */,
+			);
+			path = PandasAndBaboons;
 			sourceTree = "<group>";
 		};
 		E38D5D4B2D3AB3400057D3CF /* GamePreview */ = {
@@ -227,6 +235,8 @@
 				E361A25D2D3C4D5600E27466 /* GameTimerScoreView.swift */,
 				E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */,
 				E36789982D3D0B09009E2831 /* BonusCostView.swift */,
+				E361A2612D3C556E00E27466 /* GameStartTimerView.swift */,
+				E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -285,6 +295,7 @@
 				E3CED73C2D3960DB00C5D2EF /* History */,
 				E3CED73D2D3960E900C5D2EF /* Profile */,
 				E361A2582D3C30E200E27466 /* MinerGameView */,
+				E367899C2D3D9622009E2831 /* PandasAndBaboons */,
 			);
 			path = Scenas;
 			sourceTree = "<group>";
@@ -421,6 +432,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E361A25A2D3C312400E27466 /* MinerGameController.swift in Sources */,
+				E367899E2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift in Sources */,
 				E3CED74F2D39A9DD00C5D2EF /* GamesViewCell.swift in Sources */,
 				E361A25E2D3C4D5600E27466 /* GameTimerScoreView.swift in Sources */,
 				E361A2532D3BA36300E27466 /* DailyGameCell.swift in Sources */,

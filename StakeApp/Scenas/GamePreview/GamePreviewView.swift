@@ -65,6 +65,9 @@ class GamePreviewView: UIViewController {
         let view = PandasView()
         view.contentMode = .scaleAspectFit
         view.isHidden = true
+        view.onStartGameButton = { [weak self] in
+            self?.goPandaGameController()
+        }
         view.onCancelButtonTapped = { [weak self] in
             self?.goBackView()
         }
@@ -150,6 +153,11 @@ class GamePreviewView: UIViewController {
         pandaGameDescriptionImage.isHidden = false
         pandaImage.isHidden = false
         pandaGameView.isHidden = false
+    }
+
+    private func goPandaGameController() {
+        let pandaAndBaboonsVC = PandaAndBaboonsGameController()
+        navigationController?.pushViewController(pandaAndBaboonsVC, animated: true)
     }
 
     @objc private func goBackView() {

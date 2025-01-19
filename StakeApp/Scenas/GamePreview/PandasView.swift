@@ -10,6 +10,7 @@ import SnapKit
 
 class PandasView: UIView {
 
+    var onStartGameButton: (() -> Void)?
     var onCancelButtonTapped: (() -> Void)?
 
     private lazy var backgroundMinerView: UIView = {
@@ -110,6 +111,7 @@ class PandasView: UIView {
         view.setTitle("Start the game", for: .normal)
         view.setTitleColor(UIColor.whiteColor, for: .normal)
         view.makeRoundCorners(16)
+        view.addTarget(self, action: #selector(pressStartGameButton), for: .touchUpInside)
         return view
     }()
 
@@ -193,6 +195,10 @@ class PandasView: UIView {
             make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
             make.height.equalTo(52 * Constraint.yCoeff)
         }
+    }
+
+    @objc private func pressStartGameButton() {
+        onStartGameButton?()
     }
 
     @objc private func didPressCancelButton() {

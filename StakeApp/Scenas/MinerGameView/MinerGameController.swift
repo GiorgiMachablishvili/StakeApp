@@ -231,7 +231,7 @@ class MinerGameController: UIViewController {
         autoPickAxeTimer?.invalidate()
         gameBackgroundImage.isUserInteractionEnabled = false
 
-        //TODO: what happens in case draw? 
+        //TODO: what happens in case draw?
         guard let userPointsText = gameTimerView.leftPointView.pointLabel.text,
               let opponentCostText = gameTimerView.rightPointView.pointLabel.text,
               let userPoints = Int(userPointsText),
@@ -278,7 +278,7 @@ class MinerGameController: UIViewController {
         }
     }
 
-    //TODO: I cant press button
+    //TODO: when pressAutoPickAxeButtons is pressed and press pressDoublePickAxeButtons does not continues from count of points
     @objc private func pressDoublePickAxeButtons() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
               let doublePickAxeCostText = doublePickAxeCost.costLabel.text,
@@ -290,8 +290,11 @@ class MinerGameController: UIViewController {
         }
         if currentPoints >= axeCost {
             let updatedPoints = currentPoints - axeCost
-            gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
-            gameTimerView.leftPointView.pointLabel.text = "\(leftViewPoint * 2)"
+            let doubledPoints = leftViewPoint * 2
+            DispatchQueue.main.async {
+                self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+                self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
+            }
         } else {
             print("Not enough points!")
         }
@@ -309,15 +312,23 @@ class MinerGameController: UIViewController {
             return
         }
 
+        if autoPickAxeTimer != nil {
+            autoPickAxeTimer?.invalidate()
+            autoPickAxeTimer = nil
+            print("Auto-pickaxe disabled!")
+            return
+        }
+
         if currentPoints >= axeCost {
             // Deduct the cost
             let updatedPoints = currentPoints - axeCost
-            gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+            DispatchQueue.main.async {
+                self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+            }
 
             // Start the auto-pickaxe functionality
-            autoPickAxeTimer?.invalidate() // Ensure no previous timer is running
             autoPickAxeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-                self?.pressGameGoldButton()
+                self?.autoPressGameGoldButton()
             }
 
             print("Auto-pickaxe enabled!")
@@ -351,5 +362,18 @@ class MinerGameController: UIViewController {
         let mainView = MainView()
         let navigationController = UINavigationController(rootViewController: mainView)
         UIApplication.shared.keyWindow?.rootViewController = navigationController
+    }
+
+
+    private func autoPressGameGoldButton() {
+        guard let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
+              let leftViewPoint = Int(leftPointViewPointLabel) else {
+            return
+        }
+
+        currentGoldPoints += randomNumber
+        DispatchQueue.main.async {
+            self.gameTimerView.leftPointView.pointLabel.text = "\(self.currentGoldPoints)"
+        }
     }
 }

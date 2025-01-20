@@ -138,6 +138,7 @@ class GamePreviewView: UIViewController {
     }
 
     func goMainerGameView() {
+//        let findingAnOpponents = FindingAnOpponentsController()
         let minerGameVC = MinerGameController()
         navigationController?.pushViewController(minerGameVC, animated: true)
     }
@@ -156,6 +157,7 @@ class GamePreviewView: UIViewController {
     }
 
     private func goPandaGameController() {
+//        let findingAnOpponents = FindingAnOpponentsController()
         let pandaAndBaboonsVC = PandaAndBaboonsGameController()
         navigationController?.pushViewController(pandaAndBaboonsVC, animated: true)
     }

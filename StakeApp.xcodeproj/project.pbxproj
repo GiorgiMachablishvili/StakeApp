@@ -63,6 +63,8 @@
 		E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */; };
 		E3DDA1092D3C6280000F7EA7 /* GameBonuseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */; };
 		E3F3E4A92D3EA1E100B7C786 /* GameBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */; };
+		E3F3E4AC2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */; };
+		E3F3E4AE2D3ECD1800B7C786 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3F3E4AD2D3ECD1800B7C786 /* Montserrat-Black.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +120,8 @@
 		E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardView.swift; sourceTree = "<group>"; };
 		E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBonuseButton.swift; sourceTree = "<group>"; };
 		E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoxCell.swift; sourceTree = "<group>"; };
+		E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingAnOpponentsController.swift; sourceTree = "<group>"; };
+		E3F3E4AD2D3ECD1800B7C786 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +288,7 @@
 				E3CED7362D395E5400C5D2EF /* Montserrat-Bold.ttf */,
 				E3CED7342D395E5300C5D2EF /* Montserrat-Medium.ttf */,
 				E3CED7352D395E5400C5D2EF /* Montserrat-Regular.ttf */,
+				E3F3E4AD2D3ECD1800B7C786 /* Montserrat-Black.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 				E38D5D4B2D3AB3400057D3CF /* GamePreview */,
 				E3CED73C2D3960DB00C5D2EF /* History */,
 				E3CED73D2D3960E900C5D2EF /* Profile */,
+				E3F3E4AA2D3ECC3600B7C786 /* FingingAnOpponent */,
 				E361A2582D3C30E200E27466 /* MinerGameView */,
 				E367899C2D3D9622009E2831 /* PandasAndBaboons */,
 			);
@@ -345,6 +351,14 @@
 				E38D5D672D3B05BE0057D3CF /* EditProfileView */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		E3F3E4AA2D3ECC3600B7C786 /* FingingAnOpponent */ = {
+			isa = PBXGroup;
+			children = (
+				E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */,
+			);
+			path = FingingAnOpponent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,6 +438,7 @@
 				E3CED7022D395B1F00C5D2EF /* LaunchScreen.storyboard in Resources */,
 				E3CED7372D395E5400C5D2EF /* Montserrat-Medium.ttf in Resources */,
 				E3CED6FF2D395B1F00C5D2EF /* Assets.xcassets in Resources */,
+				E3F3E4AE2D3ECD1800B7C786 /* Montserrat-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +482,7 @@
 				E361A2572D3BA5B300E27466 /* RightGamePointView.swift in Sources */,
 				E361A25C2D3C34C000E27466 /* GameTopView.swift in Sources */,
 				E3CED7412D39611C00C5D2EF /* HistoryView.swift in Sources */,
+				E3F3E4AC2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift in Sources */,
 				E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */,
 				E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */,
 				E3CED72D2D395DF800C5D2EF /* UIColor+Extension.swift in Sources */,

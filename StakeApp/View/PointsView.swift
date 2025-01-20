@@ -68,4 +68,10 @@ class PointsView: UIView {
             make.height.width.equalTo(24 * Constraint.yCoeff)
         }
     }
+
+    func incrementPoint(by value: Int) {
+        if let currentPoints = Int(pointLabel.text ?? "0") {
+            pointLabel.text = "\(currentPoints + value)"
+        }
+    }
 }

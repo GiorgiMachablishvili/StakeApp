@@ -26,6 +26,8 @@ extension UIColor {
 
     static let bonusCostViewBackground = UIColor(hexString: "#4E65FD")
 
+    static let userImageGrayBorderColor = UIColor(hexString: "#2B2F38")
+
 }
 
 

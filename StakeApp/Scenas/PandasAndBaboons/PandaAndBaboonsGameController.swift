@@ -16,6 +16,8 @@ class PandaAndBaboonsGameController: UIViewController {
     private let images = ["bambuk", "beetle", "coin", "stick", "stone", "trapR"]
     private var shuffledImages: [String] = []
 
+    private var isUserTurn: Bool = true
+
     private lazy var gameCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: boxSize, height: boxSize)
@@ -56,6 +58,10 @@ class PandaAndBaboonsGameController: UIViewController {
         view.backgroundColor = .clear
         view.leftPointView.gameImage.image = UIImage(named: "bamboImage")
         view.rightPointView.gameImage.image = UIImage(named: "bamboImage")
+        view.userImage.layer.borderWidth = 3
+        view.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+        view.opponentImage.layer.borderWidth = 3
+        view.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
         return view
     }()
 
@@ -63,7 +69,7 @@ class PandaAndBaboonsGameController: UIViewController {
         let view = UIButton(frame: .zero)
         view.gameBonusButton(gameBonusImage: UIImage(named: "x2"))
         view.contentMode = .scaleAspectFit
-//        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
         return view
     }()
 
@@ -77,7 +83,7 @@ class PandaAndBaboonsGameController: UIViewController {
         let view = UIButton(frame: .zero)
         view.gameBonusButton(gameBonusImage: UIImage(named: "trap"))
         view.contentMode = .scaleAspectFit
-//        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
         return view
     }()
 
@@ -91,7 +97,7 @@ class PandaAndBaboonsGameController: UIViewController {
         let view = UIButton(frame: .zero)
         view.gameBonusButton(gameBonusImage: UIImage(named: "mix"))
         view.contentMode = .scaleAspectFit
-//        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
         return view
     }()
 
@@ -105,7 +111,7 @@ class PandaAndBaboonsGameController: UIViewController {
         let view = UIButton(frame: .zero)
         view.gameBonusButton(gameBonusImage: UIImage(named: "scanner"))
         view.contentMode = .scaleAspectFit
-//        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
         return view
     }()
 
@@ -123,9 +129,11 @@ class PandaAndBaboonsGameController: UIViewController {
         setup()
         setupConstraints()
 
+        initializeTurn()
+
         gameTimerView.pauseTimer()
     }
-    
+
     private func setup() {
         view.addSubview(gameTopView)
         view.addSubview(gameBackgroundImage)
@@ -234,6 +242,23 @@ class PandaAndBaboonsGameController: UIViewController {
         return Array(allImages.prefix(rows * columns))
     }
 
+    private func initializeTurn() {
+        // Randomly determine whether it's the user's turn
+        isUserTurn = Bool.random()
+
+        if isUserTurn {
+            gameTimerView.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+            gameTimerView.opponentImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
+            gameTimerView.leftArrow.isHidden = false
+            gameTimerView.rightArrow.isHidden = true
+        } else {
+            gameTimerView.userImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
+            gameTimerView.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+            gameTimerView.rightArrow.isHidden = false
+            gameTimerView.leftArrow.isHidden = true
+        }
+    }
+
     private func hideGameTimerView() {
         gameStartTimerView.isHidden = true
         gameTimerView.startTimer()
@@ -245,21 +270,46 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return rows * columns
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GameBoxCell", for: indexPath) as! GameBoxCell
         let imageName = shuffledImages[indexPath.item]
         cell.configure(with: imageName)
-        
-//        cell.onImageRevealed = { [weak self] in
-//            self?.gameTimerView.leftPointView.incrementPoint(by: 1)
-        //        }
-
         cell.onImageRevealed = { [weak self] in
+            guard let self = self else { return }
+
             if imageName == "bambuk" {
-                self?.gameTimerView.leftPointView.incrementPoint(by: 1)
+                if self.isUserTurn {
+                    self.gameTimerView.leftPointView.incrementPoint(by: 1)
+                } else {
+                    self.gameTimerView.rightPointView.incrementPoint(by: 1)
+                }
+            }
+
+            if imageName == "coin" {
+                if self.isUserTurn {
+                    self.gameTopView.pointView.incrementPoint(by: 1)
+                } else {
+                    self.gameTopView.pointView.incrementPoint(by: 1)
+                }
+            }
+
+            // Toggle the turn
+            self.isUserTurn.toggle()
+
+            if self.isUserTurn {
+                self.gameTimerView.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+                self.gameTimerView.opponentImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
+                self.gameTimerView.leftArrow.isHidden = false
+                self.gameTimerView.rightArrow.isHidden = true
+            } else {
+                self.gameTimerView.userImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
+                self.gameTimerView.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+                self.gameTimerView.rightArrow.isHidden = false
+                self.gameTimerView.leftArrow.isHidden = true
             }
         }
+
         return cell
     }
 }

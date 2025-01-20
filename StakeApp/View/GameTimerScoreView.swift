@@ -11,6 +11,14 @@ import SnapKit
 class GameTimerScoreView: UIView {
     var timerDidFinish: (() -> Void)?
 
+    lazy var leftArrow: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.image = UIImage(named: "leftArrow")
+        view.contentMode = .scaleAspectFit
+        view.isHidden = true
+        return view
+    }()
+
     private lazy var timerLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "60"
@@ -24,7 +32,15 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    private lazy var userImage: UIImageView = {
+    lazy var rightArrow: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.image = UIImage(named: "rightArrow")
+        view.contentMode = .scaleAspectFit
+        view.isHidden = true
+        return view
+    }()
+
+    lazy var userImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
         view.backgroundColor = UIColor.titlesBlack
@@ -44,7 +60,7 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    private lazy var opponentImage: UIImageView = {
+    lazy var opponentImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
         view.backgroundColor = UIColor.titlesBlack
@@ -93,7 +109,9 @@ class GameTimerScoreView: UIView {
     }
 
     private func setup() {
+        addSubview(leftArrow)
         addSubview(timerLabel)
+        addSubview(rightArrow)
         addSubview(userImage)
         addSubview(userName)
         addSubview(opponentImage)
@@ -103,9 +121,23 @@ class GameTimerScoreView: UIView {
     }
 
     private func setupConstraints() {
+        leftArrow.snp.remakeConstraints { make in
+            make.centerY.equalTo(timerLabel.snp.centerY)
+            make.trailing.equalTo(timerLabel.snp.leading)
+            make.height.equalTo(12 * Constraint.yCoeff)
+            make.width.equalTo(16 * Constraint.yCoeff)
+        }
+
         timerLabel.snp.remakeConstraints { make in
             make.center.equalToSuperview()
             make.height.width.equalTo(44 * Constraint.yCoeff)
+        }
+
+        rightArrow.snp.remakeConstraints { make in
+            make.centerY.equalTo(timerLabel.snp.centerY)
+            make.leading.equalTo(timerLabel.snp.trailing)
+            make.height.equalTo(12 * Constraint.yCoeff)
+            make.width.equalTo(16 * Constraint.yCoeff)
         }
 
         userImage.snp.remakeConstraints { make in

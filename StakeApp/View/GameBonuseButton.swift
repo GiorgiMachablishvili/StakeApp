@@ -15,9 +15,11 @@ extension UIButton {
         let imageBackgroundView = UIView()
         imageBackgroundView.backgroundColor = UIColor(hexString: "#272E5B")
         imageBackgroundView.makeRoundCorners(28)
+        imageBackgroundView.isUserInteractionEnabled = true
 
         let gameImageView = UIImageView(image: gameBonusImage)
         gameImageView.contentMode = .scaleToFill
+        gameImageView.isUserInteractionEnabled = true
 
         self.addSubview(imageBackgroundView)
         imageBackgroundView.addSubview(gameImageView)

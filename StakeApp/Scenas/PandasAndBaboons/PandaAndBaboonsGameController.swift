@@ -67,9 +67,12 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private lazy var x2Buttons: UIButton = {
         let view = UIButton(frame: .zero)
-        view.gameBonusButton(gameBonusImage: UIImage(named: "x2"))
+        view.setImage(UIImage(named: "x2"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
-        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        view.addTarget(self, action: #selector(pressX2Buttons), for: .touchUpInside)
         return view
     }()
 
@@ -81,9 +84,12 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private lazy var trapButtons: UIButton = {
         let view = UIButton(frame: .zero)
-        view.gameBonusButton(gameBonusImage: UIImage(named: "trap"))
+        view.setImage(UIImage(named: "trap"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
-        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        view.addTarget(self, action: #selector(pressTrapButtons), for: .touchUpInside)
         return view
     }()
 
@@ -95,9 +101,12 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private lazy var mixButtons: UIButton = {
         let view = UIButton(frame: .zero)
-        view.gameBonusButton(gameBonusImage: UIImage(named: "mix"))
+        view.setImage(UIImage(named: "mix"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
-        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        view.addTarget(self, action: #selector(pressMixButtons), for: .touchUpInside)
         return view
     }()
 
@@ -109,9 +118,12 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private lazy var scannerButtons: UIButton = {
         let view = UIButton(frame: .zero)
-        view.gameBonusButton(gameBonusImage: UIImage(named: "scanner"))
+        view.setImage(UIImage(named: "scanner"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
-        //        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        view.addTarget(self, action: #selector(pressScannerButtons), for: .touchUpInside)
         return view
     }()
 
@@ -262,6 +274,22 @@ class PandaAndBaboonsGameController: UIViewController {
     private func hideGameTimerView() {
         gameStartTimerView.isHidden = true
         gameTimerView.startTimer()
+    }
+
+    @objc private func pressX2Buttons() {
+        print("press x2 button")
+    }
+
+    @objc private func pressTrapButtons() {
+        print("press trap button")
+    }
+
+    @objc private func pressMixButtons() {
+        print("press mix button")
+    }
+
+    @objc private func pressScannerButtons() {
+        print("press scanner button")
     }
 }
 

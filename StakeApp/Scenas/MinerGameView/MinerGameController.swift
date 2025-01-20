@@ -12,6 +12,7 @@ class MinerGameController: UIViewController {
 
     let randomNumber = Int.random(in: 1...10)
     private var currentGoldPoints: Int = 0
+    private var autoPickAxeTimer: Timer?
 
     private lazy var gameStartTimerView: GameStartTimerView = {
         let view = GameStartTimerView(frame: .zero)
@@ -54,7 +55,10 @@ class MinerGameController: UIViewController {
 
     private lazy var doublePickAxeButtons: UIButton = {
         let view = UIButton(frame: .zero)
-        view.gameBonusButton(gameBonusImage: UIImage(named: "doublePickAxe"))
+        view.setImage(UIImage(named: "doublePickAxe"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
         view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
         return view
@@ -68,8 +72,12 @@ class MinerGameController: UIViewController {
 
     private lazy var bombButtons: UIButton = {
         let view = UIButton(frame: .zero)
-        view.gameBonusButton(gameBonusImage: UIImage(named: "bomb"))
+        view.setImage(UIImage(named: "bomb"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
+        view.addTarget(self, action: #selector(pressBombButtons), for: .touchUpInside)
         return view
     }()
 
@@ -81,8 +89,12 @@ class MinerGameController: UIViewController {
 
     private lazy var autoPickAxeButtons: UIButton = {
         let view = UIButton(frame: .zero)
-        view.gameBonusButton(gameBonusImage: UIImage(named: "autoPickAxe"))
+        view.setImage(UIImage(named: "autoPickAxe"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
+        view.addTarget(self, action: #selector(pressAutoPickAxeButtons), for: .touchUpInside)
         return view
     }()
 
@@ -216,6 +228,7 @@ class MinerGameController: UIViewController {
     }
 
     private func makeGameGoldButtonUnenabled() {
+        autoPickAxeTimer?.invalidate()
         gameBackgroundImage.isUserInteractionEnabled = false
 
         //TODO: what happens in case draw? 
@@ -267,23 +280,56 @@ class MinerGameController: UIViewController {
 
     //TODO: I cant press button
     @objc private func pressDoublePickAxeButtons() {
-        print("press Double PickAxe Buttons ")
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
               let doublePickAxeCostText = doublePickAxeCost.costLabel.text,
+              let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
+              let leftViewPoint = Int(leftPointViewPointLabel),
               let currentPoints = Int(currentPointsText),
               let axeCost = Int(doublePickAxeCostText) else {
             return
         }
         if currentPoints >= axeCost {
             let updatedPoints = currentPoints - axeCost
-
             gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+            gameTimerView.leftPointView.pointLabel.text = "\(leftViewPoint * 2)"
         } else {
             print("Not enough points!")
         }
     }
 
+    @objc private func pressBombButtons() {
+
+    }
+
+    @objc private func pressAutoPickAxeButtons() {
+        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+              let autoPickAxeCostText = autoPickAxeCost.costLabel.text,
+              let currentPoints = Int(currentPointsText),
+              let axeCost = Int(autoPickAxeCostText) else {
+            return
+        }
+
+        if currentPoints >= axeCost {
+            // Deduct the cost
+            let updatedPoints = currentPoints - axeCost
+            gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+
+            // Start the auto-pickaxe functionality
+            autoPickAxeTimer?.invalidate() // Ensure no previous timer is running
+            autoPickAxeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+                self?.pressGameGoldButton()
+            }
+
+            print("Auto-pickaxe enabled!")
+        } else {
+            print("Not enough points to enable auto-pickaxe!")
+        }
+    }
+
+
     private func pressStartGameButton() {
+        autoPickAxeTimer?.invalidate()
+        autoPickAxeTimer = nil
         // Restart the MinerGameController
         if let navigationController = navigationController {
             let newGameController = MinerGameController()

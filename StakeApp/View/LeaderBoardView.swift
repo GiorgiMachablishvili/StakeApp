@@ -155,5 +155,4 @@ class LeaderBoardView: UIView {
         combinedString.append(numberString)
         return combinedString
     }
-
 }

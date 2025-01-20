@@ -62,6 +62,7 @@
 		E3CED7512D39AE1500C5D2EF /* LeaderBoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7502D39AE1500C5D2EF /* LeaderBoardViewCell.swift */; };
 		E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */; };
 		E3DDA1092D3C6280000F7EA7 /* GameBonuseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */; };
+		E3F3E4A92D3EA1E100B7C786 /* GameBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +117,7 @@
 		E3CED7502D39AE1500C5D2EF /* LeaderBoardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardViewCell.swift; sourceTree = "<group>"; };
 		E3CED7522D39B21800C5D2EF /* LeaderBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardView.swift; sourceTree = "<group>"; };
 		E3DDA1082D3C6280000F7EA7 /* GameBonuseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBonuseButton.swift; sourceTree = "<group>"; };
+		E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoxCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */,
+				E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */,
 			);
 			path = PandasAndBaboons;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				E38D5D582D3AC3820057D3CF /* BonusesStringAttributed.swift in Sources */,
 				E3CED74B2D39972C00C5D2EF /* DailyBonusViewCell.swift in Sources */,
 				E367899B2D3D7FB1009E2831 /* WinOrLoseView.swift in Sources */,
+				E3F3E4A92D3EA1E100B7C786 /* GameBoxCell.swift in Sources */,
 				E3CED7452D3961BB00C5D2EF /* MainViewControllerTab.swift in Sources */,
 				E38D5D5E2D3AE8EF0057D3CF /* TopCell.swift in Sources */,
 				E38D5D532D3AB8920057D3CF /* PandasView.swift in Sources */,

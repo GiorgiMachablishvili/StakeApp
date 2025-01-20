@@ -10,6 +10,25 @@ import SnapKit
 
 class PandaAndBaboonsGameController: UIViewController {
 
+    private let rows = 5
+    private let columns = 6
+    private let boxSize: CGFloat = 66.0
+    private let images = ["bambuk", "beetle", "coin", "stick", "stone", "trapR"]
+    private var shuffledImages: [String] = []
+
+    private lazy var gameCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: boxSize, height: boxSize)
+        layout.minimumInteritemSpacing = 6
+        layout.minimumLineSpacing = 6
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(GameBoxCell.self, forCellWithReuseIdentifier: "GameBoxCell")
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
+
     private lazy var gameStartTimerView: GameStartTimerView = {
         let view = GameStartTimerView(frame: .zero)
         view.timerDidFinish = { [weak self] in
@@ -35,6 +54,8 @@ class PandaAndBaboonsGameController: UIViewController {
     private lazy var gameTimerView: GameTimerScoreView = {
         let view = GameTimerScoreView(frame: .zero)
         view.backgroundColor = .clear
+        view.leftPointView.gameImage.image = UIImage(named: "bamboImage")
+        view.rightPointView.gameImage.image = UIImage(named: "bamboImage")
         return view
     }()
 
@@ -97,6 +118,8 @@ class PandaAndBaboonsGameController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        shuffledImages = generateShuffledImages()
+
         setup()
         setupConstraints()
 
@@ -107,6 +130,7 @@ class PandaAndBaboonsGameController: UIViewController {
         view.addSubview(gameTopView)
         view.addSubview(gameBackgroundImage)
         gameBackgroundImage.addSubview(gameTimerView)
+        gameBackgroundImage.addSubview(gameCollectionView)
         gameBackgroundImage.addSubview(x2Buttons)
         gameBackgroundImage.addSubview(trapButtons)
         gameBackgroundImage.addSubview(mixButtons)
@@ -140,6 +164,12 @@ class PandaAndBaboonsGameController: UIViewController {
         gameStartTimerView.snp.remakeConstraints { make in
             make.top.equalTo(gameTopView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
+        }
+
+        gameCollectionView.snp.remakeConstraints { make in
+            make.top.equalTo(gameTimerView.snp.bottom).offset(42)
+            make.leading.trailing.equalToSuperview().inset(18)
+            make.bottom.equalTo(x2Buttons.snp.top).offset(-42)
         }
 
         x2Buttons.snp.remakeConstraints { make in
@@ -195,8 +225,41 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
+    private func generateShuffledImages() -> [String] {
+        var allImages = [String]()
+        for _ in 0..<(rows * columns / images.count) {
+            allImages.append(contentsOf: images)
+        }
+        allImages.shuffle()
+        return Array(allImages.prefix(rows * columns))
+    }
+
     private func hideGameTimerView() {
         gameStartTimerView.isHidden = true
         gameTimerView.startTimer()
+    }
+}
+
+
+extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return rows * columns
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GameBoxCell", for: indexPath) as! GameBoxCell
+        let imageName = shuffledImages[indexPath.item]
+        cell.configure(with: imageName)
+        
+//        cell.onImageRevealed = { [weak self] in
+//            self?.gameTimerView.leftPointView.incrementPoint(by: 1)
+        //        }
+
+        cell.onImageRevealed = { [weak self] in
+            if imageName == "bambuk" {
+                self?.gameTimerView.leftPointView.incrementPoint(by: 1)
+            }
+        }
+        return cell
     }
 }

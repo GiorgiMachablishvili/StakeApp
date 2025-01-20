@@ -67,4 +67,10 @@ class LeftGamePointView: UIView {
             make.height.equalTo(17 * Constraint.yCoeff)
         }
     }
+
+    func incrementPoint(by value: Int) {
+        if let currentPoints = Int(pointLabel.text ?? "0") {
+            pointLabel.text = "\(currentPoints + value)"
+        }
+    }
 }

@@ -377,15 +377,12 @@ class MinerGameController: UIViewController {
         if currentPoints >= axeCost {
             // Deduct the cost
             let updatedPoints = currentPoints - axeCost
-            DispatchQueue.main.async {
-                self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
-            }
+            self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
 
             // Start the auto-pickaxe functionality
             autoPickAxeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
                 self?.autoPressGameGoldButton()
             }
-
             print("Auto-pickaxe enabled!")
         } else {
             print("Not enough points to enable auto-pickaxe!")

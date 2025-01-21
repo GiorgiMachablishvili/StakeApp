@@ -11,6 +11,7 @@ import SnapKit
 class GameBoxCell: UICollectionViewCell {
 
     var onImageRevealed: (() -> Void)?
+    var resetTimerCallback: (() -> Void)?
 
     private lazy var imageView: UIImageView = {
         let view = UIImageView(frame: .zero)
@@ -73,6 +74,7 @@ class GameBoxCell: UICollectionViewCell {
 
     @objc func revealImage() {
         coverView.isHidden = true
+        resetTimerCallback?()
         onImageRevealed?()
     }
 }

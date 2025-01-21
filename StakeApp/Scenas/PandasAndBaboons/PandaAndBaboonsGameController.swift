@@ -320,6 +320,10 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             guard let self = self else { return }
             self.handleMove(imageName: imageName, indexPath: indexPath)
         }
+        cell.resetTimerCallback = { [weak self] in
+            guard let self = self else { return }
+            self.resetTimer()
+        }
         return cell
     }
 
@@ -329,7 +333,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         let cell = collectionView.cellForItem(at: indexPath) as? GameBoxCell
         guard cell?.coverView.isHidden == false else { return } // Ignore already revealed cells
 
-        cell?.revealImage() // User reveals the image
+        cell?.revealImage()
     }
 
     private func handleMove(imageName: String, indexPath: IndexPath) {
@@ -349,12 +353,12 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         updateTurnUI()
 
         if !isUserTurn {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.botMakeMove()
             }
         } else {
             // Restart the timer for the user
-            resetTimer()
+//            resetTimer()
         }
     }
 
@@ -374,11 +378,25 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         }
     }
 
+
     private func resetTimer() {
-        // Reset the turn timer (not shown in full, but you can implement it as needed)
-        timerSeconds = 15
-        gameTimerView.timerLabel.text = "\(timerSeconds)"
+        gameTimerView.resetTimer(to: 15)
     }
+//    private func resetTimer() {
+//        timerSeconds = 15
+//        gameTimerView.timerLabel.text = "\(timerSeconds)"
+//        moveTimer?.invalidate() // Stop any existing timer
+//        moveTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+//            guard let self = self else { return }
+//            if self.timerSeconds > 0 {
+//                self.timerSeconds -= 1
+//                self.gameTimerView.timerLabel.text = "\(self.timerSeconds)"
+//            } else {
+//                timer.invalidate()
+////                self.handleTimerEnd() // Handle timeout (if necessary)
+//            }
+//        }
+//    }
 
     private func updateTurnUI() {
         if isUserTurn {

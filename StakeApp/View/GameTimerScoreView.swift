@@ -11,6 +11,13 @@ import SnapKit
 class GameTimerScoreView: UIView {
     var timerDidFinish: (() -> Void)?
 
+    private var timer: Timer?
+    var remainingSeconds: Int = 60 {
+        didSet {
+            timerLabel.text = "\(remainingSeconds)"
+        }
+    }
+
     lazy var leftArrow: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.image = UIImage(named: "leftArrow")
@@ -21,7 +28,7 @@ class GameTimerScoreView: UIView {
 
     lazy var timerLabel: UILabel = {
         let view = UILabel(frame: .zero)
-        view.text = "60"
+        view.text = "\(remainingSeconds)"
         view.font = UIFont.montserratBold(size: 14)
         view.textColor = UIColor.whiteColor
         view.textAlignment = .center
@@ -104,9 +111,6 @@ class GameTimerScoreView: UIView {
         view.contentMode = .scaleAspectFit
         return view
     }()
-
-    private var timer: Timer?
-    var remainingSeconds: Int = 60
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -204,27 +208,55 @@ class GameTimerScoreView: UIView {
         }
     }
 
+//    func startTimer() {
+//        timer?.invalidate()
+//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+//    }
+//
+//    func pauseTimer() {
+//        timer?.invalidate()
+//        timer = nil
+//    }
+//
+//    @objc private func updateTimer() {
+//        if remainingSeconds > 0 {
+//            remainingSeconds -= 1
+//            timerLabel.text = "\(remainingSeconds)"
+//        } else {
+//            pauseTimer()
+//            timerDidFinish?()
+//        }
+//    }
+//
+//    deinit {
+//        timer?.invalidate()
+//    }
     func startTimer() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-    }
-
-    func pauseTimer() {
-        timer?.invalidate()
-        timer = nil
-    }
-
-    @objc private func updateTimer() {
-        if remainingSeconds > 0 {
-            remainingSeconds -= 1
-            timerLabel.text = "\(remainingSeconds)"
-        } else {
-            pauseTimer()
-            timerDidFinish?()
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         }
-    }
 
-    deinit {
-        timer?.invalidate()
-    }
+        func pauseTimer() {
+            timer?.invalidate()
+            timer = nil
+        }
+
+        func resetTimer(to seconds: Int) {
+            pauseTimer()
+            remainingSeconds = seconds
+            startTimer()
+        }
+
+        @objc private func updateTimer() {
+            if remainingSeconds > 0 {
+                remainingSeconds -= 1
+            } else {
+                pauseTimer()
+                timerDidFinish?()
+            }
+        }
+
+        deinit {
+            timer?.invalidate()
+        }
 }

@@ -19,7 +19,7 @@ class GameBoxCell: UICollectionViewCell {
     }()
 
 
-    private lazy var coverView: UIView = {
+    lazy var coverView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .clear
         view.addSubview(questionMarkImageView)
@@ -71,7 +71,7 @@ class GameBoxCell: UICollectionViewCell {
         coverView.isHidden = false
     }
 
-    @objc private func revealImage() {
+    @objc func revealImage() {
         coverView.isHidden = true
         onImageRevealed?()
     }

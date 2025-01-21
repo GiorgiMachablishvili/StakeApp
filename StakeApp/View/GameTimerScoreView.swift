@@ -76,13 +76,13 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    private lazy var opponentLevelLabel: ExpLabel = {
+    lazy var opponentLevelLabel: ExpLabel = {
         let view = ExpLabel(frame: .zero)
         view.text = "1"
         return view
     }()
 
-    private lazy var opponentName: UILabel = {
+    lazy var opponentName: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Kote"
         view.font = UIFont.montserratBold(size: 13)

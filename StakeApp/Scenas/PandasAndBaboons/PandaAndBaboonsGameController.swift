@@ -15,8 +15,14 @@ class PandaAndBaboonsGameController: UIViewController {
     private let boxSize: CGFloat = 66.0
     private let images = ["bambuk", "beetle", "coin", "stick", "stone", "trapR"]
     private var shuffledImages: [String] = []
-
     private var isUserTurn: Bool = true
+
+    private let botName = "Bot"
+    private let botImageName = "avatar"
+    private var botLevel = 1
+
+    private var timerSeconds = 15
+    private var moveTimer: Timer?
 
     private lazy var gameCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -56,6 +62,8 @@ class PandaAndBaboonsGameController: UIViewController {
     private lazy var gameTimerView: GameTimerScoreView = {
         let view = GameTimerScoreView(frame: .zero)
         view.backgroundColor = .clear
+        view.timerLabel.text = "timerSeconds"
+        view.remainingSeconds = timerSeconds
         view.leftPointView.gameImage.image = UIImage(named: "bamboImage")
         view.rightPointView.gameImage.image = UIImage(named: "bamboImage")
         view.userImage.layer.borderWidth = 3
@@ -142,7 +150,7 @@ class PandaAndBaboonsGameController: UIViewController {
         setupConstraints()
 
         initializeTurn()
-
+        configureBotUI()
         gameTimerView.pauseTimer()
     }
 
@@ -245,6 +253,12 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
+    private func configureBotUI() {
+        gameTimerView.opponentImage.image = UIImage(named: botImageName)
+        gameTimerView.opponentName.text = botName
+        gameTimerView.opponentLevelLabel.text = "\(botLevel)"
+    }
+
     private func generateShuffledImages() -> [String] {
         var allImages = [String]()
         for _ in 0..<(rows * columns / images.count) {
@@ -293,7 +307,6 @@ class PandaAndBaboonsGameController: UIViewController {
     }
 }
 
-
 extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return rows * columns
@@ -305,39 +318,80 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         cell.configure(with: imageName)
         cell.onImageRevealed = { [weak self] in
             guard let self = self else { return }
-
-            if imageName == "bambuk" {
-                if self.isUserTurn {
-                    self.gameTimerView.leftPointView.incrementPoint(by: 1)
-                } else {
-                    self.gameTimerView.rightPointView.incrementPoint(by: 1)
-                }
-            }
-
-            if imageName == "coin" {
-                if self.isUserTurn {
-                    self.gameTopView.pointView.incrementPoint(by: 1)
-                } else {
-                    self.gameTopView.pointView.incrementPoint(by: 1)
-                }
-            }
-
-            // Toggle the turn
-            self.isUserTurn.toggle()
-
-            if self.isUserTurn {
-                self.gameTimerView.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
-                self.gameTimerView.opponentImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
-                self.gameTimerView.leftArrow.isHidden = false
-                self.gameTimerView.rightArrow.isHidden = true
-            } else {
-                self.gameTimerView.userImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
-                self.gameTimerView.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
-                self.gameTimerView.rightArrow.isHidden = false
-                self.gameTimerView.leftArrow.isHidden = true
-            }
+            self.handleMove(imageName: imageName, indexPath: indexPath)
         }
-
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard isUserTurn else { return } // Ignore taps if it's the bot's turn
+
+        let cell = collectionView.cellForItem(at: indexPath) as? GameBoxCell
+        guard cell?.coverView.isHidden == false else { return } // Ignore already revealed cells
+
+        cell?.revealImage() // User reveals the image
+    }
+
+    private func handleMove(imageName: String, indexPath: IndexPath) {
+        // Update points based on the image revealed
+        if imageName == "bambuk" {
+            if isUserTurn {
+                gameTimerView.leftPointView.incrementPoint(by: 1)
+            } else {
+                gameTimerView.rightPointView.incrementPoint(by: 1)
+            }
+        } else if imageName == "coin" {
+            gameTopView.pointView.incrementPoint(by: 1)
+        }
+
+        // Switch turns
+        isUserTurn.toggle()
+        updateTurnUI()
+
+        if !isUserTurn {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.botMakeMove()
+            }
+        } else {
+            // Restart the timer for the user
+            resetTimer()
+        }
+    }
+
+    private func botMakeMove() {
+        // Find unrevealed cells
+        let availableIndices = shuffledImages.indices.filter {
+            let cell = gameCollectionView.cellForItem(at: IndexPath(item: $0, section: 0)) as? GameBoxCell
+            return cell?.coverView.isHidden == false
+        }
+
+        guard let randomIndex = availableIndices.randomElement() else { return }
+
+        // Bot reveals the box
+        let imageName = shuffledImages[randomIndex]
+        if let cell = gameCollectionView.cellForItem(at: IndexPath(item: randomIndex, section: 0)) as? GameBoxCell {
+            cell.revealImage()
+        }
+    }
+
+    private func resetTimer() {
+        // Reset the turn timer (not shown in full, but you can implement it as needed)
+        timerSeconds = 15
+        gameTimerView.timerLabel.text = "\(timerSeconds)"
+    }
+
+    private func updateTurnUI() {
+        if isUserTurn {
+            gameTimerView.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+            gameTimerView.opponentImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
+            gameTimerView.leftArrow.isHidden = false
+            gameTimerView.rightArrow.isHidden = true
+        } else {
+            gameTimerView.userImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
+            gameTimerView.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+            gameTimerView.rightArrow.isHidden = false
+            gameTimerView.leftArrow.isHidden = true
+        }
+    }
 }
+

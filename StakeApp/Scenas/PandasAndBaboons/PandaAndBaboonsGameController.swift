@@ -271,17 +271,13 @@ class PandaAndBaboonsGameController: UIViewController {
     private func initializeTurn() {
         // Randomly determine whether it's the user's turn
         isUserTurn = Bool.random()
+        updateTurnUI()
 
-        if isUserTurn {
-            gameTimerView.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
-            gameTimerView.opponentImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
-            gameTimerView.leftArrow.isHidden = false
-            gameTimerView.rightArrow.isHidden = true
-        } else {
-            gameTimerView.userImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
-            gameTimerView.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
-            gameTimerView.rightArrow.isHidden = false
-            gameTimerView.leftArrow.isHidden = true
+        if !isUserTurn {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // Add a slight delay for a natural feel
+                self.hideGameTimerView()
+                self.botMakeMove()
+            }
         }
     }
 
@@ -329,9 +325,8 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard isUserTurn else { return } // Ignore taps if it's the bot's turn
-
         let cell = collectionView.cellForItem(at: indexPath) as? GameBoxCell
-        guard cell?.coverView.isHidden == false else { return } // Ignore already revealed cells
+        guard cell?.coverView.isHidden == false else { return }
 
         cell?.revealImage()
     }
@@ -363,7 +358,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
     }
 
     private func botMakeMove() {
-        // Find unrevealed cells
+//        // Find unrevealed cells
         let availableIndices = shuffledImages.indices.filter {
             let cell = gameCollectionView.cellForItem(at: IndexPath(item: $0, section: 0)) as? GameBoxCell
             return cell?.coverView.isHidden == false
@@ -382,21 +377,6 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
     private func resetTimer() {
         gameTimerView.resetTimer(to: 15)
     }
-//    private func resetTimer() {
-//        timerSeconds = 15
-//        gameTimerView.timerLabel.text = "\(timerSeconds)"
-//        moveTimer?.invalidate() // Stop any existing timer
-//        moveTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-//            guard let self = self else { return }
-//            if self.timerSeconds > 0 {
-//                self.timerSeconds -= 1
-//                self.gameTimerView.timerLabel.text = "\(self.timerSeconds)"
-//            } else {
-//                timer.invalidate()
-////                self.handleTimerEnd() // Handle timeout (if necessary)
-//            }
-//        }
-//    }
 
     private func updateTurnUI() {
         if isUserTurn {
@@ -404,11 +384,13 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             gameTimerView.opponentImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
             gameTimerView.leftArrow.isHidden = false
             gameTimerView.rightArrow.isHidden = true
+            gameCollectionView.isUserInteractionEnabled = true
         } else {
             gameTimerView.userImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
             gameTimerView.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
             gameTimerView.rightArrow.isHidden = false
             gameTimerView.leftArrow.isHidden = true
+            gameCollectionView.isUserInteractionEnabled = false
         }
     }
 }

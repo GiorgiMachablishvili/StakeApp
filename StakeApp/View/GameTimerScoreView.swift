@@ -19,7 +19,7 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    private lazy var timerLabel: UILabel = {
+    lazy var timerLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "60"
         view.font = UIFont.montserratBold(size: 14)
@@ -51,6 +51,11 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
+    private lazy var useLevelLabel: ExpLabel = {
+        let view = ExpLabel(frame: .zero)
+        return view
+    }()
+
     private lazy var userName: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Tedo"
@@ -68,6 +73,12 @@ class GameTimerScoreView: UIView {
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "avatar")
+        return view
+    }()
+
+    private lazy var opponentLevelLabel: ExpLabel = {
+        let view = ExpLabel(frame: .zero)
+        view.text = "1"
         return view
     }()
 
@@ -95,7 +106,7 @@ class GameTimerScoreView: UIView {
     }()
 
     private var timer: Timer?
-    private var remainingSeconds: Int = 60
+    var remainingSeconds: Int = 60
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -113,8 +124,10 @@ class GameTimerScoreView: UIView {
         addSubview(timerLabel)
         addSubview(rightArrow)
         addSubview(userImage)
+        addSubview(useLevelLabel)
         addSubview(userName)
         addSubview(opponentImage)
+        addSubview(opponentLevelLabel)
         addSubview(opponentName)
         addSubview(leftPointView)
         addSubview(rightPointView)
@@ -146,6 +159,12 @@ class GameTimerScoreView: UIView {
             make.height.width.equalTo(60 * Constraint.yCoeff)
         }
 
+        useLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(userImage.snp.top).offset(40 * Constraint.yCoeff)
+            make.leading.equalTo(userImage.snp.leading).offset(40 * Constraint.xCoeff)
+            make.height.width.equalTo(20 * Constraint.yCoeff)
+        }
+
         userName.snp.remakeConstraints { make in
             make.top.equalTo(userImage.snp.top)
             make.leading.equalTo(userImage.snp.trailing).offset(8 * Constraint.xCoeff)
@@ -165,6 +184,12 @@ class GameTimerScoreView: UIView {
             make.height.width.equalTo(60 * Constraint.yCoeff)
         }
 
+        opponentLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(opponentImage.snp.top).offset(40 * Constraint.yCoeff)
+            make.leading.equalTo(opponentImage.snp.leading).offset(40 * Constraint.xCoeff)
+            make.height.width.equalTo(20 * Constraint.yCoeff)
+        }
+
         opponentName.snp.remakeConstraints { make in
             make.top.equalTo(opponentImage.snp.top)
             make.trailing.equalTo(opponentImage.snp.leading).offset(-8 * Constraint.xCoeff)
@@ -180,7 +205,7 @@ class GameTimerScoreView: UIView {
     }
 
     func startTimer() {
-        timer?.invalidate() // Ensure no previous timers are running
+        timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
 

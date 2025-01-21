@@ -26,6 +26,9 @@ class MinerGameController: UIViewController {
         let view = GameTopView(frame: .zero)
         view.backgroundColor = UIColor.titlesBlack
         view.makeRoundCorners(16)
+        view.pressPauseButton = { [weak self] in
+            self?.quitOrContinueGame()
+        }
         return view
     }()
 
@@ -126,8 +129,23 @@ class MinerGameController: UIViewController {
         return view
     }()
 
+    private lazy var quitOrContinueView: QuitOrContinueView = {
+        let view = QuitOrContinueView(frame: .zero)
+        view.backgroundColor = UIColor(hexString: "#16171A")
+        view.makeRoundCorners(20)
+        view.isHidden = true
+        view.pressContinueButton = { [weak self] in
+            self?.pressContinueGameButton()
+        }
+        view.pressQuitButton = { [weak self] in
+            self?.pressQuitGameButton()
+        }
+        return view
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isUserInteractionEnabled = true
         setup()
         setupConstraints()
 
@@ -146,6 +164,7 @@ class MinerGameController: UIViewController {
         view.addSubview(bombCost)
         view.addSubview(autoPickAxeCost)
         view.addSubview(winOrLoseView)
+        view.addSubview(quitOrContinueView)
         view.addSubview(gameStartTimerView)
     }
 
@@ -220,6 +239,25 @@ class MinerGameController: UIViewController {
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(652 * Constraint.yCoeff)
         }
+
+        quitOrContinueView.snp.remakeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(290 * Constraint.yCoeff)
+        }
+    }
+
+    private func getTopViewCell() -> TopViewCell? {
+        guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
+            return nil
+        }
+        let collectionView = mainView.exposedCollectionView
+        let indexPath = IndexPath(item: 0, section: 0)
+        return collectionView.cellForItem(at: indexPath) as? TopViewCell
+    }
+    
+    private func quitOrContinueGame() {
+        print("didi press stop button")
+        quitOrContinueView.isHidden = false
     }
 
     private func hideGameTimerView() {
@@ -231,6 +269,7 @@ class MinerGameController: UIViewController {
         autoPickAxeTimer?.invalidate()
         gameBackgroundImage.isUserInteractionEnabled = false
 
+
         //TODO: what happens in case draw?
         guard let userPointsText = gameTimerView.leftPointView.pointLabel.text,
               let opponentCostText = gameTimerView.rightPointView.pointLabel.text,
@@ -238,6 +277,9 @@ class MinerGameController: UIViewController {
               let opponentCost = Int(opponentCostText) else {
             return
         }
+
+        winOrLoseView.leftPointView.pointLabel.text = "\(userPoints)"
+
         if userPoints > opponentCost {
             winOrLoseView.winOrLoseLabel.text = "WIN!"
             winOrLoseView.bonusButton.isHidden = false
@@ -245,12 +287,21 @@ class MinerGameController: UIViewController {
             winOrLoseView.expButton.isHidden = false
             winOrLoseView.expPoints.isHidden = false
             winOrLoseView.isHidden = false
+
+            if let topViewCell = getTopViewCell() {
+                topViewCell.updateExperiencePoints(add: 22)
+            }
+
         } else {
             winOrLoseView.winOrLoseLabel.text = "LOSE"
             winOrLoseView.winOrLoseLabel.textColor = .red
             winOrLoseView.redExpButton.isHidden = false
             winOrLoseView.redExpPoints.isHidden = false
             winOrLoseView.isHidden = false
+        }
+
+        if let topViewCell = getTopViewCell() {
+            topViewCell.updateExperiencePoints(add: 0)
         }
     }
 
@@ -301,7 +352,11 @@ class MinerGameController: UIViewController {
     }
 
     @objc private func pressBombButtons() {
+        gameTimerView.opponentImage.image = UIImage(named: "blockUser")
 
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+            self?.gameTimerView.opponentImage.image = UIImage(named: "avatar")
+        }
     }
 
     @objc private func pressAutoPickAxeButtons() {
@@ -375,5 +430,14 @@ class MinerGameController: UIViewController {
         DispatchQueue.main.async {
             self.gameTimerView.leftPointView.pointLabel.text = "\(self.currentGoldPoints)"
         }
+    }
+
+    private func pressContinueGameButton() {
+        winOrLoseView.isHidden = true
+    }
+
+    private func pressQuitGameButton() {
+        //TODO: make quit from game
+        print("quit from game")
     }
 }

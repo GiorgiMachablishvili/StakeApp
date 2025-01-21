@@ -24,7 +24,11 @@ class TopViewCell: UICollectionViewCell {
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "avatar")
-//        view.isUserInteractionEnabled = true
+        return view
+    }()
+
+    private lazy var userLevelLabel: ExpLabel = {
+        let view = ExpLabel(frame: .zero)
         return view
     }()
 
@@ -37,7 +41,7 @@ class TopViewCell: UICollectionViewCell {
         return view
     }()
 
-    private lazy var expLabel: UILabel = {
+    lazy var expLabel: UILabel = {
         let view = UILabel()
         view.attributedText = createExpAttributedString()
         view.numberOfLines = 1
@@ -66,6 +70,7 @@ class TopViewCell: UICollectionViewCell {
     private func setup() {
         addSubview(backgroundTopView)
         backgroundTopView.addSubview(workoutImage)
+        backgroundTopView.addSubview(userLevelLabel)
         backgroundTopView.addSubview(nameLabel)
         backgroundTopView.addSubview(expLabel)
         backgroundTopView.addSubview(pointView)
@@ -80,6 +85,12 @@ class TopViewCell: UICollectionViewCell {
             make.top.equalTo(snp.top).offset(48 * Constraint.yCoeff)
             make.leading.equalTo(snp.leading).offset(16 * Constraint.xCoeff)
             make.height.width.equalTo(48 * Constraint.yCoeff)
+        }
+
+        userLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(workoutImage.snp.top).offset(30 * Constraint.yCoeff)
+            make.leading.equalTo(workoutImage.snp.leading).offset(30 * Constraint.xCoeff)
+            make.height.width.equalTo(20 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in
@@ -107,18 +118,63 @@ class TopViewCell: UICollectionViewCell {
             .font: UIFont.montserratMedium(size: 10),
             .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)
         ]
+        let numberExp: [NSAttributedString.Key: Any] = [
+            .font: UIFont.montserratMedium(size: 10),
+            .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)
+        ]
         let numberAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.montserratMedium(size: 10),
             .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)
         ]
         // Create the attributed strings
         let expString = NSAttributedString(string: "EXP ", attributes: expAttributes)
-        let numberString = NSAttributedString(string: "0/20", attributes: numberAttributes)
+        let numberOfExp = NSAttributedString(string: "0", attributes: numberExp)
+        let numberString = NSAttributedString(string: "/20", attributes: numberAttributes)
         // Combine the two strings
         let combinedString = NSMutableAttributedString()
         combinedString.append(expString)
+        combinedString.append(numberOfExp)
         combinedString.append(numberString)
         return combinedString
+    }
+
+//    func updateExperiencePoints(add value: Int) {
+//        guard let expText = expLabel.attributedText?.string else { return }
+//
+//        let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
+//        let newExp = max(0, currentExp + value) // Prevent negative experience points
+//
+//        // Update the attributed text
+//        let updatedExpString = NSMutableAttributedString()
+//        updatedExpString.append(NSAttributedString(string: "EXP ", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+//        updatedExpString.append(NSAttributedString(string: "\(newExp)", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+//        updatedExpString.append(NSAttributedString(string: "/20", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+//
+//        expLabel.attributedText = updatedExpString
+//    }
+    func updateExperiencePoints(add value: Int) {
+        guard let expText = expLabel.attributedText?.string else { return }
+
+        // Extract current experience and level
+        let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
+        let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
+        var newExp = currentExp + value
+
+        // Handle leveling up
+        if newExp >= 20 {
+            let levelsToAdd = newExp / 20
+            newExp = newExp % 20 // Remaining experience after leveling up
+            ExpLabel.defaultText = "\(currentLevel + levelsToAdd)"
+            userLevelLabel.text = ExpLabel.defaultText // Update level label
+        }
+
+        // Update the attributed text for experience points
+        let updatedExpString = NSMutableAttributedString()
+        updatedExpString.append(NSAttributedString(string: "EXP ", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+        updatedExpString.append(NSAttributedString(string: "\(newExp)", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+        updatedExpString.append(NSAttributedString(string: "/20", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+
+        expLabel.attributedText = updatedExpString
     }
 
 }

@@ -21,6 +21,10 @@ class MainView: UIViewController {
         return view
     }()
 
+    var exposedCollectionView: UICollectionView {
+        return collectionView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,7 +34,6 @@ class MainView: UIViewController {
         setupConstraint()
         setupHierarchy()
         configureCompositionLayout()
-
     }
 
     private func setup() {
@@ -63,10 +66,6 @@ class MainView: UIViewController {
                 return self?.GameView()
             case 3:
                 return self?.LeaderBoardView()
-                //            case 4:
-                //                return self?.taskViewLayout()
-                //            case 5:
-                //                return self?.addTaskViewButtonLayout()
             default:
                 return self?.defaultLayout()
             }
@@ -198,10 +197,6 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
             return 1
         case 3:
             return 1
-            //        case 4:
-            //            return 1
-            //        case 5:
-            //            return 1
         default:
             return 0
         }

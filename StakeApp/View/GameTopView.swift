@@ -10,11 +10,13 @@ import SnapKit
 
 class GameTopView: UIView {
 
-    private lazy var startPauseButton: UIButton = {
+    var pressPauseButton: (()-> Void)?
+
+    private lazy var pauseButton: UIButton = {
         let view = UIButton(frame: .zero)
         view.setImage(UIImage(named: "pauseButton"), for: .normal)
         view.makeRoundCorners(20)
-//        view.addTarget(self, action: #selector(clickSkipButton), for: .touchUpInside)
+        view.addTarget(self, action: #selector(clickPauseButton), for: .touchUpInside)
         return view
     }()
 
@@ -36,23 +38,27 @@ class GameTopView: UIView {
     }
 
     private func setup() {
-        addSubview(startPauseButton)
+        addSubview(pauseButton)
         addSubview(pointView)
     }
 
     private func setupConstraints() {
-        startPauseButton.snp.remakeConstraints { make in
+        pauseButton.snp.remakeConstraints { make in
             make.bottom.equalTo(snp.bottom).offset(-16 * Constraint.yCoeff)
             make.leading.equalTo(snp.leading).offset(16 * Constraint.xCoeff)
             make.width.height.equalTo(40 * Constraint.yCoeff)
         }
 
         pointView.snp.remakeConstraints { make in
-            make.centerY.equalTo(startPauseButton.snp.centerY)
+            make.centerY.equalTo(pauseButton.snp.centerY)
             make.trailing.equalTo(snp.trailing).offset(-16 * Constraint.xCoeff)
             make.height.equalTo(40 * Constraint.yCoeff)
             make.width.equalTo(85 * Constraint.xCoeff)
         }
     }
 
+    //TODO: how can I press clickPauseButton when it is under navigation bar 
+    @objc private func clickPauseButton() {
+        pressPauseButton?()
+    }
 }

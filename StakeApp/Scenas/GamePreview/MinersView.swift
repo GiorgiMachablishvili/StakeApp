@@ -52,7 +52,7 @@ class MinerView: UIView {
     private lazy var bonusesLabel: BonusesStringAttributed = {
         let view = BonusesStringAttributed()
         view.backgroundColor = .clear
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         view.labelText = "BONUSES"
         return view
     }()

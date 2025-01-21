@@ -286,6 +286,7 @@ class PandaAndBaboonsGameController: UIViewController {
         gameTimerView.startTimer()
     }
 
+    //TODO: how to make this buttons or how to make real time game
     @objc private func pressX2Buttons() {
         print("press x2 button")
     }

@@ -17,7 +17,7 @@ class MinerGameController: UIViewController {
     private var pointIncrementTimer: Timer?
     private var pointInterval: TimeInterval = 1.0
 
-    private var botPointsTimeInterval = 0.2
+    private var botPointsTimeInterval = 0.25
 
     private var isUserBlocked: Bool = false
     private var isOpponentScoreBlocked: Bool = false
@@ -298,11 +298,8 @@ class MinerGameController: UIViewController {
         //MARK: auto press double point button
         if remainingSeconds == 30 {
             //MARK: Generate a random number of bomb presses (1 to 3)
-            let doublePointCount = Int.random(in: 0...2)
+            let doublePointCount = Int.random(in: 1...2)
             print("Opponent will press double button \(doublePointCount) time(s)")
-
-            //MARK: Schedule the bomb presses over the remaining time
-            scheduleBombPresses(count: doublePointCount, remainingTime: remainingSeconds, byUser: false)
 
             //MARK: Schedule the double button presses over the remaining time
             scheduleDoublePresses(count: doublePointCount, remainingTime: remainingSeconds, byUser: false)
@@ -344,7 +341,6 @@ class MinerGameController: UIViewController {
             lastScheduledTime = time
             return time
         }
-
         for time in times {
             let delay = remainingTime - time
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
@@ -495,14 +491,11 @@ class MinerGameController: UIViewController {
     @objc private func pressBombButtons(byUser: Bool = true) {
         if byUser {
 
-
             // Block opponent's score updates
-//            isOpponentScoreBlocked = true
             gameTimerView.opponentImage.image = UIImage(named: "blockUser")
             gameTimerView.rightPointView.setScoreBlocked(true)
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-//                self?.isOpponentScoreBlocked = false
                 self?.gameTimerView.opponentImage.image = UIImage(named: "avatar")
                 self?.gameTimerView.rightPointView.setScoreBlocked(false)
             }

@@ -14,6 +14,11 @@ class MinerGameController: UIViewController {
     private var currentGoldPoints: Int = 0
     private var autoPickAxeTimer: Timer?
 
+    private var pointIncrementTimer: Timer?
+    private var pointInterval: TimeInterval = 1.0
+
+    private var botPointsTimeInterval = 0.2
+
     private lazy var gameStartTimerView: GameStartTimerView = {
         let view = GameStartTimerView(frame: .zero)
         view.timerDidFinish = { [weak self] in
@@ -52,6 +57,7 @@ class MinerGameController: UIViewController {
         view.backgroundColor = .clear
         view.timerDidFinish = { [weak self] in
             self?.makeGameGoldButtonUnenabled()
+            self?.stopPointIncrementTimer()
         }
         return view
     }()
@@ -246,6 +252,32 @@ class MinerGameController: UIViewController {
         }
     }
 
+    //MARK: auto collection points for bot
+    private func startPointIncrementTimer() {
+        pointIncrementTimer?.invalidate()
+        pointIncrementTimer = Timer.scheduledTimer(withTimeInterval: pointInterval, repeats: true) { [weak self] _ in
+            self?.incrementPoints()
+        }
+    }
+
+    private func incrementPoints() {
+        let randomValue = Int.random(in: 1...10)
+        DispatchQueue.main.async {
+            self.gameTimerView.rightPointView.incrementPoint(by: randomValue)
+        }
+    }
+
+    func updatePointInterval(to newInterval: TimeInterval) {
+        pointInterval = newInterval
+        startPointIncrementTimer()
+    }
+
+    private func stopPointIncrementTimer() {
+        pointIncrementTimer?.invalidate()
+        pointIncrementTimer = nil
+    }
+
+
     private func getTopViewCell() -> TopViewCell? {
         guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
             return nil
@@ -263,12 +295,18 @@ class MinerGameController: UIViewController {
     private func hideGameTimerView() {
         gameStartTimerView.isHidden = true
         gameTimerView.startTimer()
+        startPointIncrementTimer()
+
+        //MARK: bot points increasing timeInterval
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.updatePointInterval(to: self!.botPointsTimeInterval)
+        }
     }
+    
 
     private func makeGameGoldButtonUnenabled() {
         autoPickAxeTimer?.invalidate()
         gameBackgroundImage.isUserInteractionEnabled = false
-
 
         //TODO: what happens in case draw?
         guard let userPointsText = gameTimerView.leftPointView.pointLabel.text,
@@ -289,7 +327,7 @@ class MinerGameController: UIViewController {
             winOrLoseView.isHidden = false
 
             if let topViewCell = getTopViewCell() {
-                topViewCell.updateExperiencePoints(add: 22)
+                topViewCell.updateExperiencePoints(add: 10)
             }
 
         } else {
@@ -298,10 +336,10 @@ class MinerGameController: UIViewController {
             winOrLoseView.redExpButton.isHidden = false
             winOrLoseView.redExpPoints.isHidden = false
             winOrLoseView.isHidden = false
-        }
 
-        if let topViewCell = getTopViewCell() {
-            topViewCell.updateExperiencePoints(add: 0)
+            if let topViewCell = getTopViewCell() {
+                topViewCell.updateExperiencePoints(add: -1)
+            }
         }
     }
 
@@ -329,7 +367,8 @@ class MinerGameController: UIViewController {
         }
     }
 
-    //TODO: when pressAutoPickAxeButtons is pressed and press pressDoublePickAxeButtons does not continues from count of points
+    //TODO: when pressAutoPickAxeButtons is pressed and press pressDoublePickAxeButtons does not continues from doubled points
+    //TODO: when pressAutoPickAxeButtons is pressed and press pressGameGoldButton does not continue from doubled points
     @objc private func pressDoublePickAxeButtons() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
               let doublePickAxeCostText = doublePickAxeCost.costLabel.text,
@@ -380,7 +419,7 @@ class MinerGameController: UIViewController {
             self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
 
             // Start the auto-pickaxe functionality
-            autoPickAxeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            autoPickAxeTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
                 self?.autoPressGameGoldButton()
             }
             print("Auto-pickaxe enabled!")

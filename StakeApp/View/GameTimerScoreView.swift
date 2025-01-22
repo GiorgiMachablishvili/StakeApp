@@ -10,6 +10,7 @@ import SnapKit
 
 class GameTimerScoreView: UIView {
     var timerDidFinish: (() -> Void)?
+    var onTimeUpdate: ((Int) -> Void)?
 
     private var timer: Timer?
     var remainingSeconds: Int = 60 {
@@ -250,6 +251,7 @@ class GameTimerScoreView: UIView {
         @objc private func updateTimer() {
             if remainingSeconds > 0 {
                 remainingSeconds -= 1
+                onTimeUpdate?(remainingSeconds)
             } else {
                 pauseTimer()
                 timerDidFinish?()

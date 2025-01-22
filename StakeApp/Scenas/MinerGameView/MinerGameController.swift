@@ -19,6 +19,9 @@ class MinerGameController: UIViewController {
 
     private var botPointsTimeInterval = 0.2
 
+    private var isUserBlocked: Bool = false
+    private var isOpponentScoreBlocked: Bool = false
+
     private lazy var gameStartTimerView: GameStartTimerView = {
         let view = GameStartTimerView(frame: .zero)
         view.timerDidFinish = { [weak self] in
@@ -59,6 +62,9 @@ class MinerGameController: UIViewController {
             self?.makeGameGoldButtonUnenabled()
             self?.stopPointIncrementTimer()
         }
+        view.onTimeUpdate = { [weak self] remainingSeconds in
+            self?.handleTimeUpdate(remainingSeconds)
+        }
         return view
     }()
 
@@ -86,7 +92,7 @@ class MinerGameController: UIViewController {
         view.layer.cornerRadius = 28
         view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
-        view.addTarget(self, action: #selector(pressBombButtons), for: .touchUpInside)
+        view.addTarget(self, action: #selector(userPressedBombButton), for: .touchUpInside)
         return view
     }()
 
@@ -277,6 +283,75 @@ class MinerGameController: UIViewController {
         pointIncrementTimer = nil
     }
 
+    //MARK: auto press bomb button and doublePoint Button then the timer drops below 30 and 20
+    private func handleTimeUpdate(_ remainingSeconds: Int) {
+        //MARK: auto press bomb button
+        if remainingSeconds == 40 {
+            //MARK: Generate a random number of bomb presses (0 to 2)
+            let bombPressCount = Int.random(in: 1...2)
+            print("Opponent will press bomb button \(bombPressCount) time(s)")
+
+            //MARK: Schedule the bomb presses over the remaining time
+            scheduleBombPresses(count: bombPressCount, remainingTime: remainingSeconds, byUser: false)
+        }
+
+        //MARK: auto press double point button
+        if remainingSeconds == 30 {
+            //MARK: Generate a random number of bomb presses (1 to 3)
+            let doublePointCount = Int.random(in: 0...2)
+            print("Opponent will press double button \(doublePointCount) time(s)")
+
+            //MARK: Schedule the bomb presses over the remaining time
+            scheduleBombPresses(count: doublePointCount, remainingTime: remainingSeconds, byUser: false)
+
+            //MARK: Schedule the double button presses over the remaining time
+            scheduleDoublePresses(count: doublePointCount, remainingTime: remainingSeconds, byUser: false)
+        }
+    }
+
+    //MARK: schedule bomb presses
+    private func scheduleBombPresses(count: Int, remainingTime: Int, byUser: Bool)  {
+        guard count > 0, remainingTime > 1 else { return }
+
+        //MARK: Generate times ensuring at least 7 seconds between presses
+        var lastScheduledTime = 0
+        let times = (1...count).compactMap { _ -> Int? in
+            let minTime = lastScheduledTime + 7
+            guard minTime <= remainingTime else { return nil }
+            let time = Int.random(in: minTime...remainingTime)
+            lastScheduledTime = time
+            return time
+        }
+
+        for time in times {
+            let delay = remainingTime - time
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
+                self?.pressBombButtons(byUser: false)
+            }
+        }
+    }
+
+    //MARK: schedule double point presses
+    private func scheduleDoublePresses(count: Int, remainingTime: Int, byUser: Bool) {
+        guard count > 0, remainingTime > 1 else { return }
+
+        //MARK: Generate times ensuring at least 7 seconds between presses
+        var lastScheduledTime = 0
+        let times = (1...count).compactMap { _ -> Int? in
+            let minTime = lastScheduledTime + 7
+            guard minTime <= remainingTime else { return nil }
+            let time = Int.random(in: minTime...remainingTime)
+            lastScheduledTime = time
+            return time
+        }
+
+        for time in times {
+            let delay = remainingTime - time
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
+                self?.pressDoublePickAxeButtons()
+            }
+        }
+    }
 
     private func getTopViewCell() -> TopViewCell? {
         guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
@@ -286,7 +361,7 @@ class MinerGameController: UIViewController {
         let indexPath = IndexPath(item: 0, section: 0)
         return collectionView.cellForItem(at: indexPath) as? TopViewCell
     }
-    
+
     private func quitOrContinueGame() {
         print("didi press stop button")
         quitOrContinueView.isHidden = false
@@ -302,7 +377,6 @@ class MinerGameController: UIViewController {
             self?.updatePointInterval(to: self!.botPointsTimeInterval)
         }
     }
-    
 
     private func makeGameGoldButtonUnenabled() {
         autoPickAxeTimer?.invalidate()
@@ -344,13 +418,24 @@ class MinerGameController: UIViewController {
     }
 
     @objc func pressGameGoldButton () {
+        if isUserBlocked {
+            print("User is blocked from pressing the gold button!")
+            return
+        }
+        if isOpponentScoreBlocked {
+            print("Opponent is blocked from pressing the gold button!")
+            return
+        }
+
         let randomNumber = Int.random(in: 1...10)
         currentGoldPoints += randomNumber
         gameTimerView.leftPointView.pointLabel.text = "\(currentGoldPoints)"
         randomGoldsLabel.pointLabel.text = "+ \(randomNumber)"
+
         if randomGoldsLabel.superview == nil {
             view.addSubview(randomGoldsLabel)
         }
+
         randomGoldsLabel.snp.removeConstraints()
         let randomXOffset = CGFloat.random(in: -150...150)
         let randomYOffset = CGFloat.random(in: -150...150)
@@ -390,13 +475,50 @@ class MinerGameController: UIViewController {
         }
     }
 
-    @objc private func pressBombButtons() {
-        gameTimerView.opponentImage.image = UIImage(named: "blockUser")
+    @objc private func userPressedBombButton() {
+        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+              let bombCostText = bombCost.costLabel.text,
+              let currentPoints = Int(currentPointsText),
+              let bombCost = Int(bombCostText) else {
+            return
+        }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-            self?.gameTimerView.opponentImage.image = UIImage(named: "avatar")
+        if currentPoints >= bombCost {
+            let updatedPoints = currentPoints - bombCost
+            DispatchQueue.main.async {
+                self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+            }
+        }
+        pressBombButtons(byUser: true)
+    }
+
+    @objc private func pressBombButtons(byUser: Bool = true) {
+        if byUser {
+
+
+            // Block opponent's score updates
+//            isOpponentScoreBlocked = true
+            gameTimerView.opponentImage.image = UIImage(named: "blockUser")
+            gameTimerView.rightPointView.setScoreBlocked(true)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+//                self?.isOpponentScoreBlocked = false
+                self?.gameTimerView.opponentImage.image = UIImage(named: "avatar")
+                self?.gameTimerView.rightPointView.setScoreBlocked(false)
+            }
+        } else {
+            // Block user's score updates
+            isUserBlocked = true
+            gameTimerView.userImage.image = UIImage(named: "blockUser")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+                self?.isUserBlocked = false
+                self?.gameTimerView.userImage.image = UIImage(named: "avatar")
+            }
         }
     }
+
+
 
     @objc private func pressAutoPickAxeButtons() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
@@ -432,6 +554,11 @@ class MinerGameController: UIViewController {
     private func pressStartGameButton() {
         autoPickAxeTimer?.invalidate()
         autoPickAxeTimer = nil
+
+        isUserBlocked = false
+        isOpponentScoreBlocked = false
+        gameTimerView.rightPointView.setScoreBlocked(false)
+
         // Restart the MinerGameController
         if let navigationController = navigationController {
             let newGameController = MinerGameController()

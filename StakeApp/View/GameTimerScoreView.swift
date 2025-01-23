@@ -208,30 +208,6 @@ class GameTimerScoreView: UIView {
             make.width.equalTo(65 * Constraint.xCoeff)
         }
     }
-
-//    func startTimer() {
-//        timer?.invalidate()
-//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-//    }
-//
-//    func pauseTimer() {
-//        timer?.invalidate()
-//        timer = nil
-//    }
-//
-//    @objc private func updateTimer() {
-//        if remainingSeconds > 0 {
-//            remainingSeconds -= 1
-//            timerLabel.text = "\(remainingSeconds)"
-//        } else {
-//            pauseTimer()
-//            timerDidFinish?()
-//        }
-//    }
-//
-//    deinit {
-//        timer?.invalidate()
-//    }
     func startTimer() {
             timer?.invalidate()
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)

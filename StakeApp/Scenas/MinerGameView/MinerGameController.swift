@@ -288,7 +288,7 @@ class MinerGameController: UIViewController {
         //MARK: auto press bomb button
         if remainingSeconds == 40 {
             //MARK: Generate a random number of bomb presses (0 to 2)
-            let bombPressCount = Int.random(in: 1...2)
+            let bombPressCount = Int.random(in: 0...2)
             print("Opponent will press bomb button \(bombPressCount) time(s)")
 
             //MARK: Schedule the bomb presses over the remaining time
@@ -298,7 +298,7 @@ class MinerGameController: UIViewController {
         //MARK: auto press double point button
         if remainingSeconds == 30 {
             //MARK: Generate a random number of bomb presses (1 to 3)
-            let doublePointCount = Int.random(in: 1...2)
+            let doublePointCount = Int.random(in: 0...2)
             print("Opponent will press double button \(doublePointCount) time(s)")
 
             //MARK: Schedule the double button presses over the remaining time
@@ -413,6 +413,7 @@ class MinerGameController: UIViewController {
         }
     }
 
+    //MARK: press gold button
     @objc func pressGameGoldButton () {
         if isUserBlocked {
             print("User is blocked from pressing the gold button!")

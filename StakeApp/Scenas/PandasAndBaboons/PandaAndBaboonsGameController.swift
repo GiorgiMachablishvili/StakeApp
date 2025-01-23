@@ -24,6 +24,11 @@ class PandaAndBaboonsGameController: UIViewController {
     private var timerSeconds = 15
     private var moveTimer: Timer?
 
+    private var isX2Active: Bool = false
+
+    private var opponentX2PressCount = 0
+    private let maxOpponentX2Presses = Int.random(in: 2...4)
+
     private lazy var gameCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: boxSize, height: boxSize)
@@ -70,6 +75,9 @@ class PandaAndBaboonsGameController: UIViewController {
         view.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
         view.opponentImage.layer.borderWidth = 3
         view.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+        view.onTimeUpdate = { [weak self] remainingSeconds in
+            self?.handleTimeUpdate(remainingSeconds)
+        }
         return view
     }()
 
@@ -141,6 +149,35 @@ class PandaAndBaboonsGameController: UIViewController {
         return view
     }()
 
+    private lazy var winOrLoseView: WinOrLoseView = {
+        let view = WinOrLoseView(frame: .zero)
+        view.backgroundColor = UIColor(hexString: "#16171A")
+        view.makeRoundCorners(20)
+        view.leftPointView.gameImage.image = UIImage(named: "bamboImage")
+        view.isHidden = true
+        view.didPressStartGameButton = { [weak self] in
+            self?.pressStartGameButton()
+        }
+        view.didPressContinueButton = { [weak self] in
+            self?.pressContinueButton()
+        }
+        return view
+    }()
+
+    private lazy var quitOrContinueView: QuitOrContinueView = {
+        let view = QuitOrContinueView(frame: .zero)
+        view.backgroundColor = UIColor(hexString: "#16171A")
+        view.makeRoundCorners(20)
+        view.isHidden = true
+        view.pressContinueButton = { [weak self] in
+            self?.pressContinueGameButton()
+        }
+        view.pressQuitButton = { [weak self] in
+            self?.pressQuitGameButton()
+        }
+        return view
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -167,7 +204,8 @@ class PandaAndBaboonsGameController: UIViewController {
         view.addSubview(trapCost)
         view.addSubview(mixCost)
         view.addSubview(scannerCost)
-
+        view.addSubview(winOrLoseView)
+        view.addSubview(quitOrContinueView)
         view.addSubview(gameStartTimerView)
     }
 
@@ -251,6 +289,26 @@ class PandaAndBaboonsGameController: UIViewController {
             make.height.equalTo(19 * Constraint.yCoeff)
             make.width.greaterThanOrEqualTo(34 * Constraint.xCoeff)
         }
+
+        winOrLoseView.snp.remakeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(652 * Constraint.yCoeff)
+        }
+
+        quitOrContinueView.snp.remakeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(290 * Constraint.yCoeff)
+        }
+    }
+
+    private func checkIfAllBoxesAreOpen() -> Bool {
+        for index in 0..<(rows * columns) {
+            let cell = gameCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? GameBoxCell
+            if cell?.coverView.isHidden == false {
+                return false
+            }
+        }
+        return true
     }
 
     private func configureBotUI() {
@@ -286,10 +344,166 @@ class PandaAndBaboonsGameController: UIViewController {
         gameTimerView.startTimer()
     }
 
-    //TODO: how to make this buttons or how to make real time game
-    @objc private func pressX2Buttons() {
-        print("press x2 button")
+    //MARK: auto press bomb button and doublePoint Button then the timer drops below 30 and 20
+    private func handleTimeUpdate(_ remainingSeconds: Int) {
+        //MARK: auto press bomb button
+        let randomNumber = Int.random(in: 11...14)
+        if remainingSeconds == randomNumber {
+            if remainingSeconds == 13 {
+                //MARK: Generate a random number of bomb presses (0 to 1)
+                let x2PressCount = 1 /*Int.random(in: 0...1)*/
+                print("Opponent will press x2 button \(x2PressCount) time(s)")
+
+                //MARK: Schedule the bomb presses over the remaining time
+                scheduleX2Presses(count: x2PressCount, remainingTime: remainingSeconds)
+            }
+        }
+
+        //MARK: auto press mix button
+        if remainingSeconds == 13 {
+            //MARK: Generate a random number of bomb presses (1 to 3)
+            let doublePointCount = Int.random(in: 0...1)
+            print("Opponent will press mix button \(doublePointCount) time(s)")
+
+            //MARK: Schedule the double button presses over the remaining time
+            scheduleMixPresses(count: doublePointCount, remainingTime: remainingSeconds)
+        }
     }
+
+    //MARK: schedule bomb presses
+    private func scheduleX2Presses(count: Int, remainingTime: Int)  {
+        guard count > 0, remainingTime > 1 else { return }
+
+        //MARK: Generate times ensuring at least 7 seconds between presses
+        var lastScheduledTime = 0
+        let times = (1...count).compactMap { _ -> Int? in
+            let minTime = lastScheduledTime + 7
+            guard minTime <= remainingTime else { return nil }
+            let time = Int.random(in: minTime...remainingTime)
+            lastScheduledTime = time
+            return time
+        }
+
+        for time in times {
+            let delay = remainingTime - time
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
+                self?.pressX2Buttons()
+            }
+        }
+    }
+
+    //MARK: schedule double point presses
+    private func scheduleMixPresses(count: Int, remainingTime: Int) {
+        guard count > 0, remainingTime > 1 else { return }
+
+        //MARK: Generate times ensuring at least 7 seconds between presses
+        var lastScheduledTime = 0
+        let times = (1...count).compactMap { _ -> Int? in
+            let minTime = lastScheduledTime + 7
+            guard minTime <= remainingTime else { return nil }
+            let time = Int.random(in: minTime...remainingTime)
+            lastScheduledTime = time
+            return time
+        }
+        for time in times {
+            let delay = remainingTime - time
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
+                self?.pressMixButtons()
+            }
+        }
+    }
+
+    //TODO: how to make this buttons or how to make real time game
+
+    @objc private func pressX2Buttons() {
+        if isUserTurn {
+            // Retrieve and validate user points, cost, and current left view points
+            guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+                  let x2CostText = x2Cost.costLabel.text,
+                  let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
+                  let leftViewPoint = Int(leftPointViewPointLabel),
+                  let currentPoints = Int(currentPointsText),
+                  let x2Cost = Int(x2CostText) else {
+                return
+            }
+
+            if currentPoints >= x2Cost {
+                // Deduct the x2 button cost from the user's points
+                let updatedPoints = currentPoints - x2Cost
+
+                // Double the left point view score
+                let doubledPoints = leftViewPoint * 2
+
+                DispatchQueue.main.async {
+                    // Update the UI
+                    self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+                    self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
+                }
+
+                print("User pressed x2 button: Points doubled to \(doubledPoints)")
+            } else {
+                print("Not enough points to press x2 button!")
+            }
+        } else {
+            // Opponent pressed x2 button
+            guard opponentX2PressCount < maxOpponentX2Presses, // Ensure opponent hasn't exceeded max x2 presses
+                  let rightPointViewPointLabel = gameTimerView.rightPointView.pointLabel.text,
+                  let rightViewPoint = Int(rightPointViewPointLabel) else {
+                return
+            }
+
+            // Increment opponent x2 press count
+            opponentX2PressCount += 1
+
+            // Double the opponent's right point view score
+            let doubledPoints = rightViewPoint * 2
+
+            DispatchQueue.main.async {
+                // Update the opponent's score
+                self.gameTimerView.rightPointView.pointLabel.text = "\(doubledPoints)"
+            }
+
+            print("Opponent pressed x2 button: Points doubled to \(doubledPoints)")
+        }
+    }
+
+
+//    @objc private func pressX2Buttons() {
+//        if isUserTurn {
+//            guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+//                  let x2CostText = x2Cost.costLabel.text,
+//                  let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
+//                  let leftViewPoint = Int(leftPointViewPointLabel),
+//                  let currentPoints = Int(currentPointsText),
+//                  let x2Cost = Int(x2CostText) else {
+//                return
+//            }
+//            if currentPoints >= x2Cost {
+//                let updatedPoints = currentPoints - x2Cost
+//                let doubledPoints = leftViewPoint * 2
+//                DispatchQueue.main.async {
+//                    // Deduct cost from user points
+//                    self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+//                    // Double the user's left point view
+//                    self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
+//                }
+//            } else {
+//                print("Not enough points for double pickaxe!")
+//            }
+//        } else {
+//            // Opponent pressed x2 button
+//            guard let rightPointViewPointLabel = gameTimerView.rightPointView.pointLabel.text,
+//                  let rightViewPoint = Int(rightPointViewPointLabel) else {
+//                return
+//            }
+//            let doubledPoints = rightViewPoint * 2
+//            DispatchQueue.main.async {
+//                // Double the opponent's right point view
+//                self.gameTimerView.rightPointView.pointLabel.text = "\(doubledPoints)"
+//            }
+//        }
+//        print("press x2 button")
+//    }
 
     @objc private func pressTrapButtons() {
         print("press trap button")
@@ -302,6 +516,52 @@ class PandaAndBaboonsGameController: UIViewController {
     @objc private func pressScannerButtons() {
         print("press scanner button")
     }
+
+    private func getTopViewCell() -> TopViewCell? {
+        guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
+            return nil
+        }
+        let collectionView = mainView.exposedCollectionView
+        let indexPath = IndexPath(item: 0, section: 0)
+        return collectionView.cellForItem(at: indexPath) as? TopViewCell
+    }
+
+    private func pressStartGameButton() {
+        gameTimerView.rightPointView.setScoreBlocked(false)
+
+        // Restart the MinerGameController
+        if let navigationController = navigationController {
+            let newGameController = MinerGameController()
+            navigationController.pushViewController(newGameController, animated: true)
+        } else {
+            // Fallback in case there is no navigation controller
+            let newGameController = MinerGameController()
+            present(newGameController, animated: true, completion: nil)
+        }
+    }
+
+    private func pressContinueButton() {
+        for controller in navigationController?.viewControllers ?? [] {
+            if controller is MainView {
+                navigationController?.popToViewController(controller, animated: true)
+                return
+            }
+        }
+        let mainView = MainView()
+        let navigationController = UINavigationController(rootViewController: mainView)
+        UIApplication.shared.keyWindow?.rootViewController = navigationController
+    }
+
+    private func pressContinueGameButton() {
+        quitOrContinueView.isHidden = true
+    }
+
+    private func pressQuitGameButton() {
+        //TODO: make quit from game
+        print("quit from game")
+    }
+
+
 }
 
 extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -344,7 +604,48 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             gameTopView.pointView.incrementPoint(by: 1)
         }
 
-        // Switch turns
+        //MARK: Check if all boxes are open
+        if checkIfAllBoxesAreOpen() {
+            winOrLoseView.isHidden = false
+
+            //TODO: what happens in case draw?
+            guard let userPointsText = gameTimerView.leftPointView.pointLabel.text,
+                  let opponentCostText = gameTimerView.rightPointView.pointLabel.text,
+                  let userPoints = Int(userPointsText),
+                  let opponentCost = Int(opponentCostText) else {
+                return
+            }
+
+            winOrLoseView.leftPointView.pointLabel.text = "\(userPoints)"
+
+            if userPoints > opponentCost {
+                winOrLoseView.winOrLoseLabel.text = "WIN!"
+                winOrLoseView.bonusButton.isHidden = false
+                winOrLoseView.bonusPoints.isHidden = false
+                winOrLoseView.expButton.isHidden = false
+                winOrLoseView.expPoints.isHidden = false
+                winOrLoseView.isHidden = false
+
+                if let topViewCell = getTopViewCell() {
+                    topViewCell.updateExperiencePoints(add: 10)
+                }
+
+            } else {
+                winOrLoseView.winOrLoseLabel.text = "LOSE"
+                winOrLoseView.winOrLoseLabel.textColor = .red
+                winOrLoseView.redExpButton.isHidden = false
+                winOrLoseView.redExpPoints.isHidden = false
+                winOrLoseView.isHidden = false
+
+                if let topViewCell = getTopViewCell() {
+                    topViewCell.updateExperiencePoints(add: -1)
+                }
+            }
+
+            return
+        }
+
+        //MARK: Switch turns
         isUserTurn.toggle()
         updateTurnUI()
 
@@ -354,12 +655,12 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             }
         } else {
             // Restart the timer for the user
-//            resetTimer()
+            //            resetTimer()
         }
     }
 
     private func botMakeMove() {
-//        // Find unrevealed cells
+        //        // Find unrevealed cells
         let availableIndices = shuffledImages.indices.filter {
             let cell = gameCollectionView.cellForItem(at: IndexPath(item: $0, section: 0)) as? GameBoxCell
             return cell?.coverView.isHidden == false
@@ -373,7 +674,6 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             cell.revealImage()
         }
     }
-
 
     private func resetTimer() {
         gameTimerView.resetTimer(to: 15)

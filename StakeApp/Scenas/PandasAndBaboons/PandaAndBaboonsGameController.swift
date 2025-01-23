@@ -467,54 +467,89 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
-
-//    @objc private func pressX2Buttons() {
-//        if isUserTurn {
-//            guard let currentPointsText = gameTopView.pointView.pointLabel.text,
-//                  let x2CostText = x2Cost.costLabel.text,
-//                  let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
-//                  let leftViewPoint = Int(leftPointViewPointLabel),
-//                  let currentPoints = Int(currentPointsText),
-//                  let x2Cost = Int(x2CostText) else {
-//                return
-//            }
-//            if currentPoints >= x2Cost {
-//                let updatedPoints = currentPoints - x2Cost
-//                let doubledPoints = leftViewPoint * 2
-//                DispatchQueue.main.async {
-//                    // Deduct cost from user points
-//                    self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
-//                    // Double the user's left point view
-//                    self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
-//                }
-//            } else {
-//                print("Not enough points for double pickaxe!")
-//            }
-//        } else {
-//            // Opponent pressed x2 button
-//            guard let rightPointViewPointLabel = gameTimerView.rightPointView.pointLabel.text,
-//                  let rightViewPoint = Int(rightPointViewPointLabel) else {
-//                return
-//            }
-//            let doubledPoints = rightViewPoint * 2
-//            DispatchQueue.main.async {
-//                // Double the opponent's right point view
-//                self.gameTimerView.rightPointView.pointLabel.text = "\(doubledPoints)"
-//            }
-//        }
-//        print("press x2 button")
-//    }
-
     @objc private func pressTrapButtons() {
         print("press trap button")
     }
 
     @objc private func pressMixButtons() {
-        print("press mix button")
+        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+              let mixCostText = mixCost.costLabel.text,
+              let currentPoints = Int(currentPointsText),
+              let mixCostValue = Int(mixCostText),
+              currentPoints >= mixCostValue else {
+            print("Not enough points to press mix button!")
+            return
+        }
+
+        // Deduct the mix button cost
+        let updatedPoints = currentPoints - mixCostValue
+        DispatchQueue.main.async {
+            self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+        }
+
+        // Store the visibility state of each cell
+        var visibilityStates: [IndexPath: Bool] = [:]
+        for index in 0..<(rows * columns) {
+            let indexPath = IndexPath(item: index, section: 0)
+            if let cell = gameCollectionView.cellForItem(at: indexPath) as? GameBoxCell {
+                visibilityStates[indexPath] = cell.coverView.isHidden
+            }
+        }
+        // Shuffle the images only once
+        shuffledImages.shuffle()
+
+        // Apply the shuffled images back to the cells while preserving visibility states
+        for (index, imageName) in shuffledImages.enumerated() {
+            let indexPath = IndexPath(item: index, section: 0)
+            if let cell = gameCollectionView.cellForItem(at: indexPath) as? GameBoxCell {
+                cell.configure(with: imageName)
+                if let isHidden = visibilityStates[indexPath] {
+                    cell.coverView.isHidden = isHidden
+                }
+            }
+        }
+
+        print("Mix button pressed: Images shuffled once, visibility states preserved.")
     }
 
     @objc private func pressScannerButtons() {
-        print("press scanner button")
+        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+              let scannerCostText = scannerCost.costLabel.text,
+              let currentPoints = Int(currentPointsText),
+              let scannerCostValue = Int(scannerCostText),
+              currentPoints >= scannerCostValue else {
+            print("Not enough points to press scanner button!")
+            return
+        }
+
+        // Deduct cost
+        let updatedPoints = currentPoints - scannerCostValue
+        DispatchQueue.main.async {
+            self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+        }
+
+        // Store initial state of coverViews
+        var initialCoverViewStates: [IndexPath: Bool] = [:]
+        for index in 0..<(rows * columns) {
+            let indexPath = IndexPath(item: index, section: 0)
+            if let cell = gameCollectionView.cellForItem(at: indexPath) as? GameBoxCell {
+                initialCoverViewStates[indexPath] = cell.coverView.isHidden
+                // Reveal all cover views
+                cell.coverView.isHidden = true
+            }
+        }
+        print("Scanner button pressed, revealing all cover views.")
+
+        // Revert to initial states after 3 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard let self = self else { return }
+            for (indexPath, wasHidden) in initialCoverViewStates {
+                if let cell = self.gameCollectionView.cellForItem(at: indexPath) as? GameBoxCell {
+                    cell.coverView.isHidden = wasHidden
+                }
+            }
+            print("Cover views reverted to their initial state after 3 seconds.")
+        }
     }
 
     private func getTopViewCell() -> TopViewCell? {

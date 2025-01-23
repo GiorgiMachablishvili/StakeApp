@@ -86,6 +86,15 @@ class WinOrLoseView: UIView {
         return view
     }()
 
+    private lazy var expLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.text = "EXP"
+        view.textColor = .whiteColor
+        view.font = UIFont.montserratBold(size: 12)
+        view.contentMode = .center
+        return view
+    }()
+
     lazy var expPoints: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "1"
@@ -108,10 +117,19 @@ class WinOrLoseView: UIView {
         return view
     }()
 
+    private lazy var redExpLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.text = "EXP"
+        view.textColor = .whiteColor
+        view.font = UIFont.montserratBlack(size: 12)
+        view.contentMode = .center
+        return view
+    }()
+
     lazy var redExpPoints: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "-1"
-        view.font = UIFont.montserratBold(size: 12)
+        view.font = UIFont.montserratBlack(size: 12)
         view.textColor = UIColor.whiteColor
         view.textAlignment = .center
         view.backgroundColor = UIColor(hexString: "#5B272D")
@@ -158,8 +176,10 @@ class WinOrLoseView: UIView {
         addSubview(bonusButton)
         addSubview(bonusPoints)
         addSubview(expButton)
+        expButton.addSubview(expLabel)
         addSubview(expPoints)
         addSubview(redExpButton)
+        redExpButton.addSubview(redExpLabel)
         addSubview(redExpPoints)
         addSubview(playAgainButton)
         addSubview(continueButton)
@@ -167,85 +187,97 @@ class WinOrLoseView: UIView {
 
     private func setupConstraints() {
         winOrLoseLabel.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(54)
+            make.top.equalTo(snp.top).offset(20 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(54 * Constraint.yCoeff)
         }
 
         workoutImage.snp.remakeConstraints { make in
-            make.top.equalTo(winOrLoseLabel.snp.bottom).offset(32)
+            make.top.equalTo(winOrLoseLabel.snp.bottom).offset(32 * Constraint.yCoeff)
             make.centerX.equalToSuperview()
-            make.height.width.equalTo(100)
+            make.height.width.equalTo(100 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in
-            make.top.equalTo(workoutImage.snp.bottom).offset(8)
+            make.top.equalTo(workoutImage.snp.bottom).offset(8 * Constraint.yCoeff)
             make.centerX.equalToSuperview()
-            make.height.equalTo(15)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         leftPointView.snp.remakeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(8)
+            make.top.equalTo(nameLabel.snp.bottom).offset(8 * Constraint.yCoeff)
             make.centerX.equalToSuperview()
-            make.height.equalTo(36)
-            make.width.equalTo(70)
+            make.height.equalTo(36 * Constraint.yCoeff)
+            make.width.equalTo(70 * Constraint.xCoeff)
         }
 
         rewardLabel.snp.remakeConstraints { make in
-            make.top.equalTo(leftPointView.snp.bottom).offset(32)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(15)
+            make.top.equalTo(leftPointView.snp.bottom).offset(32 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         bonusButton.snp.remakeConstraints { make in
-            make.top.equalTo(rewardLabel.snp.bottom).offset(12)
-            make.leading.equalTo(snp.leading).offset(115)
-            make.height.width.equalTo(72)
+            make.top.equalTo(rewardLabel.snp.bottom).offset(12 * Constraint.yCoeff)
+            make.leading.equalTo(snp.leading).offset(115 * Constraint.xCoeff)
+            make.height.width.equalTo(72 * Constraint.yCoeff)
         }
 
         bonusPoints.snp.remakeConstraints { make in
-            make.top.equalTo(bonusButton.snp.bottom).offset(-12)
+            make.top.equalTo(bonusButton.snp.bottom).offset(-12 * Constraint.yCoeff)
             make.centerX.equalTo(bonusButton.snp.centerX)
-            make.height.equalTo(19)
-            make.width.equalTo(25)
+            make.height.equalTo(19 * Constraint.yCoeff)
+            make.width.equalTo(25 * Constraint.xCoeff)
         }
 
         expButton.snp.remakeConstraints { make in
-            make.top.equalTo(rewardLabel.snp.bottom).offset(12)
-            make.trailing.equalTo(snp.trailing).offset(-115)
-            make.height.width.equalTo(72)
+            make.top.equalTo(rewardLabel.snp.bottom).offset(12 * Constraint.yCoeff)
+            make.trailing.equalTo(snp.trailing).offset(-115 * Constraint.xCoeff)
+            make.height.width.equalTo(72 * Constraint.yCoeff)
+        }
+
+        expLabel.snp.remakeConstraints { make in
+            make.center.equalTo(expButton.snp.center)
+            make.height.equalTo(9 * Constraint.yCoeff)
+            make.width.equalTo(26 * Constraint.xCoeff)
         }
 
         expPoints.snp.remakeConstraints { make in
-            make.top.equalTo(expButton.snp.bottom).offset(-12)
+            make.top.equalTo(expButton.snp.bottom).offset(-12 * Constraint.yCoeff)
             make.centerX.equalTo(expButton.snp.centerX)
-            make.height.equalTo(19)
-            make.width.equalTo(25)
+            make.height.equalTo(19 * Constraint.yCoeff)
+            make.width.equalTo(25 * Constraint.xCoeff)
         }
 
         redExpButton.snp.remakeConstraints { make in
-            make.top.equalTo(rewardLabel.snp.bottom).offset(12)
+            make.top.equalTo(rewardLabel.snp.bottom).offset(12 * Constraint.yCoeff)
             make.centerX.equalToSuperview()
-            make.height.width.equalTo(72)
+            make.height.width.equalTo(72 * Constraint.yCoeff)
+        }
+
+        redExpLabel.snp.remakeConstraints { make in
+            make.center.equalTo(redExpButton.snp.center)
+            make.height.equalTo(9 * Constraint.yCoeff)
+            make.width.equalTo(26 * Constraint.xCoeff)
         }
 
         redExpPoints.snp.remakeConstraints { make in
-            make.top.equalTo(redExpButton.snp.bottom).offset(-12)
+            make.top.equalTo(redExpButton.snp.bottom).offset(-12 * Constraint.yCoeff)
             make.centerX.equalTo(redExpButton.snp.centerX)
-            make.height.equalTo(19)
-            make.width.equalTo(25)
+            make.height.equalTo(19 * Constraint.yCoeff)
+            make.width.equalTo(25 * Constraint.xCoeff)
         }
 
         playAgainButton.snp.remakeConstraints { make in
-            make.bottom.equalTo(snp.bottom).offset(-104)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(52)
+            make.bottom.equalTo(snp.bottom).offset(-104 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
 
         continueButton.snp.remakeConstraints { make in
-            make.top.equalTo(playAgainButton.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(52)
+            make.top.equalTo(playAgainButton.snp.bottom).offset(8 * Constraint.yCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
+            make.height.equalTo(52 * Constraint.yCoeff)
         }
     }
 

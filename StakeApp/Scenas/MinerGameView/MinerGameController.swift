@@ -75,7 +75,7 @@ class MinerGameController: UIViewController {
         view.layer.cornerRadius = 28
         view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
-        view.addTarget(self, action: #selector(pressDoublePickAxeButtons), for: .touchUpInside)
+        view.addTarget(self, action: #selector(userPressedDoublePickAxeButton), for: .touchUpInside)
         return view
     }()
 
@@ -344,7 +344,7 @@ class MinerGameController: UIViewController {
         for time in times {
             let delay = remainingTime - time
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
-                self?.pressDoublePickAxeButtons()
+                self?.pressDoublePickAxeButtons(byUser: byUser)
             }
         }
     }
@@ -450,26 +450,49 @@ class MinerGameController: UIViewController {
 
     //TODO: when pressAutoPickAxeButtons is pressed and press pressDoublePickAxeButtons does not continues from doubled points
     //TODO: when pressAutoPickAxeButtons is pressed and press pressGameGoldButton does not continue from doubled points
-    @objc private func pressDoublePickAxeButtons() {
-        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
-              let doublePickAxeCostText = doublePickAxeCost.costLabel.text,
-              let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
-              let leftViewPoint = Int(leftPointViewPointLabel),
-              let currentPoints = Int(currentPointsText),
-              let axeCost = Int(doublePickAxeCostText) else {
-            return
+
+    @objc private func userPressedDoublePickAxeButton() {
+            pressDoublePickAxeButtons(byUser: true)
         }
-        if currentPoints >= axeCost {
-            let updatedPoints = currentPoints - axeCost
-            let doubledPoints = leftViewPoint * 2
-            DispatchQueue.main.async {
-                self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
-                self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
+
+    @objc private func pressDoublePickAxeButtons(byUser: Bool = true) {
+        if byUser {
+            // User pressed double pickaxe button
+            guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+                  let doublePickAxeCostText = doublePickAxeCost.costLabel.text,
+                  let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
+                  let leftViewPoint = Int(leftPointViewPointLabel),
+                  let currentPoints = Int(currentPointsText),
+                  let axeCost = Int(doublePickAxeCostText) else {
+                return
+            }
+            if currentPoints >= axeCost {
+                let updatedPoints = currentPoints - axeCost
+                let doubledPoints = leftViewPoint * 2
+                DispatchQueue.main.async {
+                    // Deduct cost from user points
+                    self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+                    // Double the user's left point view
+                    self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
+                }
+            } else {
+                print("Not enough points for double pickaxe!")
             }
         } else {
-            print("Not enough points!")
+            // Opponent pressed double pickaxe button
+            guard let rightPointViewPointLabel = gameTimerView.rightPointView.pointLabel.text,
+                  let rightViewPoint = Int(rightPointViewPointLabel) else {
+                return
+            }
+            let doubledPoints = rightViewPoint * 2
+            DispatchQueue.main.async {
+                // Double the opponent's right point view
+                self.gameTimerView.rightPointView.pointLabel.text = "\(doubledPoints)"
+            }
         }
     }
+
+
 
     @objc private func userPressedBombButton() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
@@ -510,8 +533,6 @@ class MinerGameController: UIViewController {
             }
         }
     }
-
-
 
     @objc private func pressAutoPickAxeButtons() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,

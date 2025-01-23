@@ -45,7 +45,7 @@ class SignInController: UIViewController {
         view.setTitleColor(UIColor.titlesBlack, for: .normal)
         view.backgroundColor = UIColor.whiteColor
             view.makeRoundCorners(16)
-        view.titleLabel?.font = UIFont.montserratBold(size: 12)
+        view.titleLabel?.font = UIFont.montserratBlack(size: 12)
         view.layer.borderColor = UIColor.whiteColor.cgColor
             view.layer.borderWidth = 1
             let image = UIImage(named: "apple")?.withRenderingMode(.alwaysOriginal)

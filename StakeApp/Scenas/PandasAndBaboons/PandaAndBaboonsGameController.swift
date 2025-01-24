@@ -497,28 +497,24 @@ class PandaAndBaboonsGameController: UIViewController {
     }
 
     @objc private func pressTrapButtons() {
-        if isUserTurn {
-            guard let currentPointsText = gameTopView.pointView.pointLabel.text,
-                  let trapCostText = trapCost.costLabel.text,
-                  let currentPoints = Int(currentPointsText),
-                  let trapCostValue = Int(trapCostText),
-                  currentPoints >= trapCostValue else {
-                print("Not enough points to press trap button!")
-                return
-            }
-
-            // Deduct the trap button cost
-            let updatedPoints = currentPoints - trapCostValue
-            DispatchQueue.main.async {
-                self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
-            }
-
-            isOpponentBlocked = true
-            // Apply the trap
-            print("Trap button pressed: Opponent will skip their next move.")
-        } else {
-
+        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+              let trapCostText = trapCost.costLabel.text,
+              let currentPoints = Int(currentPointsText),
+              let trapCostValue = Int(trapCostText),
+              currentPoints >= trapCostValue else {
+            print("Not enough points to press trap button!")
+            return
         }
+
+        // Deduct the trap button cost
+        let updatedPoints = currentPoints - trapCostValue
+        DispatchQueue.main.async {
+            self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+        }
+
+        isOpponentBlocked = true
+        // Apply the trap
+        print("Trap button pressed: Opponent will skip their next move.")
     }
 
     @objc private func pressMixButtons() {
@@ -686,6 +682,20 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             }
         } else if imageName == "coin" {
             gameTopView.pointView.incrementPoint(by: 1)
+            //TODO: when opponent open trapR user is not blocked, it should block
+        }  else if imageName == "trapR" {
+            // Block the other player for one move
+            if isUserTurn {
+                isOpponentBlocked = true
+                print("Trap revealed! Opponent will skip their next move.")
+            } else {
+                gameCollectionView.isUserInteractionEnabled = false // Disable user interaction
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.isUserTurn = false // Ensure the user is blocked for one move
+                    self.gameCollectionView.isUserInteractionEnabled = true // Re-enable after the move
+                    self.botMakeMove()
+                }
+            }
         }
 
         //MARK: Check if all boxes are open
@@ -744,6 +754,12 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
 
     private func botMakeMove() {
         // Check if the opponent is blocked
+        //        if !isUserTurn {
+        //               print("User's move skipped due to trap.")
+        //               isUserTurn = true
+        //               updateTurnUI()
+        //               return
+        //           }
         if isOpponentBlocked {
             print("Opponent's move skipped due to trap.")
             isOpponentBlocked = false

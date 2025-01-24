@@ -493,8 +493,6 @@ class MinerGameController: UIViewController {
         }
     }
 
-
-
     @objc private func userPressedBombButton() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
               let bombCostText = bombCost.costLabel.text,
@@ -514,7 +512,6 @@ class MinerGameController: UIViewController {
 
     @objc private func pressBombButtons(byUser: Bool = true) {
         if byUser {
-
             // Block opponent's score updates
             gameTimerView.opponentImage.image = UIImage(named: "blockUser")
             gameTimerView.rightPointView.setScoreBlocked(true)

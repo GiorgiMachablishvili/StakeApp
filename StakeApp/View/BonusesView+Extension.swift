@@ -41,7 +41,6 @@ extension UIView {
         addSubview(infoLabel)
 
         // Layout using Auto Layout
-
         imageView.snp.remakeConstraints { make in
             make.centerY.equalTo(snp.centerY)
             make.leading.equalTo(snp.leading).offset(12 * Constraint.xCoeff)
@@ -55,9 +54,9 @@ extension UIView {
         }
 
         infoLabel.snp.remakeConstraints { make in
-            make.bottom.equalTo(snp.bottom).offset(-18.5 * Constraint.yCoeff)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4 * Constraint.yCoeff)
             make.leading.equalTo(imageView.snp.trailing).offset(12 * Constraint.xCoeff)
-            make.height.equalTo(12 * Constraint.yCoeff)
+            make.width.equalTo(266 * Constraint.yCoeff)
         }
     }
 }

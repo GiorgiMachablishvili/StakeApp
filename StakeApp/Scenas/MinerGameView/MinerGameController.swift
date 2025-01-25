@@ -306,7 +306,7 @@ class MinerGameController: UIViewController {
         //MARK: auto press double point button
         if remainingSeconds == 30 {
             //MARK: Generate a random number of bomb presses (1 to 3)
-            let doublePointCount = Int.random(in: 0...2)
+            let doublePointCount = Int.random(in: 1...2)
             print("Opponent will press double button \(doublePointCount) time(s)")
 
             //MARK: Schedule the double button presses over the remaining time
@@ -517,7 +517,16 @@ class MinerGameController: UIViewController {
                 print("Not enough points for double pickaxe!")
             }
         } else {
-            // Opponent logic (if applicable)
+            // Opponent pressed double pickaxe button
+            guard let rightPointViewPointLabel = gameTimerView.rightPointView.pointLabel.text,
+                  let rightViewPoint = Int(rightPointViewPointLabel) else {
+                return
+            }
+            let doubledPoints = rightViewPoint * 2
+            DispatchQueue.main.async {
+                // Double the opponent's right point view
+                self.gameTimerView.rightPointView.pointLabel.text = "\(doubledPoints)"
+            }
         }
     }
 

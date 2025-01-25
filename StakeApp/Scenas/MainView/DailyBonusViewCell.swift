@@ -53,6 +53,7 @@ class DailyBonusViewCell: UICollectionViewCell {
         return view
     }()
 
+    //TODO: ჰow to make Timer work even when the user is turned off
     private var timer: Timer?
     private var remainingTime: TimeInterval = 86400
 

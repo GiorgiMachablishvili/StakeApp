@@ -334,7 +334,7 @@ class PandaAndBaboonsGameController: UIViewController {
         updateTurnUI()
 
         if !isUserTurn {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // Add a slight delay for a natural feel
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.hideGameTimerView()
                 self.botMakeMove()
             }
@@ -452,7 +452,6 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
-    //TODO: how to make this buttons or how to make real time game
     @objc private func pressX2Buttons() {
         if isUserTurn {
             // Retrieve and validate user points, cost, and current left view points
@@ -496,6 +495,7 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
+    //TODO: how to make that opponent pressed trap button and block user for one move
     @objc private func pressTrapButtons() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
               let trapCostText = trapCost.costLabel.text,

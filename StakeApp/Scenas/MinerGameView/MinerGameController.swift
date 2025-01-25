@@ -456,44 +456,6 @@ class MinerGameController: UIViewController {
         }
     }
 
-
-//    @objc func pressGameGoldButton () {
-//        if isUserBlocked {
-//            print("User is blocked from pressing the gold button!")
-//            return
-//        }
-//        if isOpponentScoreBlocked {
-//            print("Opponent is blocked from pressing the gold button!")
-//            return
-//        }
-//
-//        let randomNumber = Int.random(in: 1...10)
-//        currentGoldPoints += randomNumber
-//        gameTimerView.leftPointView.pointLabel.text = "\(currentGoldPoints)"
-//        randomGoldsLabel.pointLabel.text = "+ \(randomNumber)"
-//
-//        if randomGoldsLabel.superview == nil {
-//            view.addSubview(randomGoldsLabel)
-//        }
-//
-//        randomGoldsLabel.snp.removeConstraints()
-//        let randomXOffset = CGFloat.random(in: -150...150)
-//        let randomYOffset = CGFloat.random(in: -150...150)
-//        randomGoldsLabel.snp.makeConstraints { make in
-//            make.centerX.equalTo(view.snp.centerX).offset(randomXOffset)
-//            make.centerY.equalTo(view.snp.centerY).offset(randomYOffset)
-//            make.height.width.equalTo(50 * Constraint.xCoeff)
-//        }
-//        randomGoldsLabel.alpha = 1
-//        UIView.animate(withDuration: 0.5, delay: 0.5, options: [], animations: {
-//            self.randomGoldsLabel.alpha = 0
-//        }) { _ in
-//            self.randomGoldsLabel.removeFromSuperview()
-//        }
-//    }
-
-    //TODO: when pressAutoPickAxeButtons and press pressDoublePickAxeButtons does not continues from doubled points
-    //TODO: when pressAutoPickAxeButtons and press pressGameGoldButton does not continue from doubled points
     @objc private func userPressedDoublePickAxeButton() {
             pressDoublePickAxeButtons(byUser: true)
         }
@@ -529,43 +491,6 @@ class MinerGameController: UIViewController {
             }
         }
     }
-
-//    @objc private func pressDoublePickAxeButtons(byUser: Bool = true) {
-//        if byUser {
-//            // User pressed double pickaxe button
-//            guard let currentPointsText = gameTopView.pointView.pointLabel.text,
-//                  let doublePickAxeCostText = doublePickAxeCost.costLabel.text,
-//                  let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
-//                  let leftViewPoint = Int(leftPointViewPointLabel),
-//                  let currentPoints = Int(currentPointsText),
-//                  let axeCost = Int(doublePickAxeCostText) else {
-//                return
-//            }
-//            if currentPoints >= axeCost {
-//                let updatedPoints = currentPoints - axeCost
-//                let doubledPoints = leftViewPoint * 2
-//                DispatchQueue.main.async {
-//                    // Deduct cost from user points
-//                    self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
-//                    // Double the user's left point view
-//                    self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
-//                }
-//            } else {
-//                print("Not enough points for double pickaxe!")
-//            }
-//        } else {
-//            // Opponent pressed double pickaxe button
-//            guard let rightPointViewPointLabel = gameTimerView.rightPointView.pointLabel.text,
-//                  let rightViewPoint = Int(rightPointViewPointLabel) else {
-//                return
-//            }
-//            let doubledPoints = rightViewPoint * 2
-//            DispatchQueue.main.async {
-//                // Double the opponent's right point view
-//                self.gameTimerView.rightPointView.pointLabel.text = "\(doubledPoints)"
-//            }
-//        }
-//    }
 
     @objc private func userPressedBombButton() {
         guard let currentPointsText = gameTopView.pointView.pointLabel.text,
@@ -636,7 +561,6 @@ class MinerGameController: UIViewController {
         }
     }
 
-
     private func pressStartGameButton() {
         autoPickAxeTimer?.invalidate()
         autoPickAxeTimer = nil
@@ -672,18 +596,6 @@ class MinerGameController: UIViewController {
         let randomIncrement = Int.random(in: 1...10)
         currentLeftPoints += randomIncrement // Update the property instead of the UI directly
     }
-
-//    private func autoPressGameGoldButton() {
-//        guard let leftPointViewPointLabel = gameTimerView.leftPointView.pointLabel.text,
-//              let leftViewPoint = Int(leftPointViewPointLabel) else {
-//            return
-//        }
-//
-//        currentGoldPoints += randomNumber
-//        DispatchQueue.main.async {
-//            self.gameTimerView.leftPointView.pointLabel.text = "\(self.currentGoldPoints)"
-//        }
-//    }
 
     private func pressContinueGameButton() {
         winOrLoseView.isHidden = true

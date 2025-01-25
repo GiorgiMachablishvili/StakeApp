@@ -505,13 +505,11 @@ class PandaAndBaboonsGameController: UIViewController {
             print("Not enough points to press trap button!")
             return
         }
-
         // Deduct the trap button cost
         let updatedPoints = currentPoints - trapCostValue
         DispatchQueue.main.async {
             self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
         }
-
         isOpponentBlocked = true
         // Apply the trap
         print("Trap button pressed: Opponent will skip their next move.")

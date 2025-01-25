@@ -305,3 +305,21 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
 }
+
+
+extension ProfileView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        // Get the selected image
+        if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+            profileView.workoutImage.image = selectedImage // Update the image view
+            // You can also use the `didUpdateImage` callback if needed
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}

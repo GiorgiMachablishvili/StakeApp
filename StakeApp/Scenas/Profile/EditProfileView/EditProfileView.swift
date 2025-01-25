@@ -11,6 +11,7 @@ import SnapKit
 class EditProfileView: UIView {
 
     var didPressCancelButton: (() -> Void)?
+    var didUpdateImage: ((UIImage) -> Void)?
 
     private lazy var backgroundTopView: UIView = {
         let view = UIView(frame: .zero)
@@ -28,7 +29,7 @@ class EditProfileView: UIView {
         return view
     }()
 
-    private lazy var workoutImage: UIImageView = {
+    lazy var workoutImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
         view.backgroundColor = UIColor.titlesBlack
@@ -36,7 +37,20 @@ class EditProfileView: UIView {
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "avatar")
-        //        view.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapUserImageView))
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+
+    private lazy var editImage: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.clipsToBounds = true
+//        view.backgroundColor = UIColor.titlesBlack
+        view.makeRoundCorners(16)
+        view.contentMode = .center
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "editImage")
         return view
     }()
 
@@ -107,6 +121,7 @@ class EditProfileView: UIView {
     private func setup() {
         addSubview(viewTitle)
         addSubview(workoutImage)
+        addSubview(editImage)
         addSubview(nicknameBackgroundView)
         nicknameBackgroundView.addSubview(nicknameTextField)
         addSubview(birthdayBackgroundView)
@@ -126,6 +141,12 @@ class EditProfileView: UIView {
             make.top.equalTo(viewTitle.snp.bottom).offset(20 * Constraint.yCoeff)
             make.centerX.equalTo(snp.centerX)
             make.height.width.equalTo(100 * Constraint.yCoeff)
+        }
+
+        editImage.snp.remakeConstraints { make in
+            make.trailing.equalTo(workoutImage.snp.trailing).offset(4 * Constraint.xCoeff)
+            make.bottom.equalTo(workoutImage.snp.bottom).offset(4 * Constraint.yCoeff)
+            make.height.width.equalTo(32 * Constraint.yCoeff)
         }
 
         nicknameBackgroundView.snp.remakeConstraints { make in
@@ -165,11 +186,35 @@ class EditProfileView: UIView {
         }
     }
 
+
+    @objc private func didTapUserImageView() {
+        print("did press image")
+           guard let parentViewController = self.findViewController() else { return }
+           let imagePicker = UIImagePickerController()
+           imagePicker.delegate = parentViewController as? (UIImagePickerControllerDelegate & UINavigationControllerDelegate)
+           imagePicker.sourceType = .photoLibrary
+           imagePicker.allowsEditing = true
+           parentViewController.present(imagePicker, animated: true, completion: nil)
+       }
+
     @objc private func pressSaveButton() {
 
     }
 
     @objc private func pressCancelButton() {
         didPressCancelButton?()
+    }
+}
+
+extension UIView {
+    func findViewController() -> UIViewController? {
+        var nextResponder: UIResponder? = self
+        while let responder = nextResponder {
+            if let viewController = responder as? UIViewController {
+                return viewController
+            }
+            nextResponder = responder.next
+        }
+        return nil
     }
 }

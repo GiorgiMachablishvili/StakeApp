@@ -172,6 +172,11 @@ class MinerGameController: UIViewController {
         gameTimerView.pauseTimer()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+
     private func setup() {
         view.addSubview(gameTopView)
         view.addSubview(gameBackgroundImage)
@@ -598,11 +603,10 @@ class MinerGameController: UIViewController {
     }
 
     private func pressContinueGameButton() {
-        winOrLoseView.isHidden = true
+        quitOrContinueView.isHidden = true
     }
 
     private func pressQuitGameButton() {
-        //TODO: make quit from game
-        print("quit from game")
+        pressContinueButton()
     }
 }

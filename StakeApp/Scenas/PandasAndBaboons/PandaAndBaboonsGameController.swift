@@ -56,6 +56,9 @@ class PandaAndBaboonsGameController: UIViewController {
         let view = GameTopView(frame: .zero)
         view.backgroundColor = UIColor.titlesBlack
         view.makeRoundCorners(16)
+        view.pressPauseButton = { [weak self] in
+            self?.quitOrContinueGame()
+        }
         return view
     }()
 
@@ -346,7 +349,6 @@ class PandaAndBaboonsGameController: UIViewController {
         gameTimerView.startTimer()
     }
 
-    //MARK: auto press bomb button and doublePoint Button then the timer drops below 30 and 20
     private func handleTimeUpdate(_ remainingSeconds: Int) {
         //MARK: auto press bomb button
         let randomNumber = Int.random(in: 11...14)
@@ -380,7 +382,7 @@ class PandaAndBaboonsGameController: UIViewController {
                 //MARK: Generate a random number of bomb presses (0 to 1)
                 let mixCount = Int.random(in: 0...1)
                 print("Opponent will press x2 button \(mixCount) time(s)")
-
+                
                 //MARK: Schedule the bomb presses over the remaining time
                 scheduleMixPresses(count: mixCount, remainingTime: remainingSeconds)
             }
@@ -630,13 +632,16 @@ class PandaAndBaboonsGameController: UIViewController {
         UIApplication.shared.keyWindow?.rootViewController = navigationController
     }
 
+    private func quitOrContinueGame() {
+        quitOrContinueView.isHidden = false
+    }
+
     private func pressContinueGameButton() {
         quitOrContinueView.isHidden = true
     }
 
     private func pressQuitGameButton() {
-        //TODO: make quit from game
-        print("quit from game")
+        pressContinueButton()
     }
 
 

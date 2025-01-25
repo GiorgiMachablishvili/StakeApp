@@ -73,7 +73,6 @@ class QuitOrContinueView: UIView {
         leaveOrNotLabel.snp.remakeConstraints { make in
             make.top.equalTo(snp.top).offset(20 * Constraint.yCoeff)
             make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
-            make.height.equalTo(48 * Constraint.yCoeff)
         }
 
         leaveOrNotInfoLabel.snp.remakeConstraints { make in
@@ -84,13 +83,13 @@ class QuitOrContinueView: UIView {
 
         continuePlayingButton.snp.remakeConstraints { make in
             make.bottom.equalTo(snp.bottom).offset(-104 * Constraint.yCoeff)
-            make.leading.trailing.equalTo(20 * Constraint.xCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
             make.height.equalTo(52 * Constraint.yCoeff)
         }
 
         quitTheGameButton.snp.remakeConstraints { make in
             make.top.equalTo(continuePlayingButton.snp.bottom).offset(8 * Constraint.yCoeff)
-            make.leading.trailing.equalTo(20 * Constraint.xCoeff)
+            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
             make.height.equalTo(52 * Constraint.yCoeff)
         }
     }

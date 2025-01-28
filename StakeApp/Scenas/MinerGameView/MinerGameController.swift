@@ -401,7 +401,7 @@ class MinerGameController: UIViewController {
 
         winOrLoseView.leftPointView.pointLabel.text = "\(userPoints)"
 
-        if userPoints > opponentCost {
+        if userPoints >= opponentCost {
             winOrLoseView.winOrLoseLabel.text = "WIN!"
             winOrLoseView.bonusButton.isHidden = false
             winOrLoseView.bonusPoints.isHidden = false

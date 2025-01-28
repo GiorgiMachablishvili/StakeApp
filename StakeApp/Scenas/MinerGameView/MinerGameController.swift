@@ -465,7 +465,6 @@ class MinerGameController: UIViewController {
             pressDoublePickAxeButtons(byUser: true)
         }
 
-
     @objc private func pressDoublePickAxeButtons(byUser: Bool = true) {
         if byUser {
             guard let currentPointsText = gameTopView.pointView.pointLabel.text,

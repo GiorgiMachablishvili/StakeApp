@@ -356,6 +356,7 @@ class PandaAndBaboonsGameController: UIViewController {
             byUser.toggle()
             updateTurnUI()
 
+            //TODO: maybe it need to delete
             // Reset and restart the timer
             resetTimer()
 
@@ -384,7 +385,7 @@ class PandaAndBaboonsGameController: UIViewController {
         if remainingSeconds == randomNumber {
             if remainingSeconds == 13 {
                 //MARK: Generate a random number of bomb presses (0 to 1)
-                let x2PressCount = Int.random(in: 0...1)
+                let x2PressCount = Int.random(in: 1...2)
                 print("Opponent will press x2 button \(x2PressCount) time(s)")
 
                 //MARK: Schedule the bomb presses over the remaining time
@@ -397,7 +398,7 @@ class PandaAndBaboonsGameController: UIViewController {
         if remainingSeconds == randomNumberTrap {
             if remainingSeconds == 13 {
                 //MARK: Generate a random number of bomb presses (0 to 1)
-                let trapPressCount = Int.random(in: 0...1)
+                let trapPressCount = Int.random(in: 1...2)
                 print("Opponent will press x2 button \(trapPressCount) time(s)")
 
                 //MARK: Schedule the bomb presses over the remaining time
@@ -409,7 +410,7 @@ class PandaAndBaboonsGameController: UIViewController {
         if remainingSeconds == randomNumber {
             if remainingSeconds == 12 {
                 //MARK: Generate a random number of bomb presses (0 to 1)
-                let mixCount = Int.random(in: 0...1)
+                let mixCount = Int.random(in: 1...2)
                 print("Opponent will press x2 button \(mixCount) time(s)")
 
                 //MARK: Schedule the bomb presses over the remaining time
@@ -538,10 +539,7 @@ class PandaAndBaboonsGameController: UIViewController {
             isOpponentBlocked = true
             // Apply the trap
             print("Trap button pressed: Opponent will skip their next move.")
-        } else {
-            // User logic remains unchanged
-            pressTrapButtons()
-        }
+        } 
     }
 
     //TODO: When reload gameCollectionView.reloadData hides open images

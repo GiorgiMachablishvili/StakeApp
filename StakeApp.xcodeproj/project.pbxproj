@@ -33,6 +33,7 @@
 		E38D5D642D3AE9430057D3CF /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D632D3AE9430057D3CF /* SettingCell.swift */; };
 		E38D5D662D3AF1AA0057D3CF /* ProfileButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */; };
 		E38D5D692D3B05FA0057D3CF /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D682D3B05FA0057D3CF /* EditProfileView.swift */; };
+		E3B48BE42D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B48BE32D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift */; };
 		E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */; };
 		E3CED6F82D395B1D00C5D2EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */; };
 		E3CED6FF2D395B1F00C5D2EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3CED6FE2D395B1F00C5D2EF /* Assets.xcassets */; };
@@ -96,6 +97,7 @@
 		E38D5D632D3AE9430057D3CF /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileButton+Extension.swift"; sourceTree = "<group>"; };
 		E38D5D682D3B05FA0057D3CF /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		E3B48BE32D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarHideOrNot+Extension.swift"; sourceTree = "<group>"; };
 		E3CED6F22D395B1D00C5D2EF /* StakeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StakeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				E3CED72E2D395E0500C5D2EF /* UIFont+Extension.swift */,
 				E3CED7302D395E1000C5D2EF /* Colors.swift */,
 				E3CED7322D395E1A00C5D2EF /* UICornerRadius.swift */,
+				E3B48BE32D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				E361A2532D3BA36300E27466 /* DailyGameCell.swift in Sources */,
 				E3CED7472D39702500C5D2EF /* TopViewCell.swift in Sources */,
 				E36729682D3F9BA600E75929 /* ExpLabel.swift in Sources */,
+				E3B48BE42D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift in Sources */,
 				E361A2512D3BA2E700E27466 /* TopHistoryCell.swift in Sources */,
 				E38D5D692D3B05FA0057D3CF /* EditProfileView.swift in Sources */,
 				E361A2622D3C556E00E27466 /* GameStartTimerView.swift in Sources */,

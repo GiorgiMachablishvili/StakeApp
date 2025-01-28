@@ -56,7 +56,8 @@ class ProfileView: UIViewController {
 
     private func setupConstraint() {
         collectionView.snp.remakeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.snp.bottom).offset(60 * Constraint.yCoeff)
         }
 
         backgroundProfileView.snp.remakeConstraints { make in
@@ -65,7 +66,7 @@ class ProfileView: UIViewController {
 
         profileView.snp.remakeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.snp.bottom)
+            make.bottom.equalTo(view.snp.bottom).offset(80 * Constraint.yCoeff)
             make.height.equalTo(478 * Constraint.yCoeff)
         }
     }
@@ -113,7 +114,7 @@ class ProfileView: UIViewController {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
-            top: -80 * Constraint.yCoeff,
+            top: -60 * Constraint.yCoeff,
             leading: 0 * Constraint.xCoeff,
             bottom: 0 * Constraint.yCoeff,
             trailing: 0 * Constraint.xCoeff
@@ -277,6 +278,9 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 backgroundProfileView.isHidden = false
                 profileView.isHidden = false
                 self.tabBarController?.tabBar.isHidden = true
+
+//                self.tabBarController?.setTabBarHidden(true)
+
             }
             return cell
         case 2:

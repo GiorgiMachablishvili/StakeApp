@@ -87,7 +87,7 @@ class MainView: UIViewController {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
-            top: -80 * Constraint.yCoeff,
+            top: -60 * Constraint.yCoeff,
             leading: 0 * Constraint.xCoeff,
             bottom: 0 * Constraint.yCoeff,
             trailing: 0 * Constraint.xCoeff

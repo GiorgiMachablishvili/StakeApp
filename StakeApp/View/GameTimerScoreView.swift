@@ -59,8 +59,19 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    private lazy var useLevelLabel: ExpLabel = {
-        let view = ExpLabel(frame: .zero)
+//    private lazy var useLevelLabel: ExpLabel = {
+//        let view = ExpLabel(frame: .zero)
+//        return view
+//    }()
+
+    lazy var useLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 13)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(10)
+        view.text = "1"
         return view
     }()
 
@@ -84,15 +95,27 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    lazy var opponentLevelLabel: ExpLabel = {
-        let view = ExpLabel(frame: .zero)
+//    lazy var opponentLevelLabel: ExpLabel = {
+//        let view = ExpLabel(frame: .zero)
+//        view.text = "1"
+//        return view
+//    }()
+
+    lazy var opponentLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 13)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(10)
         view.text = "1"
         return view
     }()
 
+
     lazy var opponentName: UILabel = {
         let view = UILabel(frame: .zero)
-        view.text = "Kote"
+        view.text = "User_\(Int.random(in: 123...900))"
         view.font = UIFont.montserratBold(size: 13)
         view.textColor = UIColor.whiteColor
         view.textAlignment = .left
@@ -118,6 +141,8 @@ class GameTimerScoreView: UIView {
         setup()
         setupConstraints()
         startTimer()
+
+        setOpponentLevel()
     }
 
     required init?(coder: NSCoder) {
@@ -237,4 +262,19 @@ class GameTimerScoreView: UIView {
         deinit {
             timer?.invalidate()
         }
+
+
+    private func setOpponentLevel() {
+        if let userLevel = Int(useLevelLabel.text ?? "1") {
+            var opponentLevel: Int
+
+            if userLevel == 1 {
+                opponentLevel = Bool.random() ? userLevel + 1 : userLevel 
+            } else {
+                opponentLevel = Bool.random() ? userLevel + 1 : userLevel - 1
+            }
+
+            opponentLevelLabel.text = "\(opponentLevel)"
+        }
+    }
 }

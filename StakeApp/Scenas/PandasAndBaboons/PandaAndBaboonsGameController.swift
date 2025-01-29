@@ -80,6 +80,7 @@ class PandaAndBaboonsGameController: UIViewController {
         view.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
         view.opponentImage.layer.borderWidth = 3
         view.opponentImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
+        view.opponentName.textAlignment = .right
         view.onTimeUpdate = { [weak self] remainingSeconds in
             self?.handleTimeUpdate(remainingSeconds)
         }
@@ -318,7 +319,7 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private func configureBotUI() {
         gameTimerView.opponentImage.image = UIImage(named: botImageName)
-        gameTimerView.opponentName.text = botName
+//        gameTimerView.opponentName.text = botName
         gameTimerView.opponentLevelLabel.text = "\(botLevel)"
     }
 

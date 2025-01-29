@@ -10,6 +10,8 @@ import SnapKit
 
 class FindingAnOpponentsController: UIViewController {
 
+    var nextViewController: UIViewController?
+
     private lazy var findingTitle: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Finding an opponent"
@@ -48,6 +50,10 @@ class FindingAnOpponentsController: UIViewController {
         setup()
         setupConstraints()
         startDotAnimation()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            self?.goToNextGameController()
+        }
     }
 
     private func setup() {
@@ -85,8 +91,15 @@ class FindingAnOpponentsController: UIViewController {
         dotTimer = nil
     }
 
+    private func goToNextGameController() {
+        stopDotAnimation()
+        if let nextVC = nextViewController {
+            navigationController?.pushViewController(nextVC, animated: true)
+        }
+    }
+
     @objc private func updateDots() {
-        dotCount = (dotCount + 1) % 4 // Cycle through 0, 1, 2, 3
+        dotCount = (dotCount + 1) % 4
         let dots = String(repeating: ".", count: dotCount)
         findingTitle.text = "Finding an opponent\(dots)"
     }

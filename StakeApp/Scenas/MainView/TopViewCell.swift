@@ -27,8 +27,19 @@ class TopViewCell: UICollectionViewCell {
         return view
     }()
 
-    private lazy var userLevelLabel: ExpLabel = {
-        let view = ExpLabel(frame: .zero)
+//    private lazy var userLevelLabel: ExpLabel = {
+//        let view = ExpLabel(frame: .zero)
+//        return view
+//    }()
+
+    lazy var userLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 13)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(10)
+        view.text = "1"
         return view
     }()
 

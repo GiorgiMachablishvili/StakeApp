@@ -129,4 +129,9 @@ class StaticCell: UICollectionViewCell {
             make.height.equalTo(17 * Constraint.yCoeff)
         }
     }
+
+    func configure(user data: UserGameStats) {
+        gamePlayedScore.text = "\(data.gamesPlayed)"
+        gameWonScore.text = "\(data.gamesWon)"
+    }
 }

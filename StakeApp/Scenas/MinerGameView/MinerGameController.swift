@@ -387,6 +387,7 @@ class MinerGameController: UIViewController {
         }
     }
 
+    //MARK: here should make get method
     private func makeGameGoldButtonUnenabled() {
         autoPickAxeTimer?.invalidate()
         gameBackgroundImage.isUserInteractionEnabled = false

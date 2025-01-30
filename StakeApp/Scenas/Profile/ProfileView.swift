@@ -10,6 +10,9 @@ import SnapKit
 import Alamofire
 
 class ProfileView: UIViewController {
+
+    private var userGameStats: [UserGameStats] = []
+
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -234,6 +237,26 @@ class ProfileView: UIViewController {
         profileView.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
     }
+
+
+    private func fetchUserGameStatistic() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? String else {
+            return
+        }
+
+        let url = String.getUserGameStatistic(userId: userId)
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[UserGameStats]>) in
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.userGameStats = response
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to fetch user game stats: \(error)")
+            }
+        }
+    }
 }
 
 extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -278,9 +301,6 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 backgroundProfileView.isHidden = false
                 profileView.isHidden = false
                 self.tabBarController?.tabBar.isHidden = true
-
-//                self.tabBarController?.setTabBarHidden(true)
-
             }
             return cell
         case 2:
@@ -289,6 +309,11 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? StaticCell else {
                 return UICollectionViewCell()
             }
+//            if let stats = userGameStats {
+//                cell.configure(user: stats)
+//            }
+            let userInfo = userGameStats[indexPath.row]
+                cell.configure(user: userInfo)
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(

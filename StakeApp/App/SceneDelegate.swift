@@ -21,8 +21,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let navigationController = window?.rootViewController as? UINavigationController {
                 navigationController.setNavigationBarHidden(true, animated: false)
             }
+
+//        ifUserISCreatedOrNot()
         window?.makeKeyAndVisible()
     }
+
+
+    func ifUserISCreatedOrNot() {
+        if let userId = UserDefaults.standard.string(forKey: "userId"), !userId.isEmpty {
+            print(userId)
+            let mainViewController = MainViewControllerTab()
+            UserDefaults.standard.setValue(false, forKey: "isGuestUser")
+            window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+        } else {
+            let signInViewController = SignInController()
+            window?.rootViewController = UINavigationController(rootViewController: signInViewController)
+        }
+    }
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

@@ -214,17 +214,13 @@ class SignInController: UIViewController {
         // Prepare parameters
         let parameters: [String: Any] = [
             "push_token": pushToken,
-            "auth_token": appleToken,
-            "username": "Tomy",
-            "image": "",
-            "level": 1,
-            "experience": 10,
-            "points": 100
+            "apple_token": appleToken,
         ]
 
         // Make the network request
         NetworkManager.shared.post(
-            url: String.userCreate(),
+//            url: String.userCreate(),
+            url: "https://stake-us-66f6608d21e4.herokuapp.com/users/register",
             parameters: parameters,
             headers: nil
         ) { [weak self] (result: Result<UserCreate>) in
@@ -242,6 +238,10 @@ class SignInController: UIViewController {
                     print("User created: \(userInfo)")
                     UserDefaults.standard.setValue(userInfo.id, forKey: "userId")
                     print("Received User ID: \(userInfo.id)")
+
+                    let mainVC = MainViewControllerTab()
+                    self.navigationController?.isNavigationBarHidden = true
+                    self.navigationController?.pushViewController(mainVC, animated: true)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -250,9 +250,9 @@ class SignInController: UIViewController {
                 print("Error: \(error)")
             }
         }
-        let mainVC = MainViewControllerTab()
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.pushViewController(mainVC, animated: true)
+//        let mainVC = MainViewControllerTab()
+//        navigationController?.isNavigationBarHidden = true
+//        navigationController?.pushViewController(mainVC, animated: true)
     }
 
     private func showAlert(title: String, description: String) {

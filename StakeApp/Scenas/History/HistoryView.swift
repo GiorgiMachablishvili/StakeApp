@@ -10,6 +10,8 @@ import SnapKit
 
 class HistoryView: UIViewController {
 
+    private var userData: UserDataResponse?
+
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +31,8 @@ class HistoryView: UIViewController {
         setupConstraint()
         setupHierarchy()
         configureCompositionLayout()
+
+        fetchUserData()
     }
 
     private func setup() {
@@ -45,6 +49,27 @@ class HistoryView: UIViewController {
     func setupHierarchy() {
         collectionView.register(TopHistoryCell.self, forCellWithReuseIdentifier: String(describing: TopHistoryCell.self))
         collectionView.register(DailyGameCell.self, forCellWithReuseIdentifier: String(describing: DailyGameCell.self))
+    }
+
+
+    private func fetchUserData() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("userId not found or not an Int")
+            return
+        }
+
+        let url = String.userDataResponse(userId: userId)
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<UserDataResponse>) in
+            switch result {
+            case .success(let userData):
+                self.userData = userData
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to fetch user data: \(error)")
+            }
+        }
     }
 
     func configureCompositionLayout() {
@@ -149,6 +174,9 @@ extension HistoryView: UICollectionViewDataSource, UICollectionViewDelegate {
                 withReuseIdentifier: String(describing: TopHistoryCell.self),
                 for: indexPath) as? TopHistoryCell else {
                 return UICollectionViewCell()
+            }
+            if let userData = userData {
+                cell.configure(with: userData)
             }
             return cell
         case 1:

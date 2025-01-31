@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class TopHistoryCell: UICollectionViewCell {
     private lazy var backgroundTopView: UIView = {
@@ -27,9 +28,20 @@ class TopHistoryCell: UICollectionViewCell {
         return view
     }()
 
+    lazy var userLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 13)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(10)
+        view.text = "1"
+        return view
+    }()
+
     private lazy var nameLabel: UILabel = {
         let view = UILabel(frame: .zero)
-        view.text = "Steve"
+        view.text = ""
         view.font = UIFont.montserratBold(size: 13)
         view.textColor = UIColor.whiteColor
         view.textAlignment = .left
@@ -65,6 +77,7 @@ class TopHistoryCell: UICollectionViewCell {
     private func setup() {
         addSubview(backgroundTopView)
         backgroundTopView.addSubview(workoutImage)
+        backgroundTopView.addSubview(userLevelLabel)
         backgroundTopView.addSubview(nameLabel)
         backgroundTopView.addSubview(expLabel)
         backgroundTopView.addSubview(pointView)
@@ -79,6 +92,12 @@ class TopHistoryCell: UICollectionViewCell {
             make.top.equalTo(snp.top).offset(48 * Constraint.yCoeff)
             make.leading.equalTo(snp.leading).offset(16 * Constraint.xCoeff)
             make.height.width.equalTo(48 * Constraint.yCoeff)
+        }
+
+        userLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(workoutImage.snp.top).offset(30 * Constraint.yCoeff)
+            make.leading.equalTo(workoutImage.snp.leading).offset(30 * Constraint.xCoeff)
+            make.height.width.equalTo(20 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in
@@ -101,8 +120,6 @@ class TopHistoryCell: UICollectionViewCell {
         }
     }
 
-
-
     func createExpAttributedString() -> NSAttributedString {
         let expAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.montserratMedium(size: 10),
@@ -120,5 +137,49 @@ class TopHistoryCell: UICollectionViewCell {
         combinedString.append(expString)
         combinedString.append(numberString)
         return combinedString
+    }
+
+    func updateExperiencePoints(add value: Int) {
+        guard let expText = expLabel.attributedText?.string else { return }
+
+        // Extract current experience and level
+        let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
+        let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
+        var newExp = currentExp + value
+
+        // Handle leveling up
+        if newExp >= 20 {
+            let levelsToAdd = newExp / 20
+            newExp = newExp % 20 // Remaining experience after leveling up
+            ExpLabel.defaultText = "\(currentLevel + levelsToAdd)"
+            userLevelLabel.text = ExpLabel.defaultText // Update level label
+        }
+
+        // Update the attributed text for experience points
+        let updatedExpString = NSMutableAttributedString()
+        updatedExpString.append(NSAttributedString(string: "EXP ", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+        updatedExpString.append(NSAttributedString(string: "\(newExp)", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+        updatedExpString.append(NSAttributedString(string: "/20", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+
+        expLabel.attributedText = updatedExpString
+    }
+
+    func configure(with userData: UserDataResponse) {
+        nameLabel.text = userData.username
+        userLevelLabel.text = "\(userData.level)"
+        updateExperiencePoints(add: userData.experience)
+        pointView.pointLabel.text = "\(userData.points)"
+        if let imageUrl = URL(string: userData.image) {
+            workoutImage.kf.setImage(
+                with: imageUrl,
+                placeholder: UIImage(named: "avatar"),
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
+        } else {
+            workoutImage.image = UIImage(named: "avatar")
+        }
     }
 }

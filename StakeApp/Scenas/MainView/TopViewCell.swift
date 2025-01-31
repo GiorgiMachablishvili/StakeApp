@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class TopViewCell: UICollectionViewCell {
     private lazy var backgroundTopView: UIView = {
@@ -45,7 +46,7 @@ class TopViewCell: UICollectionViewCell {
 
     private lazy var nameLabel: UILabel = {
         let view = UILabel(frame: .zero)
-        view.text = "Steve"
+        view.text = ""
         view.font = UIFont.montserratBold(size: 13)
         view.textColor = UIColor.whiteColor
         view.textAlignment = .left
@@ -188,4 +189,23 @@ class TopViewCell: UICollectionViewCell {
         expLabel.attributedText = updatedExpString
     }
 
+
+    func configure(with userData: UserDataResponse) {
+        nameLabel.text = userData.username
+        userLevelLabel.text = "\(userData.level)"
+        updateExperiencePoints(add: userData.experience)
+        pointView.pointLabel.text = "\(userData.points)"
+        if let imageUrl = URL(string: userData.image) {
+            workoutImage.kf.setImage(
+                with: imageUrl,
+                placeholder: UIImage(named: "avatar"),
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
+        } else {
+            workoutImage.image = UIImage(named: "avatar")
+        }
+    }
 }

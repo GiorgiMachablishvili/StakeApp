@@ -11,6 +11,9 @@ import Alamofire
 
 class MainView: UIViewController {
 
+    private var userData: UserDataResponse?
+    private var leaderboardUsers: [UserDataResponse] = []
+
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +37,9 @@ class MainView: UIViewController {
         setupConstraint()
         setupHierarchy()
         configureCompositionLayout()
+
+        fetchUserData()
+//        fetchLeaderboardData()
     }
 
     private func setup() {
@@ -53,6 +59,46 @@ class MainView: UIViewController {
         collectionView.register(GamesViewCell.self, forCellWithReuseIdentifier: String(describing: GamesViewCell.self))
         collectionView.register(LeaderBoardViewCell.self, forCellWithReuseIdentifier: String(describing: LeaderBoardViewCell.self))
     }
+
+    private func fetchUserData() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("userId not found or not an Int")
+            return
+        }
+
+        let url = String.userDataResponse(userId: userId)
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<UserDataResponse>) in
+            switch result {
+            case .success(let userData):
+                self.userData = userData
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to fetch user data: \(error)")
+            }
+        }
+    }
+
+    private func fetchLeaderboardData() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("userId not found or not an Int")
+            return
+        }
+        let url = String.userDataResponse(userId: userId)
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[UserDataResponse]>) in
+            switch result {
+            case .success(let users):
+                self.leaderboardUsers = users.sorted { $0.points > $1.points }
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to fetch user data: \(error)")
+            }
+        }
+    }
+
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
@@ -210,6 +256,9 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? TopViewCell else {
                 return UICollectionViewCell()
             }
+            if let userData = userData {
+                cell.configure(with: userData)
+            }
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(
@@ -246,6 +295,7 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? LeaderBoardViewCell else {
                 return UICollectionViewCell()
             }
+            cell.leaderboardUsers = leaderboardUsers
             return cell
         default:
             return UICollectionViewCell()

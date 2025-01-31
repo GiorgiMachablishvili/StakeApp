@@ -20,10 +20,13 @@
 		E36789992D3D0B09009E2831 /* BonusCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36789982D3D0B09009E2831 /* BonusCostView.swift */; };
 		E367899B2D3D7FB1009E2831 /* WinOrLoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */; };
 		E367899E2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */; };
+		E36E94C62D4D53020032C0C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E36E94C52D4D53020032C0C0 /* Kingfisher */; };
+		E36E94C82D4D53260032C0C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E36E94C72D4D53260032C0C0 /* Kingfisher */; };
+		E36E94CA2D4D63BF0032C0C0 /* LeaderboardUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E94C92D4D63BF0032C0C0 /* LeaderboardUserCell.swift */; };
 		E387A82C2D4BC5A3006AD1DC /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A82B2D4BC5A3006AD1DC /* URL+Extension.swift */; };
 		E387A82E2D4BC641006AD1DC /* UserCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A82D2D4BC641006AD1DC /* UserCreate.swift */; };
 		E387A8302D4BCBDD006AD1DC /* UserGameHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A82F2D4BCBDD006AD1DC /* UserGameHistory.swift */; };
-		E387A8322D4BCFE6006AD1DC /* TopViewInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A8312D4BCFE6006AD1DC /* TopViewInfo.swift */; };
+		E387A8322D4BCFE6006AD1DC /* UserDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A8312D4BCFE6006AD1DC /* UserDataResponse.swift */; };
 		E387A8342D4BD84A006AD1DC /* UserGameStatistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A8332D4BD84A006AD1DC /* UserGameStatistic.swift */; };
 		E38D5D4E2D3AB3960057D3CF /* GamePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */; };
 		E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D502D3AB6420057D3CF /* MinersView.swift */; };
@@ -89,10 +92,11 @@
 		E36789982D3D0B09009E2831 /* BonusCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusCostView.swift; sourceTree = "<group>"; };
 		E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOrLoseView.swift; sourceTree = "<group>"; };
 		E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandaAndBaboonsGameController.swift; sourceTree = "<group>"; };
+		E36E94C92D4D63BF0032C0C0 /* LeaderboardUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardUserCell.swift; sourceTree = "<group>"; };
 		E387A82B2D4BC5A3006AD1DC /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		E387A82D2D4BC641006AD1DC /* UserCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreate.swift; sourceTree = "<group>"; };
 		E387A82F2D4BCBDD006AD1DC /* UserGameHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGameHistory.swift; sourceTree = "<group>"; };
-		E387A8312D4BCFE6006AD1DC /* TopViewInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewInfo.swift; sourceTree = "<group>"; };
+		E387A8312D4BCFE6006AD1DC /* UserDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataResponse.swift; sourceTree = "<group>"; };
 		E387A8332D4BD84A006AD1DC /* UserGameStatistic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGameStatistic.swift; sourceTree = "<group>"; };
 		E38D5D4D2D3AB3960057D3CF /* GamePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePreviewView.swift; sourceTree = "<group>"; };
 		E38D5D502D3AB6420057D3CF /* MinersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinersView.swift; sourceTree = "<group>"; };
@@ -147,7 +151,9 @@
 			files = (
 				E3CED71E2D395CF100C5D2EF /* Alamofire in Frameworks */,
 				E3CED7202D395CF100C5D2EF /* AlamofireDynamic in Frameworks */,
+				E36E94C62D4D53020032C0C0 /* Kingfisher in Frameworks */,
 				E3CED7182D395CDE00C5D2EF /* SVProgressHUD in Frameworks */,
+				E36E94C82D4D53260032C0C0 /* Kingfisher in Frameworks */,
 				E3CED71B2D395CE700C5D2EF /* ProgressHUD in Frameworks */,
 				E3CED7132D395CD600C5D2EF /* SnapKit in Frameworks */,
 				E3CED7152D395CD600C5D2EF /* SnapKit-Dynamic in Frameworks */,
@@ -270,8 +276,8 @@
 			isa = PBXGroup;
 			children = (
 				E387A82D2D4BC641006AD1DC /* UserCreate.swift */,
+				E387A8312D4BCFE6006AD1DC /* UserDataResponse.swift */,
 				E387A82F2D4BCBDD006AD1DC /* UserGameHistory.swift */,
-				E387A8312D4BCFE6006AD1DC /* TopViewInfo.swift */,
 				E387A8332D4BD84A006AD1DC /* UserGameStatistic.swift */,
 			);
 			path = Models;
@@ -349,6 +355,7 @@
 				E3CED74A2D39972C00C5D2EF /* DailyBonusViewCell.swift */,
 				E3CED74E2D39A9DD00C5D2EF /* GamesViewCell.swift */,
 				E3CED7502D39AE1500C5D2EF /* LeaderBoardViewCell.swift */,
+				E36E94C92D4D63BF0032C0C0 /* LeaderboardUserCell.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -408,6 +415,8 @@
 				E3CED71A2D395CE700C5D2EF /* ProgressHUD */,
 				E3CED71D2D395CF100C5D2EF /* Alamofire */,
 				E3CED71F2D395CF100C5D2EF /* AlamofireDynamic */,
+				E36E94C52D4D53020032C0C0 /* Kingfisher */,
+				E36E94C72D4D53260032C0C0 /* Kingfisher */,
 			);
 			productName = StakeApp;
 			productReference = E3CED6F22D395B1D00C5D2EF /* StakeApp.app */;
@@ -442,6 +451,7 @@
 				E3CED7162D395CDE00C5D2EF /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
 				E3CED7192D395CE700C5D2EF /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E36E94C42D4D53020032C0C0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = E3CED6F32D395B1D00C5D2EF /* Products */;
 			projectDirPath = "";
@@ -489,6 +499,7 @@
 				E361A2552D3BA5A000E27466 /* LeftGamePointView.swift in Sources */,
 				E3CED72F2D395E0500C5D2EF /* UIFont+Extension.swift in Sources */,
 				E387A8342D4BD84A006AD1DC /* UserGameStatistic.swift in Sources */,
+				E36E94CA2D4D63BF0032C0C0 /* LeaderboardUserCell.swift in Sources */,
 				E38D5D662D3AF1AA0057D3CF /* ProfileButton+Extension.swift in Sources */,
 				E3CED7492D3976D200C5D2EF /* PointsView.swift in Sources */,
 				E3CED7312D395E1000C5D2EF /* Colors.swift in Sources */,
@@ -498,7 +509,7 @@
 				E38D5D4E2D3AB3960057D3CF /* GamePreviewView.swift in Sources */,
 				E3CED7432D39612C00C5D2EF /* ProfileView.swift in Sources */,
 				E3CED7102D395CBE00C5D2EF /* SignInController.swift in Sources */,
-				E387A8322D4BCFE6006AD1DC /* TopViewInfo.swift in Sources */,
+				E387A8322D4BCFE6006AD1DC /* UserDataResponse.swift in Sources */,
 				E38D5D5A2D3ACCF70057D3CF /* BonusesView+Extension.swift in Sources */,
 				E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */,
 				E38D5D582D3AC3820057D3CF /* BonusesStringAttributed.swift in Sources */,
@@ -751,6 +762,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E36E94C42D4D53020032C0C0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.4;
+			};
+		};
 		E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -786,6 +805,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E36E94C52D4D53020032C0C0 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E36E94C42D4D53020032C0C0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		E36E94C72D4D53260032C0C0 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E36E94C42D4D53020032C0C0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		E3CED7122D395CD600C5D2EF /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */;

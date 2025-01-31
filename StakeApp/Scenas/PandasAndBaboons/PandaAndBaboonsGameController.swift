@@ -742,6 +742,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             }
         }
 
+        //MARK: here should make get method
         //MARK: Check if all boxes are open
         if checkIfAllBoxesAreOpen() {
             winOrLoseView.isHidden = false

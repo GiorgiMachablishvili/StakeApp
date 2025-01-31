@@ -36,6 +36,9 @@ class ProfileView: UIViewController {
         view.makeRoundCorners(20)
         view.backgroundColor = .pointViewColor
         view.isHidden = true
+        view.didPressSaveButton = { [weak self] in
+            self?.updateUserInfo()
+        }
         view.didPressCancelButton = { [weak self] in
             self?.hideView()
         }
@@ -51,8 +54,12 @@ class ProfileView: UIViewController {
         setupHierarchy()
         configureCompositionLayout()
 
-        fetchUserData()
+//        fetchUserData()
         fetchUserGameStatistic()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        fetchUserData()
     }
 
     private func setup() {
@@ -125,6 +132,8 @@ class ProfileView: UIViewController {
             }
         }
     }
+
+    
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
@@ -281,6 +290,48 @@ class ProfileView: UIViewController {
         profileView.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
     }
+
+    @objc private func updateUserInfo() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("userId not found or not an Int")
+            return
+        }
+        // Get the selected image and nickname from the profile view
+        let selectedImage = profileView.selectedImage
+        let nickname = profileView.nicknameTextField.text
+
+        // Show loading indicator
+        NetworkManager.shared.showProgressHud(true, animated: true)
+
+        // Send the PATCH request
+        NetworkManager.shared.updateUserProfile(userId: userId, image: selectedImage, nickname: nickname) { [weak self] result in
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                NetworkManager.shared.showProgressHud(false, animated: false)
+            }
+
+            switch result {
+            case .success(let userData):
+                // Update the UI with the new user data
+                self.userData = userData
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                    self.hideView() // Hide the edit profile view
+                }
+            case .failure(let error):
+                print("Failed to update user profile: \(error)")
+                // Show an error message to the user
+                self.showAlert(title: "Error", message: "Failed to update profile. Please try again.")
+            }
+        }
+    }
+
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
 }
 
 extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -323,11 +374,24 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? EditProfileCell else {
                 return UICollectionViewCell()
             }
-            cell.didPressEditProfileButton = { [weak self] in
+            if let userData = userData {
+                cell.configure(with: userData)
+            }
+            cell.didPressEditProfileButton = { [weak self] image in
                 guard let self = self else { return }
-                backgroundProfileView.isHidden = false
-                profileView.isHidden = false
+                self.backgroundProfileView.isHidden = false
+                self.profileView.isHidden = false
                 self.tabBarController?.tabBar.isHidden = true
+
+                // Pass the image to EditProfileView
+                self.profileView.workoutImage.image = image
+                self.profileView.selectedImage = image
+
+                //            cell.didPressEditProfileButton = { [weak self] in
+//                guard let self = self else { return }
+//                backgroundProfileView.isHidden = false
+//                profileView.isHidden = false
+//                self.tabBarController?.tabBar.isHidden = true
             }
             return cell
         case 2:
@@ -361,15 +425,31 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 
-extension ProfileView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//extension ProfileView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+//        picker.dismiss(animated: true, completion: nil)
+//
+//        // Get the selected image
+//        if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+//            profileView.workoutImage.image = selectedImage // Update the image view
+//            // You can also use the `didUpdateImage` callback if needed
+//        }
+//    }
+//
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        picker.dismiss(animated: true, completion: nil)
+//    }
+//}
 
+extension ProfileView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true, completion: nil)
 
         // Get the selected image
         if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             profileView.workoutImage.image = selectedImage // Update the image view
-            // You can also use the `didUpdateImage` callback if needed
+            profileView.selectedImage = selectedImage // Store the selected image
         }
     }
 

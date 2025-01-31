@@ -23,6 +23,8 @@
 		E36E94C62D4D53020032C0C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E36E94C52D4D53020032C0C0 /* Kingfisher */; };
 		E36E94C82D4D53260032C0C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E36E94C72D4D53260032C0C0 /* Kingfisher */; };
 		E36E94CA2D4D63BF0032C0C0 /* LeaderboardUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E94C92D4D63BF0032C0C0 /* LeaderboardUserCell.swift */; };
+		E36E94CC2D4D6EB90032C0C0 /* UpdateUserImageAndName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E94CB2D4D6EB90032C0C0 /* UpdateUserImageAndName.swift */; };
+		E36E94CE2D4D72350032C0C0 /* NetwokManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E94CD2D4D72350032C0C0 /* NetwokManager+Extension.swift */; };
 		E387A82C2D4BC5A3006AD1DC /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A82B2D4BC5A3006AD1DC /* URL+Extension.swift */; };
 		E387A82E2D4BC641006AD1DC /* UserCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A82D2D4BC641006AD1DC /* UserCreate.swift */; };
 		E387A8302D4BCBDD006AD1DC /* UserGameHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E387A82F2D4BCBDD006AD1DC /* UserGameHistory.swift */; };
@@ -93,6 +95,8 @@
 		E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOrLoseView.swift; sourceTree = "<group>"; };
 		E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandaAndBaboonsGameController.swift; sourceTree = "<group>"; };
 		E36E94C92D4D63BF0032C0C0 /* LeaderboardUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardUserCell.swift; sourceTree = "<group>"; };
+		E36E94CB2D4D6EB90032C0C0 /* UpdateUserImageAndName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserImageAndName.swift; sourceTree = "<group>"; };
+		E36E94CD2D4D72350032C0C0 /* NetwokManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetwokManager+Extension.swift"; sourceTree = "<group>"; };
 		E387A82B2D4BC5A3006AD1DC /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		E387A82D2D4BC641006AD1DC /* UserCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreate.swift; sourceTree = "<group>"; };
 		E387A82F2D4BCBDD006AD1DC /* UserGameHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGameHistory.swift; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 				E387A8312D4BCFE6006AD1DC /* UserDataResponse.swift */,
 				E387A82F2D4BCBDD006AD1DC /* UserGameHistory.swift */,
 				E387A8332D4BD84A006AD1DC /* UserGameStatistic.swift */,
+				E36E94CB2D4D6EB90032C0C0 /* UpdateUserImageAndName.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				E3CED7272D395D6F00C5D2EF /* NetworkManager.swift */,
+				E36E94CD2D4D72350032C0C0 /* NetwokManager+Extension.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -509,6 +515,7 @@
 				E38D5D4E2D3AB3960057D3CF /* GamePreviewView.swift in Sources */,
 				E3CED7432D39612C00C5D2EF /* ProfileView.swift in Sources */,
 				E3CED7102D395CBE00C5D2EF /* SignInController.swift in Sources */,
+				E36E94CE2D4D72350032C0C0 /* NetwokManager+Extension.swift in Sources */,
 				E387A8322D4BCFE6006AD1DC /* UserDataResponse.swift in Sources */,
 				E38D5D5A2D3ACCF70057D3CF /* BonusesView+Extension.swift in Sources */,
 				E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */,
@@ -531,6 +538,7 @@
 				E32E36CA2D3FA66900C434E3 /* QuitOrContinueView.swift in Sources */,
 				E387A8302D4BCBDD006AD1DC /* UserGameHistory.swift in Sources */,
 				E3CED72B2D395DDE00C5D2EF /* Constraint.swift in Sources */,
+				E36E94CC2D4D6EB90032C0C0 /* UpdateUserImageAndName.swift in Sources */,
 				E38D5D602D3AE91F0057D3CF /* EditProfileCell.swift in Sources */,
 				E38D5D622D3AE9330057D3CF /* StaticCell.swift in Sources */,
 				E36789992D3D0B09009E2831 /* BonusCostView.swift in Sources */,

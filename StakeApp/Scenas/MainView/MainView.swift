@@ -38,8 +38,12 @@ class MainView: UIViewController {
         setupHierarchy()
         configureCompositionLayout()
 
-        fetchUserData()
+//        fetchUserData()
 //        fetchLeaderboardData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        fetchUserData()
     }
 
     private func setup() {

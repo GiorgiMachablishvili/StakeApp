@@ -7,10 +7,12 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class EditProfileCell: UICollectionViewCell {
 
-    var didPressEditProfileButton: (() -> Void)?
+//    var didPressEditProfileButton: (() -> Void)?
+    var didPressEditProfileButton: ((UIImage?) -> Void)?
 
     private lazy var workoutImage: UIImageView = {
         let view = UIImageView(frame: .zero)
@@ -21,6 +23,17 @@ class EditProfileCell: UICollectionViewCell {
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "avatar")
         //        view.isUserInteractionEnabled = true
+        return view
+    }()
+
+    lazy var userLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 16)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(16)
+        view.text = "1"
         return view
     }()
 
@@ -51,6 +64,14 @@ class EditProfileCell: UICollectionViewCell {
         return view
     }()
 
+    private lazy var pointView: PointsView = {
+        let view = PointsView()
+        view.backgroundColor = .pointViewColor
+        view.makeRoundCorners(16)
+        view.isHidden = true
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -63,9 +84,11 @@ class EditProfileCell: UICollectionViewCell {
 
     private func setup() {
         addSubview(workoutImage)
+        addSubview(userLevelLabel)
         addSubview(nameLabel)
         addSubview(expLabel)
         addSubview(editProfileButton)
+        addSubview(pointView)
     }
 
     private func setupConstraints() {
@@ -73,6 +96,12 @@ class EditProfileCell: UICollectionViewCell {
             make.top.equalTo(snp.top).offset(2 * Constraint.yCoeff)
             make.centerX.equalTo(snp.centerX)
             make.height.width.equalTo(100 * Constraint.yCoeff)
+        }
+
+        userLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(workoutImage.snp.top).offset(68 * Constraint.yCoeff)
+            make.leading.equalTo(workoutImage.snp.leading).offset(68 * Constraint.xCoeff)
+            make.height.width.equalTo(32 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in
@@ -92,6 +121,12 @@ class EditProfileCell: UICollectionViewCell {
             make.top.equalTo(expLabel.snp.bottom).offset(8 * Constraint.yCoeff)
             make.height.equalTo(39 * Constraint.yCoeff)
             make.width.equalTo(163 * Constraint.xCoeff)
+        }
+
+        pointView.snp.remakeConstraints { make in
+            make.top.equalTo(workoutImage.snp.top)
+            make.leading.equalTo(workoutImage.snp.trailing).offset(60)
+            make.height.width.equalTo(5)
         }
     }
 
@@ -115,6 +150,51 @@ class EditProfileCell: UICollectionViewCell {
     }
 
     @objc private func pressEditProfileButton() {
-        didPressEditProfileButton?()
+//        didPressEditProfileButton?()
+        didPressEditProfileButton?(workoutImage.image)
+    }
+
+    func updateExperiencePoints(add value: Int) {
+        guard let expText = expLabel.attributedText?.string else { return }
+
+        // Extract current experience and level
+        let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
+        let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
+        var newExp = currentExp + value
+
+        // Handle leveling up
+        if newExp >= 20 {
+            let levelsToAdd = newExp / 20
+            newExp = newExp % 20 // Remaining experience after leveling up
+            ExpLabel.defaultText = "\(currentLevel + levelsToAdd)"
+            userLevelLabel.text = ExpLabel.defaultText // Update level label
+        }
+
+        // Update the attributed text for experience points
+        let updatedExpString = NSMutableAttributedString()
+        updatedExpString.append(NSAttributedString(string: "EXP ", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+        updatedExpString.append(NSAttributedString(string: "\(newExp)", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+        updatedExpString.append(NSAttributedString(string: "/20", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
+
+        expLabel.attributedText = updatedExpString
+    }
+
+    func configure(with userData: UserDataResponse) {
+        nameLabel.text = userData.username
+        userLevelLabel.text = "\(userData.level)"
+        updateExperiencePoints(add: userData.experience)
+        pointView.pointLabel.text = "\(userData.points)"
+        if let imageUrl = URL(string: userData.image) {
+            workoutImage.kf.setImage(
+                with: imageUrl,
+                placeholder: UIImage(named: "avatar"),
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
+        } else {
+            workoutImage.image = UIImage(named: "avatar")
+        }
     }
 }

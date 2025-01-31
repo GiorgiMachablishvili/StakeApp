@@ -32,6 +32,10 @@ class HistoryView: UIViewController {
         setupHierarchy()
         configureCompositionLayout()
 
+//        fetchUserData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
         fetchUserData()
     }
 

@@ -11,7 +11,17 @@ import SnapKit
 class EditProfileView: UIView {
 
     var didPressCancelButton: (() -> Void)?
+    var didPressSaveButton: (() -> Void)?
     var didUpdateImage: ((UIImage) -> Void)?
+
+//    var selectedImage: UIImage?
+    var nickname: String?
+
+    var selectedImage: UIImage? {
+        didSet {
+            workoutImage.image = selectedImage // Update the image view
+        }
+    }
 
     private lazy var backgroundTopView: UIView = {
         let view = UIView(frame: .zero)
@@ -46,7 +56,6 @@ class EditProfileView: UIView {
     private lazy var editImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
-//        view.backgroundColor = UIColor.titlesBlack
         view.makeRoundCorners(16)
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
@@ -61,26 +70,9 @@ class EditProfileView: UIView {
         return view
     }()
 
-    private lazy var nicknameTextField: UITextField = {
+    lazy var nicknameTextField: UITextField = {
         let view = UITextField(frame: .zero)
         view.placeholder = "Your Nickname "
-        view.font = UIFont.montserratBold(size: 20)
-        view.textColor = UIColor.whiteColor
-        view.textAlignment = .left
-        view.backgroundColor = .clear
-        return view
-    }()
-
-    private lazy var birthdayBackgroundView: UIView = {
-        let view = UIView(frame: .zero)
-        view.makeRoundCorners(20)
-        view.backgroundColor = UIColor.titlesBlack
-        return view
-    }()
-
-    private lazy var birthdayTextField: UITextField = {
-        let view = UITextField(frame: .zero)
-        view.placeholder = "Your birthday"
         view.font = UIFont.montserratBold(size: 20)
         view.textColor = UIColor.whiteColor
         view.textAlignment = .left
@@ -124,8 +116,6 @@ class EditProfileView: UIView {
         addSubview(editImage)
         addSubview(nicknameBackgroundView)
         nicknameBackgroundView.addSubview(nicknameTextField)
-        addSubview(birthdayBackgroundView)
-        birthdayBackgroundView.addSubview(birthdayTextField)
         addSubview(saveButton)
         addSubview(cancelButton)
     }
@@ -150,7 +140,7 @@ class EditProfileView: UIView {
         }
 
         nicknameBackgroundView.snp.remakeConstraints { make in
-            make.top.equalTo(workoutImage.snp.bottom).offset(20 * Constraint.yCoeff)
+            make.top.equalTo(workoutImage.snp.bottom).offset(30 * Constraint.yCoeff)
             make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
             make.height.equalTo(55 * Constraint.yCoeff)
         }
@@ -161,20 +151,8 @@ class EditProfileView: UIView {
             make.height.equalTo(40 * Constraint.yCoeff)
         }
 
-        birthdayBackgroundView.snp.remakeConstraints { make in
-            make.top.equalTo(nicknameBackgroundView.snp.bottom).offset(8 * Constraint.yCoeff)
-            make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
-            make.height.equalTo(55 * Constraint.yCoeff)
-        }
-
-        birthdayTextField.snp.remakeConstraints { make in
-            make.centerY.equalTo(birthdayBackgroundView.snp.centerY)
-            make.leading.trailing.equalToSuperview().inset(12 * Constraint.xCoeff)
-            make.height.equalTo(40 * Constraint.yCoeff)
-        }
-
         saveButton.snp.remakeConstraints { make in
-            make.top.equalTo(birthdayBackgroundView.snp.bottom).offset(20 * Constraint.yCoeff)
+            make.top.equalTo(nicknameBackgroundView.snp.bottom).offset(50 * Constraint.yCoeff)
             make.leading.trailing.equalToSuperview().inset(20 * Constraint.xCoeff)
             make.height.equalTo(52 * Constraint.yCoeff)
         }
@@ -185,7 +163,6 @@ class EditProfileView: UIView {
             make.height.equalTo(52 * Constraint.yCoeff)
         }
     }
-
 
     @objc private func didTapUserImageView() {
         print("did press image")
@@ -198,7 +175,8 @@ class EditProfileView: UIView {
        }
 
     @objc private func pressSaveButton() {
-
+        self.nickname = nicknameTextField.text
+        didPressSaveButton?()
     }
 
     @objc private func pressCancelButton() {

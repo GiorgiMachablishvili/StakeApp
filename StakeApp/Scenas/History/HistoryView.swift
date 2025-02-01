@@ -11,6 +11,8 @@ import SnapKit
 class HistoryView: UIViewController {
 
     private var userData: UserDataResponse?
+    private var userHistoryInfo: UserGameHistory?
+    private var userHistoryList: [UserGameHistory] = []
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -19,6 +21,26 @@ class HistoryView: UIViewController {
         view.dataSource = self
         view.delegate = self
         view.backgroundColor = UIColor(hexString: "#17191D")
+        return view
+    }()
+
+    private lazy var emptyLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.text = "Empty"
+        view.font = UIFont.montserratBlack(size: 20)
+        view.textColor = UIColor.whiteColor
+        view.textAlignment = .center
+        view.isHidden = true
+        return view
+    }()
+
+    private lazy var emptyLabelInfo: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.text = "You haven't played any games yet"
+        view.font = UIFont.montserratBold(size: 12)
+        view.textColor = UIColor.grayLabel
+        view.textAlignment = .center
+        view.isHidden = true
         return view
     }()
 
@@ -32,6 +54,7 @@ class HistoryView: UIViewController {
         setupHierarchy()
         configureCompositionLayout()
 
+        hideOrNotEmptyLabel()
 //        fetchUserData()
     }
 
@@ -41,6 +64,8 @@ class HistoryView: UIViewController {
 
     private func setup() {
         view.addSubview(collectionView)
+        view.addSubview(emptyLabel)
+        view.addSubview(emptyLabelInfo)
 
     }
 
@@ -48,11 +73,33 @@ class HistoryView: UIViewController {
         collectionView.snp.remakeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
         }
+
+        emptyLabel.snp.remakeConstraints { make in
+            make.top.equalTo(view.snp.top).offset(370 * Constraint.yCoeff)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(24 * Constraint.yCoeff)
+        }
+
+        emptyLabelInfo.snp.remakeConstraints { make in
+            make.top.equalTo(emptyLabel.snp.bottom).offset(16 * Constraint.yCoeff)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(15 * Constraint.yCoeff)
+        }
     }
 
     func setupHierarchy() {
         collectionView.register(TopHistoryCell.self, forCellWithReuseIdentifier: String(describing: TopHistoryCell.self))
         collectionView.register(DailyGameCell.self, forCellWithReuseIdentifier: String(describing: DailyGameCell.self))
+    }
+
+    func hideOrNotEmptyLabel() {
+        if userHistoryList.count > 0 {
+            emptyLabel.isHidden = true
+            emptyLabelInfo.isHidden = true
+        } else {
+            emptyLabel.isHidden = false
+            emptyLabelInfo.isHidden = false
+        }
     }
 
 
@@ -67,6 +114,26 @@ class HistoryView: UIViewController {
             switch result {
             case .success(let userData):
                 self.userData = userData
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to fetch user data: \(error)")
+            }
+        }
+    }
+
+    private func fetchUserGameHistory() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("userId not found or not an Int")
+            return
+        }
+
+        let url = String.userGameHistoryGet(userId: userId)
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[UserGameHistory]>) in
+            switch result {
+            case .success(let userHistoryList):
+                self.userHistoryList = userHistoryList
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -165,7 +232,7 @@ extension HistoryView: UICollectionViewDataSource, UICollectionViewDelegate {
         case 0:
             return 1
         case 1:
-            return 1
+            return userHistoryList.count
         default:
             return 0
         }
@@ -189,6 +256,8 @@ extension HistoryView: UICollectionViewDataSource, UICollectionViewDelegate {
                 for: indexPath) as? DailyGameCell else {
                 return UICollectionViewCell()
             }
+            let historyEntry = userHistoryList[indexPath.item]
+            cell.configure(with: historyEntry)
             return cell
         default:
             return UICollectionViewCell()

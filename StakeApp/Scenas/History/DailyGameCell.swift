@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class DailyGameCell: UICollectionViewCell {
     private lazy var dataLabel: BonusesStringAttributed = {
@@ -71,6 +72,17 @@ class DailyGameCell: UICollectionViewCell {
         return view
     }()
 
+    lazy var userLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 13)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(10)
+        view.text = "1"
+        return view
+    }()
+
     private lazy var userName: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Tedo"
@@ -88,6 +100,17 @@ class DailyGameCell: UICollectionViewCell {
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "avatar")
+        return view
+    }()
+
+    lazy var opponentLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 13)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(10)
+        view.text = "1"
         return view
     }()
 
@@ -131,8 +154,10 @@ class DailyGameCell: UICollectionViewCell {
         backgroundDailyGameView.addSubview(winOrLossLabel)
         backgroundDailyGameView.addSubview(vsLabel)
         backgroundDailyGameView.addSubview(userImage)
+        backgroundDailyGameView.addSubview(userLevelLabel)
         backgroundDailyGameView.addSubview(userName)
         backgroundDailyGameView.addSubview(opponentImage)
+        backgroundDailyGameView.addSubview(opponentLevelLabel)
         backgroundDailyGameView.addSubview(opponentName)
         backgroundDailyGameView.addSubview(leftPointView)
         backgroundDailyGameView.addSubview(rightPointView)
@@ -188,6 +213,12 @@ class DailyGameCell: UICollectionViewCell {
             make.height.width.equalTo(56 * Constraint.yCoeff)
         }
 
+        userLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(userImage.snp.top).offset(40 * Constraint.yCoeff)
+            make.leading.equalTo(userImage.snp.leading).offset(40 * Constraint.xCoeff)
+            make.height.width.equalTo(20 * Constraint.yCoeff)
+        }
+
         opponentName.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
             make.leading.equalTo(vsLabel.snp.trailing).offset(23 * Constraint.xCoeff)
@@ -198,6 +229,12 @@ class DailyGameCell: UICollectionViewCell {
             make.centerY.equalTo(vsLabel.snp.centerY)
             make.leading.equalTo(opponentName.snp.trailing).offset(12 * Constraint.xCoeff)
             make.height.width.equalTo(56 * Constraint.yCoeff)
+        }
+
+        opponentLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(opponentImage.snp.top).offset(40 * Constraint.yCoeff)
+            make.leading.equalTo(opponentImage.snp.leading).offset(40 * Constraint.xCoeff)
+            make.height.width.equalTo(20 * Constraint.yCoeff)
         }
 
         leftPointView.snp.remakeConstraints { make in
@@ -213,5 +250,20 @@ class DailyGameCell: UICollectionViewCell {
             make.height.equalTo(36 * Constraint.yCoeff)
             make.width.equalTo(65 * Constraint.yCoeff)
         }
+    }
+
+    func configure(with userData: UserGameHistory) {
+        timeLabel.text = "\(userData.time)"
+        dataLabel.labelText = userData.data
+        gameTitle.text = userData.gameName
+        winOrLossLabel.text = "\(userData.result)"
+        userImage.kf.setImage(with: URL(string: userData.userImage))
+        userLevelLabel.text  = "\(userData.userLevel)"
+        userName.text = userData.userName
+        opponentImage.kf.setImage(with: URL(string: userData.opponentImage))
+        opponentLevelLabel.text = "\(userData.opponentLevel)"
+        opponentName.text = userData.opponentName
+        leftPointView.pointLabel.text = "\(userData.userGameScore)"
+        rightPointView.pointLabel.text = "\(userData.opponentGameScore)"
     }
 }

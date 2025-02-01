@@ -502,7 +502,7 @@ class MinerGameController: UIViewController {
                 "opponentId": score.opponentId
             ]
 
-            let url = String.userGameHistory()
+            let url = String.userGameHistoryPost()
             NetworkManager.shared.showProgressHud(true, animated: true)
             NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
                 NetworkManager.shared.showProgressHud(false, animated: false)

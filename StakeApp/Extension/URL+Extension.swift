@@ -21,8 +21,12 @@ extension String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
     }
 
-    static func userGameHistory() -> String {
+    static func userGameHistoryPost() -> String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/history/"
+    }
+
+    static func userGameHistoryGet(userId: Int) -> String {
+        return "https://stake-us-66f6608d21e4.herokuapp.com/history/\(userId)"
     }
 
     static func userDelete(userId: String) -> String {

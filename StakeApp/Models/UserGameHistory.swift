@@ -7,23 +7,35 @@
 
 import UIKit
 
-public struct UserUserGameHistory: Codable {
+public struct UserGameHistory: Codable {
+    let time: Int
+    let gameName: String
+    let result: Bool
+    let userImage: String
+    let userLevel: Int
+    let userName: String
+    let opponentImage: String
+    let opponentLevel: Int
+    let opponentName: String
+    let userGameScore: Int
+    let opponentGameScore: Int
+    let data: String
     let userId: Int
     let opponentId: Int
-    let result: Bool
-    let points: Int
-    let exp: Int
-    let coin: Int
-    let data: String
-    let gameName: String
-    let image: String
-    let level: Int
-    let id: Int
 
     enum CodingKeys: String, CodingKey {
+        case time, result, data
+        case gameName = "game_name"
+        case userImage = "user_image"
+        case userLevel = "user_level"
+        case userName = "user_name"
+        case opponentImage = "opponent_image"
+        case opponentLevel = "opponent_level"
+        case opponentName = "opponent_name"
+        case userGameScore = "user_game_score"
+        case opponentGameScore = "opponent_game_score"
         case userId = "user_id"
         case opponentId = "opponent_id"
-        case result, points, exp, coin, data, image, level, id
-        case gameName = "game_name"
     }
 }
+

@@ -31,6 +31,8 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private var isOpponentBlocked: Bool = false
 
+    var userGameHistory: [UserGameHistory] = []
+
     private lazy var gameCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: boxSize, height: boxSize)
@@ -780,6 +782,95 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                     topViewCell.updateExperiencePoints(add: -1)
                 }
             }
+
+            func updateWorkoutScore(for sport: String) {
+                guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+                    return
+                }
+
+                var result = Bool()
+
+                if userPoints >= opponentCost {
+                    result = true
+                } else {
+                    result = false
+                }
+                // Add day/month/year
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yy"
+                let currentDate = dateFormatter.string(from: Date())
+
+                // Add time in AM/PM format
+                dateFormatter.dateFormat = "hh:mm a"
+                let currentTimeString = Int(dateFormatter.string(from: Date())) ?? 0
+
+                let userImage = ""
+
+                let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1
+
+                let userName = gameTimerView.userName.text ?? "User_123"
+
+                let opponentImage = ""
+
+                let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1
+
+                let opponentName = gameTimerView.opponentName.text ?? "User_234"
+
+                // Create a new WorkoutScore instance
+                let newScore = UserGameHistory(
+                    time: currentTimeString,
+                    gameName: "MINERS",
+                    result: result,
+                    userImage: userImage,
+                    userLevel: userLevel,
+                    userName: userName,
+                    opponentImage: opponentImage,
+                    opponentLevel: opponentLevel,
+                    opponentName: opponentName,
+                    userGameScore: userPoints,
+                    opponentGameScore: opponentCost,
+                    data: currentDate,
+                    userId: userId,
+                    opponentId: 0
+                )
+
+                userGameHistory.append(newScore)
+
+                postUserScore(newScore)
+            }
+
+            func postUserScore(_ score: UserGameHistory) {
+                let parameters: [String: Any] = [
+                    "time": score.time,
+                    "gameName": score.gameName,
+                    "result": score.result,
+                    "userImage": score.userImage,
+                    "userLevel": score.userLevel,
+                    "userName": score.userName,
+                    "opponentImage": score.opponentImage,
+                    "opponentLevel": score.opponentLevel,
+                    "opponentName": score.opponentName,
+                    "userGameScore": score.userGameScore,
+                    "opponentGameScore": score.opponentGameScore,
+                    "data": score.data,
+                    "userId": score.userId,
+                    "opponentId": score.opponentId
+                ]
+
+                let url = String.userGameHistory()
+                NetworkManager.shared.showProgressHud(true, animated: true)
+                NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
+                    NetworkManager.shared.showProgressHud(false, animated: false)
+                    switch result {
+                    case .success(let response):
+                        print("Workout saved successfully: \(response)")
+                    case .failure(let error):
+                        print("Error saving workout: \(error.localizedDescription)")
+                        print("Request Parameters: \(parameters)")
+                    }
+                }
+            }
+
             return
         }
 

@@ -147,14 +147,6 @@ class TopHistoryCell: UICollectionViewCell {
         let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
         var newExp = currentExp + value
 
-        // Handle leveling up
-        if newExp >= 20 {
-            let levelsToAdd = newExp / 20
-            newExp = newExp % 20 // Remaining experience after leveling up
-            ExpLabel.defaultText = "\(currentLevel + levelsToAdd)"
-            userLevelLabel.text = ExpLabel.defaultText // Update level label
-        }
-
         // Update the attributed text for experience points
         let updatedExpString = NSMutableAttributedString()
         updatedExpString.append(NSAttributedString(string: "EXP ", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))

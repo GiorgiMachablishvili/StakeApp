@@ -75,7 +75,7 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-    private lazy var userName: UILabel = {
+    lazy var userName: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Tedo"
         view.font = UIFont.montserratBold(size: 13)

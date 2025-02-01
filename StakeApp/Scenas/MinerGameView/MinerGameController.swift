@@ -17,7 +17,7 @@ class MinerGameController: UIViewController {
     private var pointIncrementTimer: Timer?
     private var pointInterval: TimeInterval = 1.0
 
-    private var botPointsTimeInterval = 0.4
+    private var botPointsTimeInterval = 0.5
 
     private var isUserBlocked: Bool = false
     private var isOpponentScoreBlocked: Bool = false
@@ -313,7 +313,7 @@ class MinerGameController: UIViewController {
         //MARK: auto press double point button
         if remainingSeconds == 30 {
             //MARK: Generate a random number of bomb presses (1 to 3)
-            let doublePointCount = Int.random(in: 1...2)
+            let doublePointCount = Int.random(in: 0...2)
             print("Opponent will press double button \(doublePointCount) time(s)")
 
             //MARK: Schedule the double button presses over the remaining time
@@ -428,11 +428,12 @@ class MinerGameController: UIViewController {
             }
         }
 
-        func updateWorkoutScore(for sport: String) {
+        func updateWorkoutScore() {
             guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
                 return
             }
-
+            
+            //TODO: does not comes here
             var result = Bool()
 
             if userPoints >= opponentCost {
@@ -480,7 +481,6 @@ class MinerGameController: UIViewController {
             )
 
             userGameHistory.append(newScore)
-
             postUserScore(newScore)
         }
 

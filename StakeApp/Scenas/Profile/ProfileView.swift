@@ -113,7 +113,6 @@ class ProfileView: UIViewController {
         }
     }
 
-
     private func fetchUserGameStatistic() {
         guard let userId = UserDefaults.standard.value(forKey: "userId") as? String else {
             return
@@ -133,7 +132,6 @@ class ProfileView: UIViewController {
         }
     }
 
-    
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in

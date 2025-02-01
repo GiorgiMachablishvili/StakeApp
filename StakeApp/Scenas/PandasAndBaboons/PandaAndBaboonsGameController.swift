@@ -783,7 +783,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                 }
             }
 
-            func updateWorkoutScore(for sport: String) {
+            func updateWorkoutScore() {
                 guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
                     return
                 }

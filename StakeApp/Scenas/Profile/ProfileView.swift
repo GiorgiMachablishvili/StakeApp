@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Alamofire
+import AuthenticationServices
 
 class ProfileView: UIViewController {
 
@@ -330,6 +331,130 @@ class ProfileView: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
+
+    private func createUser() {
+        NetworkManager.shared.showProgressHud(true, animated: true)
+
+        let pushToken = UserDefaults.standard.string(forKey: "PushToken") ?? ""
+        let appleToken = UserDefaults.standard.string(forKey: "AccountCredential") ?? ""
+
+        // Prepare parameters
+        let parameters: [String: Any] = [
+            "push_token": pushToken,
+            "apple_token": appleToken,
+        ]
+
+        // Make the network request
+        NetworkManager.shared.post(
+//            url: String.userCreate(),
+            url: "https://stake-us-66f6608d21e4.herokuapp.com/users/register",
+            parameters: parameters,
+            headers: nil
+        ) { [weak self] (result: Result<UserCreate>) in
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                NetworkManager.shared.showProgressHud(false, animated: false)
+                UserDefaults.standard.setValue(false, forKey: "isGuestUser")
+            }
+            print("\(parameters)")
+
+            switch result {
+            case .success(let userInfo):
+                DispatchQueue.main.async {
+                    print("User created: \(userInfo)")
+                    UserDefaults.standard.setValue(userInfo.id, forKey: "userId")
+                    print("Received User ID: \(userInfo.id)")
+
+                    let mainVC = MainViewControllerTab()
+                    self.navigationController?.isNavigationBarHidden = true
+                    self.navigationController?.pushViewController(mainVC, animated: true)
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Error", description: error.localizedDescription)
+                }
+                print("Error: \(error)")
+            }
+        }
+//        let mainVC = MainViewControllerTab()
+//        navigationController?.isNavigationBarHidden = true
+//        navigationController?.pushViewController(mainVC, animated: true)
+    }
+
+    private func showAlert(title: String, description: String) {
+        let alert = UIAlertController(title: title, message: description, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
+    private func deleteUserAccount() {
+        let alertController = UIAlertController(
+            title: "Delete Account",
+            message: "Are you sure you want to delete your account? This action cannot be undone.",
+            preferredStyle: .alert
+        )
+        // Define the delete action
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            guard let userId = UserDefaults.standard.value(forKey: "userId") as? String else {
+                return
+            }
+
+            let url = String.userDelete(userId: userId)
+
+            NetworkManager.shared.delete(url: url, parameters: nil, headers: nil) { (result: Result<EmptyResponse>) in
+                switch result {
+                case .success:
+                    print("Account deleted successfully")
+                    UserDefaults.standard.removeObject(forKey: "userId")
+                    DispatchQueue.main.async {
+                        let successAlert = UIAlertController(
+                            title: "Account Deleted",
+                            message: "Your account has been deleted successfully.",
+                            preferredStyle: .alert
+                        )
+                        successAlert.addAction(UIAlertAction(title: "Delete", style: .default) { _ in
+                            self.removeSignInControllerAndNavigate()
+                        })
+                        self.present(successAlert, animated: true)
+                    }
+                case .failure(let error):
+                    print("Failed to delete account: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        let errorAlert = UIAlertController(
+                            title: "Error",
+                            message: "Failed to delete account. Please try again later.",
+                            preferredStyle: .alert
+                        )
+                        errorAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(errorAlert, animated: true)
+                    }
+                }
+            }
+        }
+
+        // Define the cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+
+        // Add actions to the alert controller
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+
+        // Present the alert controller
+        self.present(alertController, animated: true)
+    }
+
+    private func removeSignInControllerAndNavigate() {
+        if let navigationController = navigationController {
+            var viewControllers = navigationController.viewControllers
+            // Remove SignInController if it's in the stack
+            viewControllers.removeAll { $0 is SignInController }
+            navigationController.setViewControllers(viewControllers, animated: false)
+
+            // Navigate to the initial screen or dashboard
+            navigationController.popToRootViewController(animated: true)
+        }
+    }
 }
 
 extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -408,6 +533,13 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? SettingCell else {
                 return UICollectionViewCell()
             }
+            cell.pressSignInWithAppleButton = { [weak self] in
+                self?.createUser()
+            }
+
+            cell.pressDeleteButton = { [weak self] in
+                self?.deleteUserAccount()
+            }
             return cell
         case 4:
             guard let cell = collectionView.dequeueReusableCell(
@@ -453,5 +585,52 @@ extension ProfileView: UIImagePickerControllerDelegate, UINavigationControllerDe
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+//MARK: create account
+extension ProfileView: ASAuthorizationControllerDelegate /*ASAuthorizationControllerPresentationContextProviding*/ {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
+
+        UserDefaults.standard.setValue(credential.user, forKey: "AccountCredential")
+//        createUser()
+    }
+
+    //    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    //        print("Authorization failed: \(error.localizedDescription)")
+    //        showAlert(title: "Sign In Failed", description: error.localizedDescription)
+    //    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        let nsError = error as NSError
+        if nsError.domain == ASAuthorizationError.errorDomain {
+            switch nsError.code {
+            case ASAuthorizationError.canceled.rawValue:
+                print("User canceled the Apple Sign-In process.")
+                // Optionally show a message or simply return
+                return
+            case ASAuthorizationError.failed.rawValue:
+                print("Sign-In failed.")
+                showAlert(title: "Sign In Failed", description: "Something went wrong. Please try again.")
+            case ASAuthorizationError.invalidResponse.rawValue:
+                print("Invalid response from Apple Sign-In.")
+                showAlert(title: "Invalid Response", description: "We couldn't authenticate you. Please try again.")
+            case ASAuthorizationError.notHandled.rawValue:
+                print("Apple Sign-In not handled.")
+                showAlert(title: "Not Handled", description: "The request wasn't handled. Please try again.")
+            case ASAuthorizationError.unknown.rawValue:
+                print("An unknown error occurred.")
+                showAlert(title: "Unknown Error", description: "An unknown error occurred. Please try again.")
+            default:
+                break
+            }
+        } else {
+            print("Authorization failed with error: \(error.localizedDescription)")
+            showAlert(title: "Sign In Failed", description: error.localizedDescription)
+        }
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
     }
 }

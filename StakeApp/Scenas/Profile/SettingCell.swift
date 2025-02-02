@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 
 class SettingCell: UICollectionViewCell {
+
+    var pressSignInWithAppleButton: (() -> Void)?
+    var pressDeleteButton: (() -> Void)?
+
     private lazy var bonusesLabel: BonusesStringAttributed = {
         let view = BonusesStringAttributed()
         view.backgroundColor = .clear
@@ -182,11 +186,11 @@ class SettingCell: UICollectionViewCell {
 
     //TODO: signin
     @objc private func clickSignInWithAppleButton() {
-
+        pressSignInWithAppleButton?()
     }
     //TODO: delete
     @objc private func clickDeleteButton() {
-
+        pressDeleteButton?()
     }
 
 

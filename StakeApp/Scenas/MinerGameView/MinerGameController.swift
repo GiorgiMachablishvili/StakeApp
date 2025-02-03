@@ -412,9 +412,9 @@ class MinerGameController: UIViewController {
             winOrLoseView.expPoints.isHidden = false
             winOrLoseView.isHidden = false
 
-            if let topViewCell = getTopViewCell() {
-                topViewCell.updateExperiencePoints(add: 10)
-            }
+//            if let topViewCell = getTopViewCell() {
+//                topViewCell.updateExperiencePoints(add: 10)
+//            }
 
         } else {
             winOrLoseView.winOrLoseLabel.text = "LOSE"
@@ -423,99 +423,89 @@ class MinerGameController: UIViewController {
             winOrLoseView.redExpPoints.isHidden = false
             winOrLoseView.isHidden = false
 
-            if let topViewCell = getTopViewCell() {
-                topViewCell.updateExperiencePoints(add: -1)
-            }
+//            if let topViewCell = getTopViewCell() {
+//                topViewCell.updateExperiencePoints(add: -1)
+//            }
+        }
+        updateWorkoutScore()
+    }
+
+    private func updateWorkoutScore() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("❌ Error: No userId found in UserDefaults")
+            return
         }
 
-        func updateWorkoutScore() {
-            guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
-                return
-            }
-            
-            //TODO: does not comes here
-            var result = Bool()
+        let result = currentLeftPoints >= Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0
 
-            if userPoints >= opponentCost {
-                result = true
-            } else {
-                result = false
-            }
-            // Add day/month/year
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yy"
-            let currentDate = dateFormatter.string(from: Date())
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yy"
+        let currentDate = dateFormatter.string(from: Date())
 
-            // Add time in AM/PM format
-            dateFormatter.dateFormat = "hh:mm a"
-            let currentTimeString = Int(dateFormatter.string(from: Date())) ?? 0
+        dateFormatter.dateFormat = "hh:mm a"
+        let currentTimeString = dateFormatter.string(from: Date())
 
-            let userImage = ""
+        let userImage = gameTimerView.userImage
 
-            let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1
+        let opponentImage = gameTimerView.opponentImage
 
-            let userName = gameTimerView.userName.text ?? "User_123"
+        let newScore = UserGameHistory(
+            time: currentTimeString,
+            gameName: "MINERS",
+            result: result,
+            userImage: "\(userImage)",
+            userLevel: Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1,
+            userName: gameTimerView.userName.text ?? "User_123",
+            opponentImage: "\(opponentImage)",
+            opponentLevel: Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1,
+            opponentName: gameTimerView.opponentName.text ?? "User_234",
+            userGameScore: currentLeftPoints,
+            opponentGameScore: Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0,
+            data: currentDate,
+            userId: userId,
+            opponentId: 0
+        )
 
-            let opponentImage = ""
+        userGameHistory.append(newScore)
 
-            let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1
+        postUserScore(newScore)
+    }
 
-            let opponentName = gameTimerView.opponentName.text ?? "User_234"
+    private func postUserScore(_ score: UserGameHistory) {
+        let parameters: [String: Any] = [
+            "time": score.time,
+            "gameName": score.gameName,
+            "result": score.result,
+            "userImage": score.userImage,
+            "userLevel": score.userLevel,
+            "userName": score.userName,
+            "opponentImage": score.opponentImage,
+            "opponentLevel": score.opponentLevel,
+            "opponentName": score.opponentName,
+            "userGameScore": score.userGameScore,
+            "opponentGameScore": score.opponentGameScore,
+            "data": score.data,
+            "userId": score.userId,
+            "opponentId": score.opponentId
+        ]
 
-            // Create a new WorkoutScore instance
-            let newScore = UserGameHistory(
-                time: currentTimeString,
-                gameName: "MINERS",
-                result: result,
-                userImage: userImage,
-                userLevel: userLevel,
-                userName: userName,
-                opponentImage: opponentImage,
-                opponentLevel: opponentLevel,
-                opponentName: opponentName,
-                userGameScore: userPoints,
-                opponentGameScore: opponentCost,
-                data: currentDate,
-                userId: userId, 
-                opponentId: 0
-            )
+        let url = String.userGameHistoryPost()
+        print("📡 Sending POST request to \(url) with parameters: \(parameters)")
 
-            userGameHistory.append(newScore)
-            postUserScore(newScore)
-        }
-
-        func postUserScore(_ score: UserGameHistory) {
-            let parameters: [String: Any] = [
-                "time": score.time,
-                "gameName": score.gameName,
-                "result": score.result,
-                "userImage": score.userImage,
-                "userLevel": score.userLevel,
-                "userName": score.userName,
-                "opponentImage": score.opponentImage,
-                "opponentLevel": score.opponentLevel,
-                "opponentName": score.opponentName,
-                "userGameScore": score.userGameScore,
-                "opponentGameScore": score.opponentGameScore,
-                "data": score.data,
-                "userId": score.userId,
-                "opponentId": score.opponentId
-            ]
-
-            let url = String.userGameHistoryPost()
-            NetworkManager.shared.showProgressHud(true, animated: true)
-            NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
-                NetworkManager.shared.showProgressHud(false, animated: false)
-                switch result {
-                case .success(let response):
-                    print("Workout saved successfully: \(response)")
-                case .failure(let error):
-                    print("Error saving workout: \(error.localizedDescription)")
-                    print("Request Parameters: \(parameters)")
-                }
+        NetworkManager.shared.showProgressHud(true, animated: true)
+        NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
+            NetworkManager.shared.showProgressHud(false, animated: false)
+            switch result {
+            case .success(let response):
+                print("✅ Workout saved successfully: \(response)")
+            case .failure(let error):
+                print("❌ Error saving workout: \(error.localizedDescription)")
+                print("❌ Request Parameters: \(parameters)")
             }
         }
     }
+
+
 
 
     //MARK: press gold button

@@ -14,6 +14,7 @@ class ProfileView: UIViewController {
 
     private var userData: UserDataResponse?
     private var userGameStats: UserGameStats?
+    private var leaderboardUsers: [LeaderBoardStatic] = []
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -57,6 +58,9 @@ class ProfileView: UIViewController {
 
 //        fetchUserData()
         fetchUserGameStatistic()
+        fetchLeaderboardData()
+
+        hiddenOrUnhidden()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -91,7 +95,7 @@ class ProfileView: UIViewController {
         collectionView.register(EditProfileCell.self, forCellWithReuseIdentifier: String(describing: EditProfileCell.self))
         collectionView.register(StaticCell.self, forCellWithReuseIdentifier: String(describing: StaticCell.self))
         collectionView.register(SettingCell.self, forCellWithReuseIdentifier: String(describing: SettingCell.self))
-        collectionView.register(LeaderBoardCell.self, forCellWithReuseIdentifier: String(describing: LeaderBoardCell.self))
+        collectionView.register(LeaderBoardViewCell.self, forCellWithReuseIdentifier: String(describing: LeaderBoardViewCell.self))
     }
 
     private func fetchUserData() {
@@ -133,6 +137,35 @@ class ProfileView: UIViewController {
         }
     }
 
+    private func fetchLeaderboardData() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("userId not found or not an Int")
+            return
+        }
+        let url = String.leaderBoard()
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[LeaderBoardStatic]>) in
+            switch result {
+            case .success(let users):
+                self.leaderboardUsers = users.sorted { $0.points > $1.points }
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to fetch user data: \(error)")
+            }
+        }
+    }
+
+    func hiddenOrUnhidden() {
+        let isGuestUser = UserDefaults.standard.bool(forKey: "isGuestUser")
+
+        // Find the settings section (assuming it's section index 3)
+        let settingsIndexPath = IndexPath(item: 0, section: 3)
+
+        if let cell = collectionView.cellForItem(at: settingsIndexPath) as? SettingCell {
+            cell.configureButtons(forGuest: isGuestUser)
+        }
+    }
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
@@ -543,34 +576,17 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case 4:
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: String(describing: LeaderBoardCell.self),
-                for: indexPath) as? LeaderBoardCell else {
+                withReuseIdentifier: String(describing: LeaderBoardViewCell.self),
+                for: indexPath) as? LeaderBoardViewCell else {
                 return UICollectionViewCell()
             }
+            cell.leaderboardUsers = leaderboardUsers
             return cell
         default:
             return UICollectionViewCell()
         }
     }
 }
-
-
-//extension ProfileView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-//        picker.dismiss(animated: true, completion: nil)
-//
-//        // Get the selected image
-//        if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
-//            profileView.workoutImage.image = selectedImage // Update the image view
-//            // You can also use the `didUpdateImage` callback if needed
-//        }
-//    }
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        picker.dismiss(animated: true, completion: nil)
-//    }
-//}
 
 extension ProfileView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {

@@ -16,7 +16,7 @@ class LeaderBoardView: UIView {
         return view
     }()
 
-    private lazy var ratingNumber: UILabel = {
+    lazy var ratingNumber: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "1"
         view.font = UIFont.montserratBold(size: 14)
@@ -25,7 +25,7 @@ class LeaderBoardView: UIView {
         return view
     }()
 
-    private lazy var workoutImage: UIImageView = {
+    lazy var workoutImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
         view.backgroundColor = UIColor.titlesBlack
@@ -36,7 +36,7 @@ class LeaderBoardView: UIView {
         return view
     }()
 
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Steve"
         view.font = UIFont.montserratBold(size: 13)
@@ -45,7 +45,18 @@ class LeaderBoardView: UIView {
         return view
     }()
 
-    private lazy var expLabel: UILabel = {
+    lazy var userLevelLabel: UILabel = {
+        let view = UILabel(frame: .zero)
+        view.font = UIFont.montserratMedium(size: 13)
+        view.backgroundColor = .userImageGrayBorderColor
+        view.textColor = .whiteColor
+        view.textAlignment = .center
+        view.makeRoundCorners(10)
+        view.text = "1"
+        return view
+    }()
+
+    lazy var expLabel: UILabel = {
         let view = UILabel()
         view.attributedText = createExpAttributedString()
         view.numberOfLines = 1
@@ -54,7 +65,7 @@ class LeaderBoardView: UIView {
         return view
     }()
 
-    private lazy var pointLabel: UILabel = {
+    lazy var pointLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "1420"
         view.font = UIFont.montserratBold(size: 14)
@@ -63,7 +74,7 @@ class LeaderBoardView: UIView {
         return view
     }()
 
-    private lazy var gameConcoleImage: UIImageView = {
+    lazy var gameConcoleImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
         view.backgroundColor = UIColor.clear
@@ -83,6 +94,7 @@ class LeaderBoardView: UIView {
         addSubview(backgroundLeaderBoardView)
         backgroundLeaderBoardView.addSubview(ratingNumber)
         backgroundLeaderBoardView.addSubview(workoutImage)
+        backgroundLeaderBoardView.addSubview(userLevelLabel)
         backgroundLeaderBoardView.addSubview(nameLabel)
         backgroundLeaderBoardView.addSubview(expLabel)
         backgroundLeaderBoardView.addSubview(pointLabel)
@@ -105,6 +117,12 @@ class LeaderBoardView: UIView {
             make.centerY.equalTo(backgroundLeaderBoardView.snp.centerY)
             make.leading.equalTo(ratingNumber.snp.trailing).offset(8 * Constraint.xCoeff)
             make.height.width.equalTo(48 * Constraint.yCoeff)
+        }
+
+        userLevelLabel.snp.remakeConstraints { make in
+            make.top.equalTo(workoutImage.snp.top).offset(30 * Constraint.yCoeff)
+            make.leading.equalTo(workoutImage.snp.leading).offset(30 * Constraint.xCoeff)
+            make.height.width.equalTo(20 * Constraint.yCoeff)
         }
 
         nameLabel.snp.remakeConstraints { make in

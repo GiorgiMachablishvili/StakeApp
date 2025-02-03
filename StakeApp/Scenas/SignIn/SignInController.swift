@@ -220,7 +220,7 @@ class SignInController: UIViewController {
         // Make the network request
         NetworkManager.shared.post(
 //            url: String.userCreate(),
-            url: "https://stake-us-66f6608d21e4.herokuapp.com/users/register",
+            url: String.userCreate(),
             parameters: parameters,
             headers: nil
         ) { [weak self] (result: Result<UserCreate>) in

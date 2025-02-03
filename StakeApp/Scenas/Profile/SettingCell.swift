@@ -99,6 +99,7 @@ class SettingCell: UICollectionViewCell {
         view.backgroundColor = UIColor(hexString: "#DF141E").withAlphaComponent(0.1)
         view.makeRoundCorners(16)
         view.addTarget(self, action: #selector(clickDeleteButton), for: .touchUpInside)
+        view.isHidden = true
         return view
     }()
 
@@ -192,6 +193,9 @@ class SettingCell: UICollectionViewCell {
     @objc private func clickDeleteButton() {
         pressDeleteButton?()
     }
-
-
+    
+    func configureButtons(forGuest isGuestUser: Bool) {
+        deleteButton.isHidden = isGuestUser
+        signInWithAppleButton.isHidden = !isGuestUser
+    }
 }

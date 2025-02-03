@@ -33,9 +33,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let mainViewController = MainViewControllerTab()
             UserDefaults.standard.setValue(false, forKey: "isGuestUser")
             window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+            if let navigationController = window?.rootViewController as? UINavigationController {
+                navigationController.setNavigationBarHidden(true, animated: false)
+            }
         } else {
             let signInViewController = SignInController()
             window?.rootViewController = UINavigationController(rootViewController: signInViewController)
+            if let navigationController = window?.rootViewController as? UINavigationController {
+                navigationController.setNavigationBarHidden(true, animated: false)
+            }
         }
     }
 

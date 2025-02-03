@@ -12,7 +12,8 @@ import Alamofire
 class MainView: UIViewController {
 
     private var userData: UserDataResponse?
-    private var leaderboardUsers: [UserDataResponse] = []
+    private var leaderboardUsers: [LeaderBoardStatic] = []
+    private var bonusTimer: BonusTimer?
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -38,12 +39,12 @@ class MainView: UIViewController {
         setupHierarchy()
         configureCompositionLayout()
 
-//        fetchUserData()
-//        fetchLeaderboardData()
+        fetchLeaderboardData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         fetchUserData()
+        fetchBonusTimer()
     }
 
     private func setup() {
@@ -89,8 +90,8 @@ class MainView: UIViewController {
             print("userId not found or not an Int")
             return
         }
-        let url = String.userDataResponse(userId: userId)
-        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[UserDataResponse]>) in
+        let url = String.leaderBoard()
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[LeaderBoardStatic]>) in
             switch result {
             case .success(let users):
                 self.leaderboardUsers = users.sorted { $0.points > $1.points }
@@ -103,6 +104,40 @@ class MainView: UIViewController {
         }
     }
 
+    private func fetchBonusTimer() {
+        let url = String.bonusTimer()
+
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<BonusTimer>) in
+            switch result {
+            case .success(let response):
+                print("Raw next_bonus_time from backend: \(response.nextBonusTime)")
+
+                let isoFormatter = ISO8601DateFormatter()
+                isoFormatter.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+
+                if let date = isoFormatter.date(from: response.nextBonusTime) {
+                    print("Parsed date: \(date)")
+                    let nextBonusTimestamp = date.timeIntervalSince1970
+                    DispatchQueue.main.async {
+                        self.updateBonusTimer(with: nextBonusTimestamp)
+                    }
+                } else {
+                    print("Error: Failed to parse next_bonus_time as a valid date")
+                }
+            case .failure(let error):
+                print("Failed to fetch bonus timer: \(error.localizedDescription)")
+            }
+        }
+    }
+
+
+
+    private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
+        // Find the DailyBonusViewCell and update its timer
+        if let dailyBonusCell = collectionView.visibleCells.first(where: { $0 is DailyBonusViewCell }) as? DailyBonusViewCell {
+            dailyBonusCell.startBonusTimer(with: nextBonusTimestamp)
+        }
+    }
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in

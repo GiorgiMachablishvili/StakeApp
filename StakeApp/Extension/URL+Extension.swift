@@ -13,8 +13,16 @@ extension String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/users/register"
     }
 
+    static func bonusTimer() -> String {
+        return "https://stake-us-66f6608d21e4.herokuapp.com/bonus/next"
+    }
+
     static func userDataResponse(userId: Int) -> String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
+    }
+
+    static func leaderBoard() -> String {
+        return "https://stake-us-66f6608d21e4.herokuapp.com/leaderboard"
     }
 
     static func userUpdateDate(userId: Int) -> String {
@@ -30,11 +38,10 @@ extension String {
     }
 
     static func userDelete(userId: String) -> String {
-        return "https://betus-workouts-98df47aa38c2.herokuapp.com/api/v1/users/\(userId)"
+        return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
     }
 
     static func getUserGameStatistic(userId: String) -> String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/user_statistics/\(userId)"
-
     }
 }

@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 class DailyBonusViewCell: UICollectionViewCell {
+    private var timer: Timer?
+    private var remainingTime: TimeInterval = 86400
+
     private lazy var backgroundTopView: UIView = {
         let view = UIView(frame: .zero)
         view.makeRoundCorners(24)
@@ -50,12 +53,9 @@ class DailyBonusViewCell: UICollectionViewCell {
         view.setTitle("Get Bonus ", for: .normal)
         view.setTitleColor(UIColor.whiteColor, for: .normal)
         view.makeRoundCorners(16)
+        view.addTarget(self, action: #selector(pressGetDailyBonus), for: .touchUpInside)
         return view
     }()
-
-    //TODO: how to make Timer work even when the user is turned off
-    private var timer: Timer?
-    private var remainingTime: TimeInterval = 86400
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -112,15 +112,42 @@ class DailyBonusViewCell: UICollectionViewCell {
     }
 
     private func startTimer() {
+        updateTimer()
+
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.updateTimer()
         }
+
+        getDailyBonus.isUserInteractionEnabled = false
+        getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
+        getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
     }
+
+    func startBonusTimer(with nextBonusTimestamp: TimeInterval) {
+            let currentTime = Date().timeIntervalSince1970
+            remainingTime = max(nextBonusTimestamp - currentTime, 0)
+
+            updateTimer()
+
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+                self?.updateTimer()
+            }
+
+            // Disable the button initially
+            getDailyBonus.isUserInteractionEnabled = false
+            getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
+            getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
+        }
+
     private func updateTimer() {
         guard remainingTime > 0 else {
             timer?.invalidate()
             timer = nil
-            timerLabel.text = "00:00:00" // Timer finished
+            timerLabel.text = "00:00:00"
+
+            getDailyBonus.isUserInteractionEnabled = true
+            getDailyBonus.backgroundColor = UIColor.systemGreen
+            getDailyBonus.setTitleColor(UIColor.black, for: .normal)
             return
         }
 
@@ -135,7 +162,16 @@ class DailyBonusViewCell: UICollectionViewCell {
         super.prepareForReuse()
         timer?.invalidate()
         timer = nil
-        remainingTime = 86400 // Reset to 24 hours
+        remainingTime = 86400
         timerLabel.text = "00:00:00"
+
+        getDailyBonus.isUserInteractionEnabled = false
+        getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
+        getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
+
+    }
+
+    @objc private func pressGetDailyBonus() {
+        print(">>>>>>>>>>>>>")
     }
 }

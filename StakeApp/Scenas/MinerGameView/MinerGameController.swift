@@ -4,10 +4,562 @@
 //
 //  Created by Gio's Mac on 18.01.25.
 //
-
+//
 import UIKit
 import SnapKit
 import Kingfisher
+//
+//class MinerGameController: UIViewController {
+//
+//    private let viewModel = MinerGameViewModel()
+//
+//    private lazy var gameStartTimerView: GameStartTimerView = {
+//        let view = GameStartTimerView(frame: .zero)
+//        view.timerDidFinish = { [weak self] in
+//            self?.hideGameTimerView()
+//        }
+//        return view
+//    }()
+//
+//    private lazy var gameTopView: GameTopView = {
+//        let view = GameTopView(frame: .zero)
+//        view.backgroundColor = UIColor.titlesBlack
+//        view.makeRoundCorners(16)
+//        view.pressPauseButton = { [weak self] in
+//            self?.quitOrContinueGame()
+//        }
+//        return view
+//    }()
+//
+//    private lazy var gameBackgroundImage: UIImageView = {
+//        let view = UIImageView(frame: .zero)
+//        view.image = UIImage(named: "minerGameBackgroound")
+//        view.isUserInteractionEnabled = true
+//        return view
+//    }()
+//
+//    private lazy var gameGoldImage: UIButton = {
+//        let view = UIButton(frame: .zero)
+//        view.setImage(UIImage(named: "goldenBall"), for: .normal)
+//        view.contentMode = .scaleAspectFit
+//        view.addTarget(self, action: #selector(pressGameGoldButton), for: .touchUpInside)
+//        return view
+//    }()
+//
+//    private lazy var gameTimerView: GameTimerScoreView = {
+//        let view = GameTimerScoreView(frame: .zero)
+//        view.backgroundColor = .clear
+//        view.timerDidFinish = { [weak self] in
+//            self?.makeGameGoldButtonUnenabled()
+////            self?.stopPointIncrementTimer()
+//        }
+//        view.onTimeUpdate = { [weak self] remainingSeconds in
+////            self?.handleTimeUpdate(remainingSeconds)
+//        }
+//        return view
+//    }()
+//
+//    private lazy var doublePickAxeButtons: UIButton = {
+//        let view = UIButton(frame: .zero)
+//        view.setImage(UIImage(named: "doublePickAxe"), for: .normal)
+//        view.layer.borderWidth = 4
+//        view.layer.cornerRadius = 28
+//        view.backgroundColor = .buttonBackgroundColor
+//        view.contentMode = .scaleAspectFit
+//        view.addTarget(self, action: #selector(userPressedDoublePickAxeButton), for: .touchUpInside)
+//        return view
+//    }()
+//
+//    private lazy var doublePickAxeCost: BonusCostView = {
+//        let view = BonusCostView()
+//        view.costLabel.text = "5"
+//        return view
+//    }()
+//
+//    private lazy var bombButtons: UIButton = {
+//        let view = UIButton(frame: .zero)
+//        view.setImage(UIImage(named: "bomb"), for: .normal)
+//        view.layer.borderWidth = 4
+//        view.layer.cornerRadius = 28
+//        view.backgroundColor = .buttonBackgroundColor
+//        view.contentMode = .scaleAspectFit
+//        view.addTarget(self, action: #selector(userPressedBombButton), for: .touchUpInside)
+//        return view
+//    }()
+//
+//    private lazy var bombCost: BonusCostView = {
+//        let view = BonusCostView()
+//        view.costLabel.text = "5"
+//        return view
+//    }()
+//
+//    private lazy var autoPickAxeButtons: UIButton = {
+//        let view = UIButton(frame: .zero)
+//        view.setImage(UIImage(named: "autoPickAxe"), for: .normal)
+//        view.layer.borderWidth = 4
+//        view.layer.cornerRadius = 28
+//        view.backgroundColor = .buttonBackgroundColor
+//        view.contentMode = .scaleAspectFit
+//        view.addTarget(self, action: #selector(pressAutoPickAxeButtons), for: .touchUpInside)
+//        return view
+//    }()
+//
+//    private lazy var autoPickAxeCost: BonusCostView = {
+//        let view = BonusCostView()
+//        view.costLabel.text = "20"
+//        return view
+//    }()
+//
+//    private lazy var randomGoldsLabel: RightGamePointView = {
+//        let view = RightGamePointView()
+//        view.gameImage.image = UIImage(named: "gold")
+//        view.pointLabel.text = "+ \(viewModel.randomNumber)"
+//        view.backgroundGamePointView.backgroundColor = .clear
+//        return view
+//    }()
+//
+//    private lazy var winOrLoseView: WinOrLoseView = {
+//        let view = WinOrLoseView(frame: .zero)
+//        view.backgroundColor = UIColor(hexString: "#16171A")
+//        view.makeRoundCorners(20)
+//        view.isHidden = true
+//        view.didPressStartGameButton = { [weak self] in
+//            self?.pressStartGameButton()
+//        }
+//        view.didPressContinueButton = { [weak self] in
+//            self?.pressContinueButton()
+//        }
+//        return view
+//    }()
+//
+//    private lazy var quitOrContinueView: QuitOrContinueView = {
+//        let view = QuitOrContinueView(frame: .zero)
+//        view.backgroundColor = UIColor(hexString: "#16171A")
+//        view.makeRoundCorners(20)
+//        view.isHidden = true
+//        view.pressContinueButton = { [weak self] in
+//            self?.pressContinueGameButton()
+//        }
+//        view.pressQuitButton = { [weak self] in
+//            self?.pressQuitGameButton()
+//        }
+//        return view
+//    }()
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        navigationController?.navigationBar.isUserInteractionEnabled = true
+//        setup()
+//        setupConstraints()
+//        viewModel.currentLeftPoints = 0
+//        gameTimerView.pauseTimer()
+//
+//        setupViewModelBindings()
+//        fetchUserData()
+//    }
+//
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.isNavigationBarHidden = true
+//    }
+//
+//    private func setup() {
+//        view.addSubview(gameTopView)
+//        view.addSubview(gameBackgroundImage)
+//        gameBackgroundImage.addSubview(gameTimerView)
+//        gameBackgroundImage.addSubview(doublePickAxeButtons)
+//        gameBackgroundImage.addSubview(bombButtons)
+//        gameBackgroundImage.addSubview(autoPickAxeButtons)
+//        gameBackgroundImage.addSubview(gameGoldImage)
+//        view.addSubview(doublePickAxeCost)
+//        view.addSubview(bombCost)
+//        view.addSubview(autoPickAxeCost)
+//        view.addSubview(winOrLoseView)
+//        view.addSubview(quitOrContinueView)
+//        view.addSubview(gameStartTimerView)
+//    }
+//
+//    private func setupConstraints() {
+//        gameTopView.snp.remakeConstraints { make in
+//            make.top.leading.trailing.equalToSuperview()
+//            make.height.equalTo(104 * Constraint.yCoeff)
+//        }
+//
+//        gameStartTimerView.snp.remakeConstraints { make in
+//            make.top.equalTo(gameTopView.snp.bottom)
+//            make.leading.trailing.bottom.equalToSuperview()
+//        }
+//
+//        gameBackgroundImage.snp.remakeConstraints { make in
+//            make.leading.trailing.bottom.equalToSuperview()
+//            make.top.equalTo(gameTopView.snp.bottom)
+//            make.bottom.equalTo(view.snp.bottom).offset(-56 * Constraint.yCoeff)
+//        }
+//
+//        gameGoldImage.snp.remakeConstraints { make in
+//            make.center.equalTo(gameBackgroundImage.snp.center)
+//            make.height.width.equalTo(280 * Constraint.yCoeff)
+//        }
+//
+//        gameTimerView.snp.remakeConstraints { make in
+//            make.top.equalTo(gameTopView.snp.bottom).offset(49 * Constraint.yCoeff)
+//            make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
+//            make.height.equalTo(60 * Constraint.yCoeff)
+//        }
+//
+//        doublePickAxeButtons.snp.remakeConstraints { make in
+//            make.trailing.equalTo(bombButtons.snp.leading).offset(-16 * Constraint.yCoeff)
+//            make.centerY.equalTo(bombButtons.snp.centerY)
+//            make.height.width.equalTo(72 * Constraint.yCoeff)
+//        }
+//
+//        doublePickAxeCost.snp.remakeConstraints { make in
+//            make.centerX.equalTo(doublePickAxeButtons.snp.centerX)
+//            make.bottom.equalTo(doublePickAxeButtons.snp.bottom).offset(5 * Constraint.yCoeff)
+//            make.height.equalTo(19 * Constraint.yCoeff)
+//            make.width.greaterThanOrEqualTo(34 * Constraint.xCoeff)
+//        }
+//
+//        bombButtons.snp.remakeConstraints { make in
+//            make.centerX.equalToSuperview()
+//            make.bottom.equalTo(view.snp.bottom).offset(-81 * Constraint.yCoeff)
+//            make.height.width.equalTo(72 * Constraint.yCoeff)
+//        }
+//
+//        bombCost.snp.remakeConstraints { make in
+//            make.centerX.equalTo(bombButtons.snp.centerX)
+//            make.bottom.equalTo(bombButtons.snp.bottom).offset(5 * Constraint.yCoeff)
+//            make.height.equalTo(19 * Constraint.yCoeff)
+//            make.width.greaterThanOrEqualTo(34 * Constraint.xCoeff)
+//        }
+//
+//        autoPickAxeButtons.snp.remakeConstraints { make in
+//            make.leading.equalTo(bombButtons.snp.trailing).offset(16 * Constraint.yCoeff)
+//            make.centerY.equalTo(bombButtons.snp.centerY)
+//            make.height.width.equalTo(72 * Constraint.yCoeff)
+//        }
+//
+//        autoPickAxeCost.snp.remakeConstraints { make in
+//            make.centerX.equalTo(autoPickAxeButtons.snp.centerX)
+//            make.bottom.equalTo(autoPickAxeButtons.snp.bottom).offset(5 * Constraint.yCoeff)
+//            make.height.equalTo(19 * Constraint.yCoeff)
+//            make.width.greaterThanOrEqualTo(34 * Constraint.xCoeff)
+//        }
+//
+//        winOrLoseView.snp.remakeConstraints { make in
+//            make.leading.trailing.bottom.equalToSuperview()
+//            make.height.equalTo(652 * Constraint.yCoeff)
+//        }
+//
+//        quitOrContinueView.snp.remakeConstraints { make in
+//            make.leading.trailing.bottom.equalToSuperview()
+//            make.height.equalTo(290 * Constraint.yCoeff)
+//        }
+//    }
+//
+//
+////    private func fetchUserData() {
+////        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+////            print("❌ Error: No userId found in UserDefaults")
+////            return
+////        }
+////
+////        let url = String.userDataResponse(userId: userId)
+////
+////        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<UserDataResponse>) in
+////            switch result {
+////            case .success(let data):
+////                self.userData = data
+////                DispatchQueue.main.async {
+////                    self.updateUIWithUserData()
+////                }
+////            case .failure(let error):
+////                print("❌ Error fetching user data: \(error.localizedDescription)")
+////            }
+////        }
+////    }
+//
+//    private func fetchUserData() {
+//        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+//            print("❌ Error: No userId found in UserDefaults")
+//            return
+//        }
+//        viewModel.fetchUserData(userId: userId) // ✅ Call ViewModel
+//    }
+//
+//    private func updateUIWithUserData(_ userData: UserDataResponse) {
+//        // Update GameTimerScoreView
+//        gameTimerView.userName.text = userData.username
+//        gameTimerView.useLevelLabel.text = "\(userData.level)"
+//
+//        // Set user image
+//        if let imageUrl = URL(string: userData.image) {
+//            gameTimerView.userImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
+//            winOrLoseView.workoutImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
+//        }
+//
+//        // Update GameTopView points
+//        gameTopView.pointView.pointLabel.text = "\(userData.points)"
+//
+//        winOrLoseView.nameLabel.text = userData.username
+//    }
+//
+//    private func getTopViewCell() -> TopViewCell? {
+//        guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
+//            return nil
+//        }
+//        let collectionView = mainView.exposedCollectionView
+//        let indexPath = IndexPath(item: 0, section: 0)
+//        return collectionView.cellForItem(at: indexPath) as? TopViewCell
+//    }
+//
+//    private func quitOrContinueGame() {
+//        quitOrContinueView.isHidden = false
+//    }
+//
+//    private func hideGameTimerView() {
+//        gameStartTimerView.isHidden = true
+//        gameTimerView.startTimer()
+//        viewModel.startPointIncrementTimer()
+//
+//        //MARK: bot points increasing timeInterval
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+//            guard let botTimeInterval = self?.viewModel.botPointsTimeInterval else { return }
+//            self?.viewModel.updatePointInterval(to: botTimeInterval)
+//        }
+//    }
+//
+//    //MARK: here should make get method
+//
+////    private func makeGameGoldButtonUnenabled() {
+////        guard let opponentCostText = gameTimerView.rightPointView.pointLabel.text,
+////              let opponentScore = Int(opponentCostText) else {
+////            return
+////        }
+////
+////        viewModel.makeGameGoldButtonUnenabled(opponentScore: opponentScore)
+////    }
+//
+//    private func setupViewModelBindings() {
+//        viewModel.onGameEnded = { [weak self] didWin, userPoints, opponentPoints in
+//            DispatchQueue.main.async {
+//                self?.showGameResult(didWin: didWin, userPoints: userPoints, opponentPoints: opponentPoints)
+//            }
+//        }
+//
+//        viewModel.onScoreUpdated = { [weak self] success in
+//            if success {
+//                print("Score updated in backend")
+//            } else {
+//                print("Failed to update score")
+//            }
+//        }
+//
+//        viewModel.onPointsUpdated = { [weak self] points in
+//            DispatchQueue.main.async {
+//                self?.gameTimerView.leftPointView.pointLabel.text = "\(points)"
+//            }
+//        }
+//
+//        // 🔹 Bind timer updates to ViewModel
+//        gameTimerView.onTimeUpdate = { [weak self] remainingSeconds in
+//            self?.viewModel.handleTimeUpdate(remainingSeconds)
+//        }
+//
+//        viewModel.onUserDataFetched = { [weak self] userData in
+//            DispatchQueue.main.async {
+//                self?.updateUIWithUserData(userData)
+//            }
+//        }
+//    }
+//
+//
+//    private func showGameResult(didWin: Bool, userPoints: Int, opponentPoints: Int) {
+//        winOrLoseView.leftPointView.pointLabel.text = "\(userPoints)"
+//
+//        if didWin {
+//            winOrLoseView.winOrLoseLabel.text = "WIN!"
+//            winOrLoseView.bonusButton.isHidden = false
+//            winOrLoseView.bonusPoints.isHidden = false
+//            winOrLoseView.expButton.isHidden = false
+//            winOrLoseView.expPoints.isHidden = false
+//        } else {
+//            winOrLoseView.winOrLoseLabel.text = "LOSE"
+//            winOrLoseView.winOrLoseLabel.textColor = .red
+//            winOrLoseView.redExpButton.isHidden = false
+//            winOrLoseView.redExpPoints.isHidden = false
+//        }
+//
+//        winOrLoseView.isHidden = false
+//    }
+//
+//    private func makeGameGoldButtonUnenabled() {
+//        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int,
+//              let userPointsText = gameTimerView.leftPointView.pointLabel.text,
+//              let opponentPointsText = gameTimerView.rightPointView.pointLabel.text,
+//              let userPoints = Int(userPointsText),
+//              let opponentPoints = Int(opponentPointsText),
+//              let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1"),
+//              let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1") else {
+//            return
+//        }
+//
+//        let userName = gameTimerView.userName.text ?? "User_123"
+//        let opponentName = gameTimerView.opponentName.text ?? "User_234"
+//        let userImage = ""
+//        let opponentImage = ""
+//
+//        viewModel.updateMinerScore(
+//            userId: userId,
+//            userPoints: userPoints,
+//            opponentPoints: opponentPoints,
+//            userLevel: userLevel,
+//            opponentLevel: opponentLevel,
+//            userName: userName,
+//            opponentName: opponentName,
+//            userImage: userImage,
+//            opponentImage: opponentImage
+//        )
+//    }
+//
+//
+//
+//    //MARK: press gold button
+//    @objc func pressGameGoldButton() {
+//        if viewModel.isUserBlocked {
+//            print("User is blocked from pressing the gold button!")
+//            return
+//        }
+//        if viewModel.isOpponentScoreBlocked {
+//            print("Opponent is blocked from pressing the gold button!")
+//            return
+//        }
+//
+//        let randomIncrement = Int.random(in: 1...10)
+//        viewModel.currentLeftPoints += randomIncrement
+//        randomGoldsLabel.pointLabel.text = "+ \(randomIncrement)"
+//
+//        if randomGoldsLabel.superview == nil {
+//            view.addSubview(randomGoldsLabel)
+//        }
+//
+//        randomGoldsLabel.snp.removeConstraints()
+//        let randomXOffset = CGFloat.random(in: -150...150)
+//        let randomYOffset = CGFloat.random(in: -150...150)
+//        randomGoldsLabel.snp.makeConstraints { make in
+//            make.centerX.equalTo(view.snp.centerX).offset(randomXOffset)
+//            make.centerY.equalTo(view.snp.centerY).offset(randomYOffset)
+//            make.height.width.equalTo(50 * Constraint.xCoeff)
+//        }
+//        randomGoldsLabel.alpha = 1
+//        UIView.animate(withDuration: 0.5, delay: 0.5, options: [], animations: {
+//            self.randomGoldsLabel.alpha = 0
+//        }) { _ in
+//            self.randomGoldsLabel.removeFromSuperview()
+//        }
+//    }
+//
+//    @objc private func userPressedBombButton() {
+//        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+//              let bombCostText = bombCost.costLabel.text,
+//              let currentPoints = Int(currentPointsText),
+//              let bombCost = Int(bombCostText) else {
+//            return
+//        }
+//
+//        if currentPoints >= bombCost {
+//            let updatedPoints = currentPoints - bombCost
+//            DispatchQueue.main.async {
+//                self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+//            }
+//            viewModel.pressBombButtons(byUser: true)
+//        } else {
+//            print("Not enough points for bomb!")
+//        }
+//    }
+//
+//    @objc private func userPressedDoublePickAxeButton() {
+//        viewModel.pressDoublePickAxeButtons(byUser: true)
+//    }
+//
+//
+//    
+//
+//    @objc private func pressAutoPickAxeButtons() {
+//        guard let currentPointsText = gameTopView.pointView.pointLabel.text,
+//              let autoPickAxeCostText = autoPickAxeCost.costLabel.text,
+//              let currentPoints = Int(currentPointsText),
+//              let axeCost = Int(autoPickAxeCostText) else {
+//            return
+//        }
+//
+//        if viewModel.autoPickAxeTimer != nil {
+//            viewModel.autoPickAxeTimer?.invalidate()
+//            viewModel.autoPickAxeTimer = nil
+//            print("Auto-pickaxe disabled!")
+//            return
+//        }
+//
+//        if currentPoints >= axeCost {
+//            // Deduct the cost
+//            let updatedPoints = currentPoints - axeCost
+//            self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
+//
+//            // Start the auto-pickaxe functionality
+//            viewModel.autoPickAxeTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+//                self?.autoPressGameGoldButton()
+//            }
+//            print("Auto-pickaxe enabled!")
+//        } else {
+//            print("Not enough points to enable auto-pickaxe!")
+//        }
+//    }
+//
+//    private func pressStartGameButton() {
+//        viewModel.autoPickAxeTimer?.invalidate()
+//        viewModel.autoPickAxeTimer = nil
+//
+//        viewModel.isUserBlocked = false
+//        viewModel.isOpponentScoreBlocked = false
+//        gameTimerView.rightPointView.setScoreBlocked(false)
+//
+//        // Restart the MinerGameController
+//        if let navigationController = navigationController {
+//            let newGameController = MinerGameController()
+//            navigationController.pushViewController(newGameController, animated: true)
+//        } else {
+//            // Fallback in case there is no navigation controller
+//            let newGameController = MinerGameController()
+//            present(newGameController, animated: true, completion: nil)
+//        }
+//    }
+//
+//    private func pressContinueButton() {
+//        for controller in navigationController?.viewControllers ?? [] {
+//            if controller is MainView {
+//                navigationController?.popToViewController(controller, animated: true)
+//                return
+//            }
+//        }
+//        let mainView = MainView()
+//        let navigationController = UINavigationController(rootViewController: mainView)
+//        UIApplication.shared.keyWindow?.rootViewController = navigationController
+//    }
+//
+//    private func autoPressGameGoldButton() {
+//        let randomIncrement = Int.random(in: 1...10)
+//        viewModel.currentLeftPoints += randomIncrement // Update the property instead of the UI directly
+//    }
+//
+//    private func pressContinueGameButton() {
+//        quitOrContinueView.isHidden = true
+//    }
+//
+//    private func pressQuitGameButton() {
+//        pressContinueButton()
+//    }
+//}
+
 
 class MinerGameController: UIViewController {
 
@@ -418,7 +970,6 @@ class MinerGameController: UIViewController {
     }
 
     private func quitOrContinueGame() {
-        print("didi press stop button")
         quitOrContinueView.isHidden = false
     }
 

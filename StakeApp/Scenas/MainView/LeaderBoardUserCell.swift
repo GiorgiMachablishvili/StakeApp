@@ -104,7 +104,7 @@ class LeaderBoardUserCell: UITableViewCell {
         }
     }
 
-    func configure(with user: LeaderBoardStatic, rank: Int) {
+    func configure(with user: LeaderBoardStatic, rank: Int, isCurrentUser: Bool) {
         rankLabel.text = "\(rank)"
         usernameLabel.text = user.username
         pointsLabel.text = "\(user.points)"
@@ -114,6 +114,14 @@ class LeaderBoardUserCell: UITableViewCell {
             userImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
         } else {
             userImageView.image = UIImage(named: "avatar")
+        }
+
+        if isCurrentUser {
+            contentView.backgroundColor = UIColor.buttonBackgroundColor
+            contentView.makeRoundCorners(16)
+
+        } else {
+            contentView.backgroundColor = .clear
         }
     }
 }

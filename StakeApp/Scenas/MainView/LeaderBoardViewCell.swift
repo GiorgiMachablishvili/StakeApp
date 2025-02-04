@@ -20,13 +20,14 @@ class LeaderBoardViewCell: UICollectionViewCell, UITableViewDelegate, UITableVie
     }()
 
     private lazy var leaderboardTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(LeaderBoardUserCell.self, forCellReuseIdentifier: "LeaderBoardUserCell")
-        return tableView
+        let view = UITableView()
+        view.backgroundColor = .clear
+        view.separatorStyle = .none
+        view.showsVerticalScrollIndicator = false
+        view.dataSource = self
+        view.delegate = self
+        view.register(LeaderBoardUserCell.self, forCellReuseIdentifier: "LeaderBoardUserCell")
+        return view
     }()
 
     var leaderboardUsers: [LeaderBoardStatic] = [] {
@@ -35,10 +36,16 @@ class LeaderBoardViewCell: UICollectionViewCell, UITableViewDelegate, UITableVie
         }
     }
 
+    private var currentUserId: Int? {
+        return UserDefaults.standard.value(forKey: "userId") as? Int
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
         setupConstraints()
+
+        
     }
 
     required init?(coder: NSCoder) {
@@ -74,12 +81,13 @@ class LeaderBoardViewCell: UICollectionViewCell, UITableViewDelegate, UITableVie
         }
 
         let user = leaderboardUsers[indexPath.row]
-        cell.configure(with: user, rank: indexPath.row + 1)
+        let isCurrentUser = (user.id == currentUserId)
+        cell.configure(with: user, rank: indexPath.row + 1, isCurrentUser: isCurrentUser)
         return cell
     }
 
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64 * Constraint.yCoeff // Adjust height as needed
+        return 64 * Constraint.yCoeff
     }
 }

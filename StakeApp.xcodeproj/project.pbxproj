@@ -45,6 +45,8 @@
 		E38D5D642D3AE9430057D3CF /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D632D3AE9430057D3CF /* SettingCell.swift */; };
 		E38D5D662D3AF1AA0057D3CF /* ProfileButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */; };
 		E38D5D692D3B05FA0057D3CF /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D5D682D3B05FA0057D3CF /* EditProfileView.swift */; };
+		E3A732132D528D2600CE7627 /* FindingAnOpponentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A732122D528D2600CE7627 /* FindingAnOpponentsViewModel.swift */; };
+		E3A732152D528E9200CE7627 /* MinerGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A732142D528E9200CE7627 /* MinerGameViewModel.swift */; };
 		E3B48BE42D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B48BE32D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift */; };
 		E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */; };
 		E3CED6F82D395B1D00C5D2EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */; };
@@ -119,6 +121,8 @@
 		E38D5D632D3AE9430057D3CF /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		E38D5D652D3AF1AA0057D3CF /* ProfileButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileButton+Extension.swift"; sourceTree = "<group>"; };
 		E38D5D682D3B05FA0057D3CF /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		E3A732122D528D2600CE7627 /* FindingAnOpponentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingAnOpponentsViewModel.swift; sourceTree = "<group>"; };
+		E3A732142D528E9200CE7627 /* MinerGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerGameViewModel.swift; sourceTree = "<group>"; };
 		E3B48BE32D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarHideOrNot+Extension.swift"; sourceTree = "<group>"; };
 		E3CED6F22D395B1D00C5D2EF /* StakeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StakeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				E361A2592D3C312400E27466 /* MinerGameController.swift */,
+				E3A732142D528E9200CE7627 /* MinerGameViewModel.swift */,
 			);
 			path = MinerGameView;
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */,
+				E3A732122D528D2600CE7627 /* FindingAnOpponentsViewModel.swift */,
 			);
 			path = FingingAnOpponent;
 			sourceTree = "<group>";
@@ -503,6 +509,7 @@
 				E387A82E2D4BC641006AD1DC /* UserCreate.swift in Sources */,
 				E3CED7472D39702500C5D2EF /* TopViewCell.swift in Sources */,
 				E365167F2D4FCD5600B252EC /* EmptyResponse.swift in Sources */,
+				E3A732132D528D2600CE7627 /* FindingAnOpponentsViewModel.swift in Sources */,
 				E36729682D3F9BA600E75929 /* ExpLabel.swift in Sources */,
 				E3B48BE42D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift in Sources */,
 				E361A2512D3BA2E700E27466 /* TopHistoryCell.swift in Sources */,
@@ -525,6 +532,7 @@
 				E3CED7102D395CBE00C5D2EF /* SignInController.swift in Sources */,
 				E36E94CE2D4D72350032C0C0 /* NetwokManager+Extension.swift in Sources */,
 				E387A8322D4BCFE6006AD1DC /* UserDataResponse.swift in Sources */,
+				E3A732152D528E9200CE7627 /* MinerGameViewModel.swift in Sources */,
 				E38D5D5A2D3ACCF70057D3CF /* BonusesView+Extension.swift in Sources */,
 				E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */,
 				E38D5D582D3AC3820057D3CF /* BonusesStringAttributed.swift in Sources */,

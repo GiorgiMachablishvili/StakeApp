@@ -8,7 +8,7 @@
 import UIKit
 
 public struct UserGameHistory: Codable {
-    let time: String
+    let time: Int
     let gameName: String
     let result: Bool
     let userImage: String

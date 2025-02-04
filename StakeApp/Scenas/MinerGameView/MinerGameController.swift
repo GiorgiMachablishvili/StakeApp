@@ -443,14 +443,14 @@ class MinerGameController: UIViewController {
         let currentDate = dateFormatter.string(from: Date())
 
         dateFormatter.dateFormat = "hh:mm a"
-        let currentTimeString = dateFormatter.string(from: Date())
+        let currentTimeString = Int(dateFormatter.string(from: Date())) ?? 0
 
         let userImage = gameTimerView.userImage
 
         let opponentImage = gameTimerView.opponentImage
 
         let newScore = UserGameHistory(
-            time: currentTimeString,
+            time: Int(currentTimeString),
             gameName: "MINERS",
             result: result,
             userImage: "\(userImage)",

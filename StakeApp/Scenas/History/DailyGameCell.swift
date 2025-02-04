@@ -257,10 +257,10 @@ class DailyGameCell: UICollectionViewCell {
         dataLabel.labelText = userData.data
         gameTitle.text = userData.gameName
         winOrLossLabel.text = "\(userData.result)"
-        userImage.kf.setImage(with: URL(string: userData.userImage))
+        userImage.kf.setImage(with: URL(string: userData.userImage ?? "avatar"))
         userLevelLabel.text  = "\(userData.userLevel)"
         userName.text = userData.userName
-        opponentImage.kf.setImage(with: URL(string: userData.opponentImage))
+        opponentImage.kf.setImage(with: URL(string: userData.opponentImage ?? "avatar"))
         opponentLevelLabel.text = "\(userData.opponentLevel)"
         opponentName.text = userData.opponentName
         leftPointView.pointLabel.text = "\(userData.userGameScore)"

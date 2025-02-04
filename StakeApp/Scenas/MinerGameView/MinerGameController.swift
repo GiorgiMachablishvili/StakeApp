@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class MinerGameController: UIViewController {
 
@@ -29,6 +30,9 @@ class MinerGameController: UIViewController {
             gameTimerView.leftPointView.pointLabel.text = "\(currentLeftPoints)"
         }
     }
+
+    private var userData: UserDataResponse?
+
 
     private lazy var gameStartTimerView: GameStartTimerView = {
         let view = GameStartTimerView(frame: .zero)
@@ -168,10 +172,10 @@ class MinerGameController: UIViewController {
         navigationController?.navigationBar.isUserInteractionEnabled = true
         setup()
         setupConstraints()
-
         currentLeftPoints = 0
-
         gameTimerView.pauseTimer()
+
+        fetchUserData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -272,6 +276,45 @@ class MinerGameController: UIViewController {
             make.height.equalTo(290 * Constraint.yCoeff)
         }
     }
+
+
+    private func fetchUserData() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("❌ Error: No userId found in UserDefaults")
+            return
+        }
+
+        let url = String.userDataResponse(userId: userId)
+
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<UserDataResponse>) in
+            switch result {
+            case .success(let data):
+                self.userData = data
+                DispatchQueue.main.async {
+                    self.updateUIWithUserData()
+                }
+            case .failure(let error):
+                print("❌ Error fetching user data: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func updateUIWithUserData() {
+        guard let userData = userData else { return }
+
+        // Update GameTimerScoreView
+        gameTimerView.userName.text = userData.username
+        gameTimerView.useLevelLabel.text = "\(userData.level)"
+
+        // Set user image
+        if let imageUrl = URL(string: userData.image) {
+            gameTimerView.userImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
+        }
+
+        // Update GameTopView points
+        gameTopView.pointView.pointLabel.text = "\(userData.points)"
+    }
+
 
     //MARK: auto collection points for bot
     private func startPointIncrementTimer() {
@@ -427,10 +470,11 @@ class MinerGameController: UIViewController {
 //                topViewCell.updateExperiencePoints(add: -1)
 //            }
         }
-        updateWorkoutScore()
+        updateMinerScore()
     }
 
-    private func updateWorkoutScore() {
+    private func updateMinerScore() {
+        NetworkManager.shared.showProgressHud(true, animated: true)
         guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
             print("❌ Error: No userId found in UserDefaults")
             return
@@ -443,50 +487,27 @@ class MinerGameController: UIViewController {
         let currentDate = dateFormatter.string(from: Date())
 
         dateFormatter.dateFormat = "hh:mm a"
-        let currentTimeString = Int(dateFormatter.string(from: Date())) ?? 0
+        let currentTimeString = dateFormatter.string(from: Date())
 
-        let userImage = gameTimerView.userImage
+        let userImage = ""
 
-        let opponentImage = gameTimerView.opponentImage
+        let opponentImage = ""
 
-        let newScore = UserGameHistory(
-            time: Int(currentTimeString),
-            gameName: "MINERS",
-            result: result,
-            userImage: "\(userImage)",
-            userLevel: Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1,
-            userName: gameTimerView.userName.text ?? "User_123",
-            opponentImage: "\(opponentImage)",
-            opponentLevel: Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1,
-            opponentName: gameTimerView.opponentName.text ?? "User_234",
-            userGameScore: currentLeftPoints,
-            opponentGameScore: Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0,
-            data: currentDate,
-            userId: userId,
-            opponentId: 0
-        )
-
-        userGameHistory.append(newScore)
-
-        postUserScore(newScore)
-    }
-
-    private func postUserScore(_ score: UserGameHistory) {
+        // Prepare parameters
         let parameters: [String: Any] = [
-            "time": score.time,
-            "gameName": score.gameName,
-            "result": score.result,
-            "userImage": score.userImage,
-            "userLevel": score.userLevel,
-            "userName": score.userName,
-            "opponentImage": score.opponentImage,
-            "opponentLevel": score.opponentLevel,
-            "opponentName": score.opponentName,
-            "userGameScore": score.userGameScore,
-            "opponentGameScore": score.opponentGameScore,
-            "data": score.data,
-            "userId": score.userId,
-            "opponentId": score.opponentId
+            "time": currentTimeString,
+            "gameName": "MINERS",
+            "result": result,
+            "userImage": "\(userImage)",
+            "userLevel": Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1,
+            "userName": gameTimerView.userName.text ?? "User_123",
+            "opponentImage": "\(opponentImage)",
+            "opponentLevel": Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1,
+            "opponentName": gameTimerView.opponentName.text ?? "User_234",
+            "userGameScore": currentLeftPoints,
+            "opponentGameScore": Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0,
+            "data": currentDate,
+            "userId": userId
         ]
 
         let url = String.userGameHistoryPost()
@@ -504,8 +525,6 @@ class MinerGameController: UIViewController {
             }
         }
     }
-
-
 
 
     //MARK: press gold button

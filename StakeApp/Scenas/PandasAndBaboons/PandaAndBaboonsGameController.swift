@@ -33,6 +33,12 @@ class PandaAndBaboonsGameController: UIViewController {
 
     var userGameHistory: [UserGameHistory] = []
 
+    private var currentLeftPoints: Int = 0 {
+        didSet {
+            gameTimerView.leftPointView.pointLabel.text = "\(currentLeftPoints)"
+        }
+    }
+
     private lazy var gameCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: boxSize, height: boxSize)
@@ -782,96 +788,60 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                     topViewCell.updateExperiencePoints(add: -1)
                 }
             }
+            updatePandaAndBaboonsScore()
+        }
 
-            func updateWorkoutScore() {
-                guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
-                    return
-                }
-
-                var result = Bool()
-
-                if userPoints >= opponentCost {
-                    result = true
-                } else {
-                    result = false
-                }
-                // Add day/month/year
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd/MM/yy"
-                let currentDate = dateFormatter.string(from: Date())
-
-                // Add time in AM/PM format
-                dateFormatter.dateFormat = "hh:mm a"
-                let currentTimeString = Int(dateFormatter.string(from: Date())) ?? 0
-
-                let userImage = ""
-
-                let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1
-
-                let userName = gameTimerView.userName.text ?? "User_123"
-
-                let opponentImage = ""
-
-                let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1
-
-                let opponentName = gameTimerView.opponentName.text ?? "User_234"
-
-                // Create a new WorkoutScore instance
-                let newScore = UserGameHistory(
-                    time: Int(currentTimeString),
-                    gameName: "MINERS",
-                    result: result,
-                    userImage: userImage,
-                    userLevel: userLevel,
-                    userName: userName,
-                    opponentImage: opponentImage,
-                    opponentLevel: opponentLevel,
-                    opponentName: opponentName,
-                    userGameScore: userPoints,
-                    opponentGameScore: opponentCost,
-                    data: currentDate,
-                    userId: userId,
-                    opponentId: 0
-                )
-
-                userGameHistory.append(newScore)
-
-                postUserScore(newScore)
+         func updatePandaAndBaboonsScore() {
+            NetworkManager.shared.showProgressHud(true, animated: true)
+            guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+                print("❌ Error: No userId found in UserDefaults")
+                return
             }
 
-            func postUserScore(_ score: UserGameHistory) {
-                let parameters: [String: Any] = [
-                    "time": score.time,
-                    "gameName": score.gameName,
-                    "result": score.result,
-                    "userImage": score.userImage,
-                    "userLevel": score.userLevel,
-                    "userName": score.userName,
-                    "opponentImage": score.opponentImage,
-                    "opponentLevel": score.opponentLevel,
-                    "opponentName": score.opponentName,
-                    "userGameScore": score.userGameScore,
-                    "opponentGameScore": score.opponentGameScore,
-                    "data": score.data,
-                    "userId": score.userId,
-                    "opponentId": score.opponentId
-                ]
+            let result = currentLeftPoints >= Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0
 
-                let url = String.userGameHistoryPost()
-                NetworkManager.shared.showProgressHud(true, animated: true)
-                NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
-                    NetworkManager.shared.showProgressHud(false, animated: false)
-                    switch result {
-                    case .success(let response):
-                        print("Workout saved successfully: \(response)")
-                    case .failure(let error):
-                        print("Error saving workout: \(error.localizedDescription)")
-                        print("Request Parameters: \(parameters)")
-                    }
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yy"
+            let currentDate = dateFormatter.string(from: Date())
+
+            dateFormatter.dateFormat = "hh:mm a"
+            let currentTimeString = dateFormatter.string(from: Date())
+
+            let userImage = ""
+
+            let opponentImage = ""
+
+            // Prepare parameters
+            let parameters: [String: Any] = [
+                "time": currentTimeString,
+                "gameName": "MINERS",
+                "result": result,
+                "userImage": "\(userImage)",
+                "userLevel": Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1,
+                "userName": gameTimerView.userName.text ?? "User_123",
+                "opponentImage": "\(opponentImage)",
+                "opponentLevel": Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1,
+                "opponentName": gameTimerView.opponentName.text ?? "User_234",
+                "userGameScore": currentLeftPoints,
+                "opponentGameScore": Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0,
+                "data": currentDate,
+                "userId": userId
+            ]
+
+            let url = String.userGameHistoryPost()
+            print("📡 Sending POST request to \(url) with parameters: \(parameters)")
+
+            NetworkManager.shared.showProgressHud(true, animated: true)
+            NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
+                NetworkManager.shared.showProgressHud(false, animated: false)
+                switch result {
+                case .success(let response):
+                    print("✅ Workout saved successfully: \(response)")
+                case .failure(let error):
+                    print("❌ Error saving workout: \(error.localizedDescription)")
+                    print("❌ Request Parameters: \(parameters)")
                 }
             }
-
-            return
         }
 
         //MARK: Switch turns

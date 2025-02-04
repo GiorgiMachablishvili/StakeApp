@@ -10,7 +10,7 @@ import UIKit
 struct LeaderBoardStatic: Codable {
     let id: Int
     let username: String
-    let image: String
+    let image: String?
     let pushToken: String
     let authToken: String
     let level: Int

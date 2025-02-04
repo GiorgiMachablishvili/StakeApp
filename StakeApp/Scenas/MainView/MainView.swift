@@ -86,10 +86,6 @@ class MainView: UIViewController {
     }
 
     private func fetchLeaderboardData() {
-        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
-            print("userId not found or not an Int")
-            return
-        }
         let url = String.leaderBoard()
         NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[LeaderBoardStatic]>) in
             switch result {

@@ -59,11 +59,6 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-//    private lazy var useLevelLabel: ExpLabel = {
-//        let view = ExpLabel(frame: .zero)
-//        return view
-//    }()
-
     lazy var useLevelLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.font = UIFont.montserratMedium(size: 13)
@@ -95,11 +90,6 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
-//    lazy var opponentLevelLabel: ExpLabel = {
-//        let view = ExpLabel(frame: .zero)
-//        view.text = "1"
-//        return view
-//    }()
 
     lazy var opponentLevelLabel: UILabel = {
         let view = UILabel(frame: .zero)

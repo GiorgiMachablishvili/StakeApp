@@ -8,13 +8,13 @@
 import UIKit
 
 public struct UserGameHistory: Codable {
-    let time: Int
+    let time: String
     let gameName: String
     let result: Bool
-    let userImage: String
+    let userImage: String?
     let userLevel: Int
     let userName: String
-    let opponentImage: String
+    let opponentImage: String?
     let opponentLevel: Int
     let opponentName: String
     let userGameScore: Int
@@ -22,9 +22,10 @@ public struct UserGameHistory: Codable {
     let data: String
     let userId: Int
     let opponentId: Int
+    let id: Int
 
     enum CodingKeys: String, CodingKey {
-        case time, result, data
+        case time, result, data, id
         case gameName = "game_name"
         case userImage = "user_image"
         case userLevel = "user_level"

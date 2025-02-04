@@ -110,7 +110,7 @@ class LeaderBoardUserCell: UITableViewCell {
         pointsLabel.text = "\(user.points)"
         userLevelLabel.text = "\(user.level)"
 
-        if let imageUrl = URL(string: user.image) {
+        if let imageUrlString = user.image, let imageUrl = URL(string: imageUrlString) {
             userImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
         } else {
             userImageView.image = UIImage(named: "avatar")

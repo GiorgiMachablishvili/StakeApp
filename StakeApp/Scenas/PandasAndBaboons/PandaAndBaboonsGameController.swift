@@ -818,7 +818,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
 
                 // Create a new WorkoutScore instance
                 let newScore = UserGameHistory(
-                    time: currentTimeString,
+                    time: Int(currentTimeString),
                     gameName: "MINERS",
                     result: result,
                     userImage: userImage,

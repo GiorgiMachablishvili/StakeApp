@@ -162,13 +162,13 @@ class EditProfileCell: UICollectionViewCell {
         let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
         var newExp = currentExp + value
 
-        // Handle leveling up
-        if newExp >= 20 {
-            let levelsToAdd = newExp / 20
-            newExp = newExp % 20 // Remaining experience after leveling up
-            ExpLabel.defaultText = "\(currentLevel + levelsToAdd)"
-            userLevelLabel.text = ExpLabel.defaultText // Update level label
-        }
+//        // Handle leveling up
+//        if newExp >= 20 {
+//            let levelsToAdd = newExp / 20
+//            newExp = newExp % 20 // Remaining experience after leveling up
+//            ExpLabel.defaultText = "\(currentLevel + levelsToAdd)"
+//            userLevelLabel.text = ExpLabel.defaultText // Update level label
+//        }
 
         // Update the attributed text for experience points
         let updatedExpString = NSMutableAttributedString()
@@ -178,6 +178,12 @@ class EditProfileCell: UICollectionViewCell {
 
         expLabel.attributedText = updatedExpString
     }
+
+    func configureEditProfileButton(forGuest isGuestUser: Bool) {
+        editProfileButton.isUserInteractionEnabled = !isGuestUser
+        editProfileButton.alpha = isGuestUser ? 0.5 : 1.0
+    }
+
 
     func configure(with userData: UserDataResponse) {
         nameLabel.text = userData.username

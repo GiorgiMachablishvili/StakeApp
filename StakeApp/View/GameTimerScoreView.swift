@@ -59,6 +59,18 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
+    lazy var userBlockedImage: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor.titlesBlack
+        view.makeRoundCorners(24)
+        view.contentMode = .center
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "blocked")
+        view.isHidden = true
+        return view
+    }()
+
     lazy var useLevelLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.font = UIFont.montserratMedium(size: 13)
@@ -90,6 +102,17 @@ class GameTimerScoreView: UIView {
         return view
     }()
 
+    lazy var opponentBlockedImage: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor.titlesBlack
+        view.makeRoundCorners(24)
+        view.contentMode = .center
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "blocked")
+        view.isHidden = true
+        return view
+    }()
 
     lazy var opponentLevelLabel: UILabel = {
         let view = UILabel(frame: .zero)
@@ -144,9 +167,11 @@ class GameTimerScoreView: UIView {
         addSubview(timerLabel)
         addSubview(rightArrow)
         addSubview(userImage)
+        addSubview(userBlockedImage)
         addSubview(useLevelLabel)
         addSubview(userName)
         addSubview(opponentImage)
+        addSubview(opponentBlockedImage)
         addSubview(opponentLevelLabel)
         addSubview(opponentName)
         addSubview(leftPointView)
@@ -179,6 +204,12 @@ class GameTimerScoreView: UIView {
             make.height.width.equalTo(60 * Constraint.yCoeff)
         }
 
+        userBlockedImage.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(16 * Constraint.xCoeff)
+            make.centerY.equalToSuperview()
+            make.height.width.equalTo(60 * Constraint.yCoeff)
+        }
+
         useLevelLabel.snp.remakeConstraints { make in
             make.top.equalTo(userImage.snp.top).offset(40 * Constraint.yCoeff)
             make.leading.equalTo(userImage.snp.leading).offset(40 * Constraint.xCoeff)
@@ -199,6 +230,12 @@ class GameTimerScoreView: UIView {
         }
 
         opponentImage.snp.remakeConstraints { make in
+            make.trailing.equalToSuperview().offset(-16 * Constraint.xCoeff)
+            make.centerY.equalToSuperview()
+            make.height.width.equalTo(60 * Constraint.yCoeff)
+        }
+
+        opponentBlockedImage.snp.remakeConstraints { make in
             make.trailing.equalToSuperview().offset(-16 * Constraint.xCoeff)
             make.centerY.equalToSuperview()
             make.height.width.equalTo(60 * Constraint.yCoeff)

@@ -150,20 +150,6 @@ class TopViewCell: UICollectionViewCell {
         return combinedString
     }
 
-//    func updateExperiencePoints(add value: Int) {
-//        guard let expText = expLabel.attributedText?.string else { return }
-//
-//        let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
-//        let newExp = max(0, currentExp + value) // Prevent negative experience points
-//
-//        // Update the attributed text
-//        let updatedExpString = NSMutableAttributedString()
-//        updatedExpString.append(NSAttributedString(string: "EXP ", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
-//        updatedExpString.append(NSAttributedString(string: "\(newExp)", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
-//        updatedExpString.append(NSAttributedString(string: "/20", attributes: [.font: UIFont.montserratMedium(size: 10), .foregroundColor: UIColor.whiteColor.withAlphaComponent(0.3)]))
-//
-//        expLabel.attributedText = updatedExpString
-//    }
     func updateExperiencePoints(add value: Int) {
         guard let expText = expLabel.attributedText?.string else { return }
 

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class PandaAndBaboonsGameController: UIViewController {
 
@@ -38,6 +39,8 @@ class PandaAndBaboonsGameController: UIViewController {
             gameTimerView.leftPointView.pointLabel.text = "\(currentLeftPoints)"
         }
     }
+
+    private var userData: UserDataResponse?
 
     private lazy var gameCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -203,6 +206,8 @@ class PandaAndBaboonsGameController: UIViewController {
         initializeTurn()
         configureBotUI()
         gameTimerView.pauseTimer()
+
+        fetchUserData()
     }
 
     private func setup() {
@@ -313,6 +318,46 @@ class PandaAndBaboonsGameController: UIViewController {
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(290 * Constraint.yCoeff)
         }
+    }
+
+    private func fetchUserData() {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("❌ Error: No userId found in UserDefaults")
+            return
+        }
+
+        let url = String.userDataResponse(userId: userId)
+
+        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<UserDataResponse>) in
+            switch result {
+            case .success(let data):
+                self.userData = data
+                DispatchQueue.main.async {
+                    self.updateUIWithUserData()
+                }
+            case .failure(let error):
+                print("❌ Error fetching user data: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func updateUIWithUserData() {
+        guard let userData = userData else { return }
+
+        // Update GameTimerScoreView
+        gameTimerView.userName.text = userData.username
+        gameTimerView.useLevelLabel.text = "\(userData.level)"
+
+        // Set user image
+        if let imageUrl = URL(string: userData.image) {
+            gameTimerView.userImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
+            winOrLoseView.workoutImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
+        }
+
+        // Update GameTopView points
+        gameTopView.pointView.pointLabel.text = "\(userData.points)"
+
+        winOrLoseView.nameLabel.text = userData.username
     }
 
     private func checkIfAllBoxesAreOpen() -> Bool {
@@ -773,9 +818,9 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                 winOrLoseView.expPoints.isHidden = false
                 winOrLoseView.isHidden = false
 
-                if let topViewCell = getTopViewCell() {
-                    topViewCell.updateExperiencePoints(add: 10)
-                }
+//                if let topViewCell = getTopViewCell() {
+//                    topViewCell.updateExperiencePoints(add: 10)
+//                }
 
             } else {
                 winOrLoseView.winOrLoseLabel.text = "LOSE"
@@ -784,9 +829,9 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                 winOrLoseView.redExpPoints.isHidden = false
                 winOrLoseView.isHidden = false
 
-                if let topViewCell = getTopViewCell() {
-                    topViewCell.updateExperiencePoints(add: -1)
-                }
+//                if let topViewCell = getTopViewCell() {
+//                    topViewCell.updateExperiencePoints(add: -1)
+//                }
             }
             updatePandaAndBaboonsScore()
         }

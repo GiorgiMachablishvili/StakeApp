@@ -22,7 +22,7 @@ class WinOrLoseView: UIView {
         return view
     }()
 
-    private lazy var workoutImage: UIImageView = {
+    lazy var workoutImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.clipsToBounds = true
         view.backgroundColor = UIColor.titlesBlack
@@ -34,7 +34,7 @@ class WinOrLoseView: UIView {
         return view
     }()
 
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Steve"
         view.font = UIFont.montserratBold(size: 12)

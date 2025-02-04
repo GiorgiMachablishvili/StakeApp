@@ -59,12 +59,11 @@ class ProfileView: UIViewController {
 //        fetchUserData()
         fetchUserGameStatistic()
         fetchLeaderboardData()
-
-        hiddenOrUnhidden()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         fetchUserData()
+        hiddenOrUnhidden()
     }
 
     private func setup() {
@@ -156,14 +155,22 @@ class ProfileView: UIViewController {
         }
     }
 
+
     func hiddenOrUnhidden() {
         let isGuestUser = UserDefaults.standard.bool(forKey: "isGuestUser")
 
-        // Find the settings section (assuming it's section index 3)
         let settingsIndexPath = IndexPath(item: 0, section: 3)
+        DispatchQueue.main.async {
+            if let cell = self.collectionView.cellForItem(at: settingsIndexPath) as? SettingCell {
+                cell.configureButtons(forGuest: isGuestUser)
+            }
+        }
 
-        if let cell = collectionView.cellForItem(at: settingsIndexPath) as? SettingCell {
-            cell.configureButtons(forGuest: isGuestUser)
+        let editProfileIndexPath = IndexPath(item: 0, section: 1)
+        DispatchQueue.main.async {
+            if let cell = self.collectionView.cellForItem(at: editProfileIndexPath) as? EditProfileCell {
+                cell.configureEditProfileButton(forGuest: isGuestUser)
+            }
         }
     }
 
@@ -379,8 +386,8 @@ class ProfileView: UIViewController {
 
         // Make the network request
         NetworkManager.shared.post(
-//            url: String.userCreate(),
-            url: "https://stake-us-66f6608d21e4.herokuapp.com/users/register",
+            url: String.userCreate(),
+//            url: "https://stake-us-66f6608d21e4.herokuapp.com/users/register",
             parameters: parameters,
             headers: nil
         ) { [weak self] (result: Result<UserCreate>) in
@@ -410,9 +417,6 @@ class ProfileView: UIViewController {
                 print("Error: \(error)")
             }
         }
-//        let mainVC = MainViewControllerTab()
-//        navigationController?.isNavigationBarHidden = true
-//        navigationController?.pushViewController(mainVC, animated: true)
     }
 
     private func showAlert(title: String, description: String) {

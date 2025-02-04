@@ -95,8 +95,8 @@ class SettingCell: UICollectionViewCell {
     private lazy var deleteButton: UIButton = {
         let view = UIButton(frame: .zero)
         view.setTitle("Delete Account", for: .normal)
-        view.setTitleColor(UIColor(hexString: "#DF141E1A"), for: .normal)
-        view.backgroundColor = UIColor(hexString: "#DF141E").withAlphaComponent(0.1)
+        view.setTitleColor(UIColor.redColor, for: .normal)
+        view.backgroundColor = UIColor.redColor.withAlphaComponent(0.1)
         view.makeRoundCorners(16)
         view.addTarget(self, action: #selector(clickDeleteButton), for: .touchUpInside)
         view.isHidden = true

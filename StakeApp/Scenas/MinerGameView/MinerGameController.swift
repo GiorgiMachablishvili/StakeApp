@@ -14,10 +14,8 @@ class MinerGameController: UIViewController {
     let randomNumber = Int.random(in: 1...10)
     private var currentGoldPoints: Int = 0
     private var autoPickAxeTimer: Timer?
-
     private var pointIncrementTimer: Timer?
     private var pointInterval: TimeInterval = 1.0
-
     private var botPointsTimeInterval = 0.5
 
     private var isUserBlocked: Bool = false
@@ -309,10 +307,13 @@ class MinerGameController: UIViewController {
         // Set user image
         if let imageUrl = URL(string: userData.image) {
             gameTimerView.userImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
+            winOrLoseView.workoutImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "avatar"))
         }
 
         // Update GameTopView points
         gameTopView.pointView.pointLabel.text = "\(userData.points)"
+        
+        winOrLoseView.nameLabel.text = userData.username
     }
 
 
@@ -617,21 +618,21 @@ class MinerGameController: UIViewController {
     @objc private func pressBombButtons(byUser: Bool = true) {
         if byUser {
             // Block opponent's score updates
-            gameTimerView.opponentImage.image = UIImage(named: "blockUser")
+            gameTimerView.opponentBlockedImage.isHidden = false
             gameTimerView.rightPointView.setScoreBlocked(true)
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-                self?.gameTimerView.opponentImage.image = UIImage(named: "avatar")
+                self?.gameTimerView.opponentBlockedImage.isHidden = true
                 self?.gameTimerView.rightPointView.setScoreBlocked(false)
             }
         } else {
             // Block user's score updates
             isUserBlocked = true
-            gameTimerView.userImage.image = UIImage(named: "blockUser")
+            gameTimerView.userBlockedImage.isHidden = false
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
                 self?.isUserBlocked = false
-                self?.gameTimerView.userImage.image = UIImage(named: "avatar")
+                self?.gameTimerView.userBlockedImage.isHidden = true
             }
         }
     }

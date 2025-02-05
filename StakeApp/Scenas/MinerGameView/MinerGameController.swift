@@ -1032,7 +1032,9 @@ class MinerGameController: UIViewController {
             return
         }
 
-        let result = currentLeftPoints >= Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0
+        let resultString = currentLeftPoints >= (Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0)
+
+        let userGameScore = Int(gameTimerView.leftPointView.pointLabel.text ?? "0")
 
         let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1")
 
@@ -1055,16 +1057,16 @@ class MinerGameController: UIViewController {
         let parameters: [String: Any] = [
             "time": currentTimeString,
             "game_name": "MINERS",
-            "result": result,
+            "result": resultString,
             "user_image": "",
             "user_level": userLevel ?? 1,
             "user_name": userName ?? "User_123",
             "opponent_image": "",
             "opponent_level": opponentLevel ?? 1,
             "opponent_name": opponentName ?? "User_234",
-            "user_game_score": currentLeftPoints,
+            "user_game_score": userGameScore ?? 0,
             "opponent_game_score": opponentGameScore ?? 0,
-            "data": currentDate,
+            "date": currentDate,
             "user_id": userId
         ]
 

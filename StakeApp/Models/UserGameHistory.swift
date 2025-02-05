@@ -22,10 +22,10 @@ public struct UserGameHistory: Codable {
     let userName: String?
     let opponentLevel: Int?
     let userGameScore: Int
-    let data: String?
+    let date: String
 
     enum CodingKeys: String, CodingKey {
-        case time, result, data, id
+        case time, result, date, id
         case gameName = "game_name"
         case userImage = "user_image"
         case userLevel = "user_level"

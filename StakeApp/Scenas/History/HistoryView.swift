@@ -13,6 +13,7 @@ class HistoryView: UIViewController {
     private var userData: UserDataResponse?
     private var userHistoryInfo: UserGameHistory?
     private var userHistoryList: [UserGameHistory] = []
+    
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -56,6 +57,7 @@ class HistoryView: UIViewController {
 
         hideOrNotEmptyLabel()
 //        fetchUserData()
+        fetchUserGameHistory()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -102,7 +104,6 @@ class HistoryView: UIViewController {
         }
     }
 
-
     private func fetchUserData() {
         guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
             print("userId not found or not an Int")
@@ -135,6 +136,7 @@ class HistoryView: UIViewController {
             case .success(let userHistoryList):
                 self.userHistoryList = userHistoryList
                 DispatchQueue.main.async {
+                    self.hideOrNotEmptyLabel()
                     self.collectionView.reloadData()
                 }
             case .failure(let error):

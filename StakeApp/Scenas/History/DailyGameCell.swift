@@ -28,8 +28,8 @@ class DailyGameCell: UICollectionViewCell {
     private lazy var timeLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "12:24PM"
-        view.font = UIFont.montserratBold(size: 13)
-        view.textColor = UIColor.whiteColor
+        view.font = UIFont.montserratBold(size: 10)
+        view.textColor = UIColor.whiteColor.withAlphaComponent(0.25)
         view.textAlignment = .left
         return view
     }()
@@ -37,17 +37,17 @@ class DailyGameCell: UICollectionViewCell {
     private lazy var gameTitle: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "PANDAS AND BABOONS"
-        view.font = UIFont.montserratBold(size: 13)
-        view.textColor = UIColor.whiteColor
-        view.textAlignment = .left
+        view.font = UIFont.montserratBold(size: 10)
+        view.textColor = UIColor(hexString: "#687CFF")
+        view.textAlignment = .center
         return view
     }()
 
     private lazy var winOrLossLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "WIN"
-        view.font = UIFont.montserratBold(size: 13)
-        view.textColor = UIColor.whiteColor
+        view.font = UIFont.montserratBold(size: 10)
+        view.textColor = UIColor.whiteColor.withAlphaComponent(0.25)
         view.textAlignment = .left
         return view
     }()
@@ -55,9 +55,9 @@ class DailyGameCell: UICollectionViewCell {
     private lazy var vsLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "VS"
-        view.font = UIFont.montserratBold(size: 13)
+        view.font = UIFont.montserratBold(size: 16)
         view.textColor = UIColor.whiteColor
-        view.textAlignment = .left
+        view.textAlignment = .center
         return view
     }()
 
@@ -86,8 +86,8 @@ class DailyGameCell: UICollectionViewCell {
     private lazy var userName: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Tedo"
-        view.font = UIFont.montserratBold(size: 13)
-        view.textColor = UIColor.whiteColor
+        view.font = UIFont.montserratBold(size: 12)
+        view.textColor = UIColor.whiteColor.withAlphaComponent(0.25)
         view.textAlignment = .left
         return view
     }()
@@ -118,20 +118,26 @@ class DailyGameCell: UICollectionViewCell {
         let view = UILabel(frame: .zero)
         view.text = "Kote"
         view.font = UIFont.montserratBold(size: 13)
-        view.textColor = UIColor.whiteColor
-        view.textAlignment = .left
+        view.textColor = UIColor.whiteColor.withAlphaComponent(0.25)
+        view.textAlignment = .right
         return view
     }()
 
     private lazy var leftPointView: LeftGamePointView = {
         let view = LeftGamePointView()
         view.contentMode = .scaleAspectFit
+        view.makeRoundCorners(14)
+        view.backgroundColor = UIColor.clear
+        view.pointLabel.textAlignment = .left
         return view
     }()
 
     private lazy var rightPointView: RightGamePointView = {
         let view = RightGamePointView()
         view.contentMode = .scaleAspectFit
+        view.makeRoundCorners(14)
+        view.backgroundColor = UIColor.clear
+        view.pointLabel.textAlignment = .right
         return view
     }()
 
@@ -147,8 +153,9 @@ class DailyGameCell: UICollectionViewCell {
     }
 
     private func setup() {
-        addSubview(dataLabel)
+
         addSubview(backgroundDailyGameView)
+        backgroundDailyGameView.addSubview(dataLabel)
         backgroundDailyGameView.addSubview(timeLabel)
         backgroundDailyGameView.addSubview(gameTitle)
         backgroundDailyGameView.addSubview(winOrLossLabel)
@@ -165,19 +172,18 @@ class DailyGameCell: UICollectionViewCell {
 
     private func setupConstraints() {
         dataLabel.snp.remakeConstraints { make in
-            make.top.equalTo(snp.top).offset(3 * Constraint.yCoeff)
+            make.top.equalTo(backgroundDailyGameView.snp.top).offset(5 * Constraint.yCoeff)
             make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
             make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         backgroundDailyGameView.snp.remakeConstraints { make in
-            make.top.equalTo(dataLabel.snp.bottom).offset(8 * Constraint.yCoeff)
             make.leading.trailing.equalToSuperview().inset(16 * Constraint.xCoeff)
             make.height.equalTo(160 * Constraint.yCoeff)
         }
 
         timeLabel.snp.remakeConstraints { make in
-            make.top.equalTo(backgroundDailyGameView.snp.top).offset(16 * Constraint.yCoeff)
+            make.top.equalTo(dataLabel.snp.bottom).offset(4 * Constraint.yCoeff)
             make.leading.equalTo(backgroundDailyGameView.snp.leading).offset(24 * Constraint.xCoeff)
             make.height.equalTo(12 * Constraint.yCoeff)
         }
@@ -203,13 +209,13 @@ class DailyGameCell: UICollectionViewCell {
 
         userName.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.trailing.equalTo(vsLabel.snp.leading).offset(-23 * Constraint.xCoeff)
+            make.leading.equalTo(userImage.snp.trailing).offset(12 * Constraint.xCoeff)
             make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         userImage.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.trailing.equalTo(userName.snp.leading).offset(-12 * Constraint.xCoeff)
+            make.leading.equalTo(backgroundDailyGameView.snp.leading).offset(16 * Constraint.xCoeff)
             make.height.width.equalTo(56 * Constraint.yCoeff)
         }
 
@@ -221,13 +227,13 @@ class DailyGameCell: UICollectionViewCell {
 
         opponentName.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.leading.equalTo(vsLabel.snp.trailing).offset(23 * Constraint.xCoeff)
+            make.trailing.equalTo(opponentImage.snp.leading).offset(-12 * Constraint.xCoeff)
             make.height.equalTo(15 * Constraint.yCoeff)
         }
 
         opponentImage.snp.remakeConstraints { make in
             make.centerY.equalTo(vsLabel.snp.centerY)
-            make.leading.equalTo(opponentName.snp.trailing).offset(12 * Constraint.xCoeff)
+            make.trailing.equalTo(backgroundDailyGameView.snp.trailing).offset(-16 * Constraint.xCoeff)
             make.height.width.equalTo(56 * Constraint.yCoeff)
         }
 
@@ -241,27 +247,27 @@ class DailyGameCell: UICollectionViewCell {
             make.top.equalTo(userImage.snp.bottom).offset(12 * Constraint.yCoeff)
             make.leading.equalTo(backgroundDailyGameView.snp.leading).offset(16 * Constraint.xCoeff)
             make.height.equalTo(36 * Constraint.yCoeff)
-            make.width.equalTo(65 * Constraint.xCoeff)
+            make.width.equalTo(75 * Constraint.xCoeff)
         }
 
         rightPointView.snp.remakeConstraints { make in
             make.top.equalTo(opponentImage.snp.bottom).offset(12 * Constraint.yCoeff)
             make.trailing.equalTo(backgroundDailyGameView.snp.trailing).offset(-16 * Constraint.xCoeff)
             make.height.equalTo(36 * Constraint.yCoeff)
-            make.width.equalTo(65 * Constraint.yCoeff)
+            make.width.equalTo(75 * Constraint.yCoeff)
         }
     }
 
     func configure(with userData: UserGameHistory) {
         timeLabel.text = "\(userData.time)"
-        dataLabel.labelText = userData.data ?? "11:04 AM"
+        dataLabel.labelText = userData.date
         gameTitle.text = userData.gameName
         winOrLossLabel.text = "\(userData.result)"
         userImage.kf.setImage(with: URL(string: userData.userImage ?? "avatar"))
-        userLevelLabel.text  = "\(userData.userLevel)"
+        userLevelLabel.text  = "\(userData.userLevel ?? 1)"
         userName.text = userData.userName
         opponentImage.kf.setImage(with: URL(string: userData.opponentImage ?? "avatar"))
-        opponentLevelLabel.text = "\(userData.opponentLevel)"
+        opponentLevelLabel.text = "\(userData.opponentLevel ?? 1)"
         opponentName.text = userData.opponentName
         leftPointView.pointLabel.text = "\(userData.userGameScore)"
         rightPointView.pointLabel.text = "\(userData.opponentGameScore)"

@@ -439,7 +439,7 @@ class PandaAndBaboonsGameController: UIViewController {
         if remainingSeconds == randomNumber {
             if remainingSeconds == 13 {
                 //MARK: Generate a random number of bomb presses (0 to 1)
-                let x2PressCount = Int.random(in: 1...2)
+                let x2PressCount = Int.random(in: 0...1)
                 print("Opponent will press x2 button \(x2PressCount) time(s)")
 
                 //MARK: Schedule the bomb presses over the remaining time
@@ -452,7 +452,7 @@ class PandaAndBaboonsGameController: UIViewController {
         if remainingSeconds == randomNumberTrap {
             if remainingSeconds == 13 {
                 //MARK: Generate a random number of bomb presses (0 to 1)
-                let trapPressCount = Int.random(in: 1...2)
+                let trapPressCount = Int.random(in: 0...1)
                 print("Opponent will press x2 button \(trapPressCount) time(s)")
 
                 //MARK: Schedule the bomb presses over the remaining time
@@ -464,7 +464,7 @@ class PandaAndBaboonsGameController: UIViewController {
         if remainingSeconds == randomNumber {
             if remainingSeconds == 12 {
                 //MARK: Generate a random number of bomb presses (0 to 1)
-                let mixCount = Int.random(in: 1...2)
+                let mixCount = Int.random(in: 0...1)
                 print("Opponent will press x2 button \(mixCount) time(s)")
 
                 //MARK: Schedule the bomb presses over the remaining time
@@ -837,56 +837,62 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         }
 
          func updatePandaAndBaboonsScore() {
-            NetworkManager.shared.showProgressHud(true, animated: true)
-            guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
-                print("❌ Error: No userId found in UserDefaults")
-                return
-            }
+             NetworkManager.shared.showProgressHud(true, animated: true)
+             guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+                 print("❌ Error: No userId found in UserDefaults")
+                 return
+             }
 
-            let result = currentLeftPoints >= Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0
+             let resultString = currentLeftPoints >= (Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0) ? "WIN" : "LOSE"
 
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yy"
-            let currentDate = dateFormatter.string(from: Date())
+             let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1")
 
-            dateFormatter.dateFormat = "hh:mm a"
-            let currentTimeString = dateFormatter.string(from: Date())
+             let userName = gameTimerView.userName.text
 
-            let userImage = ""
+             let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1")
 
-            let opponentImage = ""
+             let opponentName = gameTimerView.opponentName.text
 
-            // Prepare parameters
-            let parameters: [String: Any] = [
-                "time": currentTimeString,
-                "gameName": "MINERS",
-                "result": result,
-                "userImage": "\(userImage)",
-                "userLevel": Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1,
-                "userName": gameTimerView.userName.text ?? "User_123",
-                "opponentImage": "\(opponentImage)",
-                "opponentLevel": Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1,
-                "opponentName": gameTimerView.opponentName.text ?? "User_234",
-                "userGameScore": currentLeftPoints,
-                "opponentGameScore": Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0,
-                "data": currentDate,
-                "userId": userId
-            ]
+             let opponentGameScore = Int(gameTimerView.rightPointView.pointLabel.text ?? "0")
 
-            let url = String.userGameHistoryPost()
-            print("📡 Sending POST request to \(url) with parameters: \(parameters)")
+             let dateFormatter = DateFormatter()
+             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+             let currentDate = dateFormatter.string(from: Date())
 
-            NetworkManager.shared.showProgressHud(true, animated: true)
-            NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
-                NetworkManager.shared.showProgressHud(false, animated: false)
-                switch result {
-                case .success(let response):
-                    print("✅ Workout saved successfully: \(response)")
-                case .failure(let error):
-                    print("❌ Error saving workout: \(error.localizedDescription)")
-                    print("❌ Request Parameters: \(parameters)")
-                }
-            }
+             dateFormatter.dateFormat = "hh:mm a"
+             let currentTimeString = dateFormatter.string(from: Date())
+
+             // Prepare parameters
+             let parameters: [String: Any] = [
+                 "time": currentTimeString,
+                 "game_name": "PANDAS AND BABOONS",
+                 "result": resultString,
+                 "user_image": "",
+                 "user_level": userLevel ?? 1,
+                 "user_name": userName ?? "User_123",
+                 "opponent_image": "",
+                 "opponent_level": opponentLevel ?? 1,
+                 "opponent_name": opponentName ?? "User_234",
+                 "user_game_score": currentLeftPoints,
+                 "opponent_game_score": opponentGameScore ?? 0,
+                 "date": currentDate,
+                 "user_id": userId
+             ]
+
+             let url = String.userGameHistoryPost()
+             print("📡 Sending POST request to \(url) with parameters: \(parameters)")
+
+             NetworkManager.shared.showProgressHud(true, animated: true)
+             NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
+                 NetworkManager.shared.showProgressHud(false, animated: false)
+                 switch result {
+                 case .success(let response):
+                     print("✅ Workout saved successfully: \(response)")
+                 case .failure(let error):
+                     print("❌ Error saving workout: \(error.localizedDescription)")
+                     print("❌ Request Parameters: \(parameters)")
+                 }
+             }
         }
 
         //MARK: Switch turns

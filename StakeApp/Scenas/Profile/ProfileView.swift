@@ -74,8 +74,7 @@ class ProfileView: UIViewController {
 
     private func setupConstraint() {
         collectionView.snp.remakeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.snp.bottom).offset(60 * Constraint.yCoeff)
+            make.top.leading.trailing.bottom.equalToSuperview()
         }
 
         backgroundProfileView.snp.remakeConstraints { make in

@@ -325,6 +325,7 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             return cell
         case 3:
+            //TODO: cant press LeaderBoardViewCell
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: LeaderBoardViewCell.self),
                 for: indexPath) as? LeaderBoardViewCell else {

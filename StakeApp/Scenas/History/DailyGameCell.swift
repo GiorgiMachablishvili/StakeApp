@@ -254,7 +254,7 @@ class DailyGameCell: UICollectionViewCell {
 
     func configure(with userData: UserGameHistory) {
         timeLabel.text = "\(userData.time)"
-        dataLabel.labelText = userData.data
+        dataLabel.labelText = userData.data ?? "11:04 AM"
         gameTitle.text = userData.gameName
         winOrLossLabel.text = "\(userData.result)"
         userImage.kf.setImage(with: URL(string: userData.userImage ?? "avatar"))

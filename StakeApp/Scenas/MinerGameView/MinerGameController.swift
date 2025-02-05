@@ -1034,32 +1034,38 @@ class MinerGameController: UIViewController {
 
         let result = currentLeftPoints >= Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0
 
+        let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1")
+
+        let userName = gameTimerView.userName.text
+
+        let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1")
+
+        let opponentName = gameTimerView.opponentName.text
+
+        let opponentGameScore = Int(gameTimerView.rightPointView.pointLabel.text ?? "0")
+
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yy"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let currentDate = dateFormatter.string(from: Date())
 
         dateFormatter.dateFormat = "hh:mm a"
         let currentTimeString = dateFormatter.string(from: Date())
 
-        let userImage = ""
-
-        let opponentImage = ""
-
         // Prepare parameters
         let parameters: [String: Any] = [
             "time": currentTimeString,
-            "gameName": "MINERS",
+            "game_name": "MINERS",
             "result": result,
-            "userImage": "\(userImage)",
-            "userLevel": Int(gameTimerView.useLevelLabel.text ?? "1") ?? 1,
-            "userName": gameTimerView.userName.text ?? "User_123",
-            "opponentImage": "\(opponentImage)",
-            "opponentLevel": Int(gameTimerView.opponentLevelLabel.text ?? "1") ?? 1,
-            "opponentName": gameTimerView.opponentName.text ?? "User_234",
-            "userGameScore": currentLeftPoints,
-            "opponentGameScore": Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0,
+            "user_image": "",
+            "user_level": userLevel ?? 1,
+            "user_name": userName ?? "User_123",
+            "opponent_image": "",
+            "opponent_level": opponentLevel ?? 1,
+            "opponent_name": opponentName ?? "User_234",
+            "user_game_score": currentLeftPoints,
+            "opponent_game_score": opponentGameScore ?? 0,
             "data": currentDate,
-            "userId": userId
+            "user_id": userId
         ]
 
         let url = String.userGameHistoryPost()

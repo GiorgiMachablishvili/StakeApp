@@ -9,20 +9,20 @@ import UIKit
 
 public struct UserGameHistory: Codable {
     let time: String
-    let gameName: String
-    let result: Bool
-    let userImage: String?
-    let userLevel: Int
-    let userName: String
-    let opponentImage: String?
-    let opponentLevel: Int
-    let opponentName: String
-    let userGameScore: Int
-    let opponentGameScore: Int
-    let data: String
-    let userId: Int
-    let opponentId: Int
     let id: Int
+    let result: Bool
+    let opponentId: Int?
+    let userLevel: Int?
+    let opponentImage: String?
+    let opponentName: String?
+    let opponentGameScore: Int
+    let gameName: String
+    let userId: Int?
+    let userImage: String?
+    let userName: String?
+    let opponentLevel: Int?
+    let userGameScore: Int
+    let data: String?
 
     enum CodingKeys: String, CodingKey {
         case time, result, data, id

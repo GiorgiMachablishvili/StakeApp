@@ -45,7 +45,6 @@ class LeaderBoardViewCell: UICollectionViewCell, UITableViewDelegate, UITableVie
         setup()
         setupConstraints()
 
-        
     }
 
     required init?(coder: NSCoder) {

@@ -59,6 +59,7 @@ class LeaderBoardUserCell: UITableViewCell {
         setupConstraints()
 
         backgroundColor = .clear
+        selectionStyle = .none
     }
 
     required init?(coder: NSCoder) {

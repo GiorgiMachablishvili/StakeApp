@@ -538,6 +538,7 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
+    //TODO: when press pressX2Buttons do not subtract user points
     @objc private func pressX2Buttons() {
         if byUser {
             // Deduct the x2 button cost for the opponent
@@ -575,7 +576,6 @@ class PandaAndBaboonsGameController: UIViewController {
     }
 
     @objc private func pressTrapButtons() {
-        //TODO: how to make that opponent pressed trap button and block user for one move
         if byUser {
             guard let currentPointsText = gameTopView.pointView.pointLabel.text,
                   let trapCostText = trapCost.costLabel.text,
@@ -596,7 +596,6 @@ class PandaAndBaboonsGameController: UIViewController {
         } 
     }
 
-    //TODO: When reload gameCollectionView.reloadData hides open images
     @objc private func pressMixButtons() {
         if byUser {
             // Check if the user has enough points to use the Mix button
@@ -643,8 +642,34 @@ class PandaAndBaboonsGameController: UIViewController {
             DispatchQueue.main.async {
                 self.gameCollectionView.reloadItems(at: hiddenIndices)
             }
+        } else {
+            var revealedImages: [IndexPath: String] = [:]
+            var hiddenIndices: [IndexPath] = []
 
-            print("Mix button pressed: Hidden images shuffled, revealed images unchanged.")
+            for index in 0..<(rows * columns) {
+                let indexPath = IndexPath(item: index, section: 0)
+                if let cell = gameCollectionView.cellForItem(at: indexPath) as? GameBoxCell {
+                    if cell.coverView.isHidden { // Image is revealed
+                        revealedImages[indexPath] = shuffledImages[indexPath.item]
+                    } else { // Image is hidden
+                        hiddenIndices.append(indexPath)
+                    }
+                }
+            }
+
+            // Shuffle only the hidden images
+            var hiddenImages = hiddenIndices.map { shuffledImages[$0.item] }
+            hiddenImages.shuffle()
+
+            // Update `shuffledImages` for the hidden cells
+            for (index, indexPath) in hiddenIndices.enumerated() {
+                shuffledImages[indexPath.item] = hiddenImages[index]
+            }
+
+            // Reload only the hidden cells
+            DispatchQueue.main.async {
+                self.gameCollectionView.reloadItems(at: hiddenIndices)
+            }
         }
     }
 
@@ -779,14 +804,13 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             gameTopView.pointView.incrementPoint(by: 1)
         }
 
-        //TODO: when opponent open trapR user is not blocked, it should block
         if imageName == "trapR" {
             // Block the other player for one move
             if byUser {
                 isOpponentBlocked = true
                 print("Trap revealed! Opponent will skip their next move.")
             } else {
-                gameCollectionView.isUserInteractionEnabled = false // Disable user interaction
+                gameCollectionView.isUserInteractionEnabled = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.byUser = false // Ensure the user is blocked for one move
                     self.gameCollectionView.isUserInteractionEnabled = true // Re-enable after the move
@@ -795,8 +819,6 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
             }
         }
 
-        //MARK: here should make get method
-        //MARK: Check if all boxes are open
         if checkIfAllBoxesAreOpen() {
             winOrLoseView.isHidden = false
 
@@ -843,7 +865,9 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                  return
              }
 
-             let resultString = currentLeftPoints >= (Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0) ? "WIN" : "LOSE"
+             let resultString = currentLeftPoints >= (Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0)
+
+             let userGameScore = Int(gameTimerView.leftPointView.pointLabel.text ?? "0")
 
              let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1")
 
@@ -873,7 +897,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                  "opponent_image": "",
                  "opponent_level": opponentLevel ?? 1,
                  "opponent_name": opponentName ?? "User_234",
-                 "user_game_score": currentLeftPoints,
+                 "user_game_score": userGameScore ?? 0,
                  "opponent_game_score": opponentGameScore ?? 0,
                  "date": currentDate,
                  "user_id": userId

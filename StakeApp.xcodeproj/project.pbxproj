@@ -23,6 +23,7 @@
 		E36789992D3D0B09009E2831 /* BonusCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36789982D3D0B09009E2831 /* BonusCostView.swift */; };
 		E367899B2D3D7FB1009E2831 /* WinOrLoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */; };
 		E367899E2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */; };
+		E36BB4CB2D5411590049DDDB /* DailyBonusPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36BB4CA2D5411590049DDDB /* DailyBonusPost.swift */; };
 		E36E94C62D4D53020032C0C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E36E94C52D4D53020032C0C0 /* Kingfisher */; };
 		E36E94C82D4D53260032C0C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E36E94C72D4D53260032C0C0 /* Kingfisher */; };
 		E36E94CA2D4D63BF0032C0C0 /* LeaderBoardUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E94C92D4D63BF0032C0C0 /* LeaderBoardUserCell.swift */; };
@@ -101,6 +102,7 @@
 		E36789982D3D0B09009E2831 /* BonusCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusCostView.swift; sourceTree = "<group>"; };
 		E367899A2D3D7FB1009E2831 /* WinOrLoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinOrLoseView.swift; sourceTree = "<group>"; };
 		E367899D2D3D96C7009E2831 /* PandaAndBaboonsGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandaAndBaboonsGameController.swift; sourceTree = "<group>"; };
+		E36BB4CA2D5411590049DDDB /* DailyBonusPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusPost.swift; sourceTree = "<group>"; };
 		E36E94C92D4D63BF0032C0C0 /* LeaderBoardUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoardUserCell.swift; sourceTree = "<group>"; };
 		E36E94CB2D4D6EB90032C0C0 /* UpdateUserImageAndName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserImageAndName.swift; sourceTree = "<group>"; };
 		E36E94CD2D4D72350032C0C0 /* NetwokManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetwokManager+Extension.swift"; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				E36E94CB2D4D6EB90032C0C0 /* UpdateUserImageAndName.swift */,
 				E365167E2D4FCD5600B252EC /* EmptyResponse.swift */,
 				E36516802D50BD8400B252EC /* BonusTimer .swift */,
+				E36BB4CA2D5411590049DDDB /* DailyBonusPost.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				E38D5D5A2D3ACCF70057D3CF /* BonusesView+Extension.swift in Sources */,
 				E38D5D512D3AB6420057D3CF /* MinersView.swift in Sources */,
 				E38D5D582D3AC3820057D3CF /* BonusesStringAttributed.swift in Sources */,
+				E36BB4CB2D5411590049DDDB /* DailyBonusPost.swift in Sources */,
 				E3CED74B2D39972C00C5D2EF /* DailyBonusViewCell.swift in Sources */,
 				E367899B2D3D7FB1009E2831 /* WinOrLoseView.swift in Sources */,
 				E3F3E4A92D3EA1E100B7C786 /* GameBoxCell.swift in Sources */,

@@ -17,6 +17,10 @@ extension String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/bonus/next"
     }
 
+    static func dailyBonusPost() -> String {
+        return "https://stake-us-66f6608d21e4.herokuapp.com/bonus/give/10"
+    }
+
     static func userDataResponse(userId: Int) -> String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
     }

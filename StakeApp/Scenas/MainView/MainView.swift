@@ -126,6 +126,26 @@ class MainView: UIViewController {
         }
     }
 
+    private func postDailyBonus() {
+        NetworkManager.shared.showProgressHud(true, animated: true)
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("❌ Error: No userId found in UserDefaults")
+            return
+        }
+
+        let url = String.dailyBonusPost()
+
+        NetworkManager.shared.showProgressHud(true, animated: true)
+        NetworkManager.shared.post(url: url, parameters: nil, headers: nil) { (result: Result<DailyBonusPost>) in
+            NetworkManager.shared.showProgressHud(false, animated: false)
+            switch result {
+            case .success(let response):
+                print("✅ Workout saved successfully: \(response)")
+            case .failure(let error):
+                print("❌ Error saving workout: \(error.localizedDescription)")
+            }
+        }
+    }
 
 
     private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
@@ -301,6 +321,9 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? DailyBonusViewCell else {
                 return UICollectionViewCell()
             }
+            cell.didPressGetDailyBonus = { [weak self] in
+                self?.postDailyBonus()
+            }
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(
@@ -325,7 +348,6 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             return cell
         case 3:
-            //TODO: cant press LeaderBoardViewCell
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: LeaderBoardViewCell.self),
                 for: indexPath) as? LeaderBoardViewCell else {

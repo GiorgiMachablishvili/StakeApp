@@ -12,6 +12,8 @@ class DailyBonusViewCell: UICollectionViewCell {
     private var timer: Timer?
     private var remainingTime: TimeInterval = 86400
 
+    var didPressGetDailyBonus: (() -> Void)?
+
     private lazy var backgroundTopView: UIView = {
         let view = UIView(frame: .zero)
         view.makeRoundCorners(24)
@@ -172,6 +174,6 @@ class DailyBonusViewCell: UICollectionViewCell {
     }
 
     @objc private func pressGetDailyBonus() {
-        print(">>>>>>>>>>>>>")
+        didPressGetDailyBonus?()
     }
 }

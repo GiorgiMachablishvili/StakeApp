@@ -57,7 +57,6 @@ class GameTopView: UIView {
         }
     }
 
-    //TODO: how can I press clickPauseButton when it is under navigation bar 
     @objc private func clickPauseButton() {
         pressPauseButton?()
     }

@@ -410,7 +410,6 @@ class PandaAndBaboonsGameController: UIViewController {
             byUser.toggle()
             updateTurnUI()
 
-            //TODO: maybe it need to delete
             // Reset and restart the timer
             resetTimer()
 
@@ -713,13 +712,13 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
-    private func getTopViewCell() -> TopViewCell? {
+    private func getTopViewCell() -> MainTopView? {
         guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
             return nil
         }
         let collectionView = mainView.exposedCollectionView
         let indexPath = IndexPath(item: 0, section: 0)
-        return collectionView.cellForItem(at: indexPath) as? TopViewCell
+        return collectionView.cellForItem(at: indexPath) as? MainTopView
     }
 
     private func pressStartGameButton() {
@@ -822,7 +821,6 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         if checkIfAllBoxesAreOpen() {
             winOrLoseView.isHidden = false
 
-            //TODO: what happens in case draw?
             guard let userPointsText = gameTimerView.leftPointView.pointLabel.text,
                   let opponentCostText = gameTimerView.rightPointView.pointLabel.text,
                   let userPoints = Int(userPointsText),
@@ -900,7 +898,8 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                  "user_game_score": userGameScore ?? 0,
                  "opponent_game_score": opponentGameScore ?? 0,
                  "date": currentDate,
-                 "user_id": userId
+                 "user_id": userId,
+                 "game_type": 0
              ]
 
              let url = String.userGameHistoryPost()

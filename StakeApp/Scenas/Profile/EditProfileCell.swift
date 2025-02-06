@@ -11,7 +11,6 @@ import Kingfisher
 
 class EditProfileCell: UICollectionViewCell {
 
-//    var didPressEditProfileButton: (() -> Void)?
     var didPressEditProfileButton: ((UIImage?) -> Void)?
 
     private lazy var workoutImage: UIImageView = {

@@ -10,12 +10,19 @@ import SnapKit
 
 class HistoryView: UIViewController {
 
-    private var userData: UserDataResponse?
-    private var userHistoryInfo: UserGameHistory?
-    private var userHistoryList: [UserGameHistory] = []
+//    private var viewModel = HistoryViewModel(collectionView: collectionView)
 
-    private lazy var topView: TopViewCell = {
-        let view = TopViewCell()
+    private var viewModel: HistoryViewModelType?
+//
+//    init(viewModel: HistoryViewModelType = HistoryViewModel(), userData: UserDataResponse? = nil, userHistoryInfo: UserGameHistory? = nil, userHistoryList: [UserGameHistory]) {
+//        self.viewModel = viewModel
+//        self.userData = userData
+//        self.userHistoryInfo = userHistoryInfo
+//        self.userHistoryList = userHistoryList
+//    }
+
+    private lazy var topView: MainTopView = {
+        let view = MainTopView()
         return view
     }()
 
@@ -23,8 +30,7 @@ class HistoryView: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.translatesAutoresizingMaskIntoConstraints = false
         view.showsVerticalScrollIndicator = false
-        view.dataSource = self
-        view.delegate = self
+        
         view.backgroundColor = UIColor(hexString: "#17191D")
         return view
     }()
@@ -54,18 +60,19 @@ class HistoryView: UIViewController {
 
         view.backgroundColor = UIColor.mainViewsBackViewBlack
 
+        viewModel = HistoryViewModel(collectionView: collectionView)
+        viewModel?.viewDidLoad()
+
         setup()
         setupConstraint()
         setupHierarchy()
         configureCompositionLayout()
 
         hideOrNotEmptyLabel()
-//        fetchUserData()
-        fetchUserGameHistory()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        fetchUserData()
+        
+        viewModel?.didUpdataData = { [weak self] userData in
+            self?.topView.configure(with: userData)
+        }
     }
 
     private func setup() {
@@ -101,68 +108,21 @@ class HistoryView: UIViewController {
     }
 
     func setupHierarchy() {
-//        collectionView.register(TopHistoryCell.self, forCellWithReuseIdentifier: String(describing: TopHistoryCell.self))
         collectionView.register(DailyGameCell.self, forCellWithReuseIdentifier: String(describing: DailyGameCell.self))
     }
 
     func hideOrNotEmptyLabel() {
-        if userHistoryList.count > 0 {
-            emptyLabel.isHidden = true
-            emptyLabelInfo.isHidden = true
-        } else {
-            emptyLabel.isHidden = false
-            emptyLabelInfo.isHidden = false
+        viewModel?.updataEmptyStat = { [weak self] userHistoryList in
+            self?.emptyLabel.isHidden = !userHistoryList.isEmpty
+            self?.emptyLabelInfo.isHidden = !userHistoryList.isEmpty
         }
     }
 
-    private func fetchUserData() {
-        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
-            print("userId not found or not an Int")
-            return
-        }
-
-        let url = String.userDataResponse(userId: userId)
-        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<UserDataResponse>) in
-            switch result {
-            case .success(let userData):
-                self.userData = userData
-                DispatchQueue.main.async {
-                    self.topView.configure(with: userData)
-                    self.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print("Failed to fetch user data: \(error)")
-            }
-        }
-    }
-
-    private func fetchUserGameHistory() {
-        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
-            print("userId not found or not an Int")
-            return
-        }
-
-        let url = String.userGameHistoryGet(userId: userId)
-        NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[UserGameHistory]>) in
-            switch result {
-            case .success(let userHistoryList):
-                self.userHistoryList = userHistoryList
-                DispatchQueue.main.async {
-                    self.hideOrNotEmptyLabel()
-                    self.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print("Failed to fetch user data: \(error)")
-            }
-        }
-    }
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
 
             switch sectionIndex {
-//            case 0:
-//                return self?.topHistoryLayout()
             case 0:
                 return self?.dailyGameView()
             default:
@@ -170,28 +130,6 @@ class HistoryView: UIViewController {
             }
         }
         self.collectionView.setCollectionViewLayout(layout, animated: false)
-    }
-
-    func topHistoryLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(112 * Constraint.yCoeff))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(112 * Constraint.yCoeff)
-        )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(
-            top: -60 * Constraint.yCoeff,
-            leading: 0 * Constraint.xCoeff,
-            bottom: 0 * Constraint.yCoeff,
-            trailing: 0 * Constraint.xCoeff
-        )
-        return section
     }
 
     func dailyGameView() -> NSCollectionLayoutSection {
@@ -236,45 +174,3 @@ class HistoryView: UIViewController {
     }
 }
 
-extension HistoryView: UICollectionViewDataSource, UICollectionViewDelegate {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-//        case 0:
-//            return 1
-        case 0:
-            return userHistoryList.count
-        default:
-            return 0
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-//        case 0:
-//            guard let cell = collectionView.dequeueReusableCell(
-//                withReuseIdentifier: String(describing: TopHistoryCell.self),
-//                for: indexPath) as? TopHistoryCell else {
-//                return UICollectionViewCell()
-//            }
-//            if let userData = userData {
-//                cell.configure(with: userData)
-//            }
-//            return cell
-        case 0:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: String(describing: DailyGameCell.self),
-                for: indexPath) as? DailyGameCell else {
-                return UICollectionViewCell()
-            }
-            let historyEntry = userHistoryList[indexPath.item]
-            cell.configure(with: historyEntry)
-            return cell
-        default:
-            return UICollectionViewCell()
-        }
-    }
-}

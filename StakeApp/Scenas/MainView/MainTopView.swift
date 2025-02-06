@@ -1,5 +1,5 @@
 //
-//  TopViewCell.swift
+//  MainTopView.swift
 //  StakeApp
 //
 //  Created by Gio's Mac on 16.01.25.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class TopViewCell: UIView {
+class MainTopView: UIView {
     private lazy var backgroundTopView: UIView = {
         let view = UIView(frame: .zero)
         view.makeRoundCorners(24)
@@ -27,11 +27,6 @@ class TopViewCell: UIView {
         view.image = UIImage(named: "avatar")
         return view
     }()
-
-//    private lazy var userLevelLabel: ExpLabel = {
-//        let view = ExpLabel(frame: .zero)
-//        return view
-//    }()
 
     lazy var userLevelLabel: UILabel = {
         let view = UILabel(frame: .zero)
@@ -167,13 +162,13 @@ class TopViewCell: UIView {
         expLabel.attributedText = updatedExpString
     }
 
-
-    func configure(with userData: UserDataResponse) {
-        nameLabel.text = userData.username
-        userLevelLabel.text = "\(userData.level)"
-        updateExperiencePoints(add: userData.experience)
-        pointView.pointLabel.text = "\(userData.points)"
-        if let imageUrl = URL(string: userData.image) {
+    //TODO: write guard
+    func configure(with userData: UserDataResponse?) {
+        nameLabel.text = userData?.username
+        userLevelLabel.text = "\(userData?.level)"
+        updateExperiencePoints(add: userData!.experience)
+        pointView.pointLabel.text = "\(userData?.points)"
+        if let imageUrl = URL(string: userData?.image ?? "") {
             workoutImage.kf.setImage(
                 with: imageUrl,
                 placeholder: UIImage(named: "avatar"),

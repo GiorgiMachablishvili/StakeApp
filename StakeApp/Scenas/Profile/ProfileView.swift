@@ -16,8 +16,8 @@ class ProfileView: UIViewController {
     private var userGameStats: UserGameStats?
     private var leaderboardUsers: [LeaderBoardStatic] = []
 
-    private lazy var topView: TopViewCell = {
-        let view = TopViewCell()
+    private lazy var topView: MainTopView = {
+        let view = MainTopView()
         return view
     }()
 
@@ -60,15 +60,13 @@ class ProfileView: UIViewController {
         setupConstraint()
         setupHierarchy()
         configureCompositionLayout()
-
-//        fetchUserData()
         fetchUserGameStatistic()
-        fetchLeaderboardData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         fetchUserData()
         hiddenOrUnhidden()
+        fetchLeaderboardData()
     }
 
     private func setup() {
@@ -159,7 +157,8 @@ class ProfileView: UIViewController {
             case .success(let users):
                 self.leaderboardUsers = users.sorted { $0.points > $1.points }
                 DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+                    self.collectionView.reloadSections(IndexSet(integer: 3))
+//                    self.collectionView.reloadData()
                 }
             case .failure(let error):
                 print("Failed to fetch user data: \(error)")
@@ -171,14 +170,14 @@ class ProfileView: UIViewController {
     func hiddenOrUnhidden() {
         let isGuestUser = UserDefaults.standard.bool(forKey: "isGuestUser")
 
-        let settingsIndexPath = IndexPath(item: 0, section: 3)
+        let settingsIndexPath = IndexPath(item: 0, section: 2)
         DispatchQueue.main.async {
             if let cell = self.collectionView.cellForItem(at: settingsIndexPath) as? SettingCell {
                 cell.configureButtons(forGuest: isGuestUser)
             }
         }
 
-        let editProfileIndexPath = IndexPath(item: 0, section: 1)
+        let editProfileIndexPath = IndexPath(item: 0, section: 0)
         DispatchQueue.main.async {
             if let cell = self.collectionView.cellForItem(at: editProfileIndexPath) as? EditProfileCell {
                 cell.configureEditProfileButton(forGuest: isGuestUser)
@@ -367,8 +366,8 @@ class ProfileView: UIViewController {
                 // Update the UI with the new user data
                 self.userData = userData
                 DispatchQueue.main.async {
-                    self.collectionView.reloadData()
                     self.hideView() // Hide the edit profile view
+                    self.collectionView.reloadData()
                 }
             case .failure(let error):
                 print("Failed to update user profile: \(error)")
@@ -382,6 +381,30 @@ class ProfileView: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
+    }
+
+    private func signInWithAppleButton() {
+        // Simulating tokens for testing
+        let mockPushToken = "mockPushToken"
+        let mockAppleToken = "mockAppleToken"
+
+        // Store mock tokens in UserDefaults
+        UserDefaults.standard.setValue(mockPushToken, forKey: "PushToken")
+        UserDefaults.standard.setValue(mockAppleToken, forKey: "AccountCredential")
+        
+
+        // Call createUser to simulate user creation
+        createUser()
+
+        //        let authorizationProvider = ASAuthorizationAppleIDProvider()
+        //        let request = authorizationProvider.createRequest()
+        //        request.requestedScopes = [.email, .fullName]
+        //
+        //        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        //        authorizationController.delegate = self
+        //        authorizationController.performRequests()
+        //        let mainView = MainDashboardScene()
+        //        navigationController?.pushViewController(mainView, animated: true)
     }
 
     private func createUser() {
@@ -398,8 +421,8 @@ class ProfileView: UIViewController {
 
         // Make the network request
         NetworkManager.shared.post(
+//            url: String.userCreate(),
             url: String.userCreate(),
-//            url: "https://stake-us-66f6608d21e4.herokuapp.com/users/register",
             parameters: parameters,
             headers: nil
         ) { [weak self] (result: Result<UserCreate>) in
@@ -418,9 +441,11 @@ class ProfileView: UIViewController {
                     UserDefaults.standard.setValue(userInfo.id, forKey: "userId")
                     print("Received User ID: \(userInfo.id)")
 
-                    let mainVC = MainViewControllerTab()
-                    self.navigationController?.isNavigationBarHidden = true
-                    self.navigationController?.pushViewController(mainVC, animated: true)
+                    if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                        let mainViewController = MainViewControllerTab()
+                        let navigationController = UINavigationController(rootViewController: mainViewController)
+                        sceneDelegate.changeRootViewController(navigationController)
+                    }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -445,7 +470,7 @@ class ProfileView: UIViewController {
         )
         // Define the delete action
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
-            guard let userId = UserDefaults.standard.value(forKey: "userId") as? String else {
+            guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
                 return
             }
 
@@ -583,7 +608,7 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             cell.pressSignInWithAppleButton = { [weak self] in
-                self?.createUser()
+                self?.signInWithAppleButton()
             }
 
             cell.pressDeleteButton = { [weak self] in
@@ -597,6 +622,7 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             cell.leaderboardUsers = leaderboardUsers
+            cell.reloadLeaderboard()
             return cell
         default:
             return UICollectionViewCell()

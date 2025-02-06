@@ -15,8 +15,8 @@ class MainView: UIViewController {
     private var leaderboardUsers: [LeaderBoardStatic] = []
     private var bonusTimer: BonusTimer?
 
-    private lazy var topView: TopViewCell = {
-        let view = TopViewCell()
+    private lazy var topView: MainTopView = {
+        let view = MainTopView()
         return view
     }()
 
@@ -44,12 +44,12 @@ class MainView: UIViewController {
         setupHierarchy()
         configureCompositionLayout()
 
-        fetchLeaderboardData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         fetchUserData()
         fetchBonusTimer()
+        fetchLeaderboardData()
     }
 
     private func setup() {

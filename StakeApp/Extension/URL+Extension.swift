@@ -41,7 +41,7 @@ extension String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/history/\(userId)"
     }
 
-    static func userDelete(userId: String) -> String {
+    static func userDelete(userId: Int) -> String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
     }
 

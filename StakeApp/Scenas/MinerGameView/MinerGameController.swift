@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
-//
+
 //class MinerGameController: UIViewController {
 //
 //    private let viewModel = MinerGameViewModel()
@@ -304,13 +304,13 @@ import Kingfisher
 //        winOrLoseView.nameLabel.text = userData.username
 //    }
 //
-//    private func getTopViewCell() -> TopViewCell? {
+//    private func getTopViewCell() -> MainTopView? {
 //        guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
 //            return nil
 //        }
 //        let collectionView = mainView.exposedCollectionView
 //        let indexPath = IndexPath(item: 0, section: 0)
-//        return collectionView.cellForItem(at: indexPath) as? TopViewCell
+//        return collectionView.cellForItem(at: indexPath) as? MainTopView
 //    }
 //
 //    private func quitOrContinueGame() {
@@ -960,13 +960,13 @@ class MinerGameController: UIViewController {
         }
     }
 
-    private func getTopViewCell() -> TopViewCell? {
+    private func getTopViewCell() -> MainTopView? {
         guard let mainView = navigationController?.viewControllers.first(where: { $0 is MainView }) as? MainView else {
             return nil
         }
         let collectionView = mainView.exposedCollectionView
         let indexPath = IndexPath(item: 0, section: 0)
-        return collectionView.cellForItem(at: indexPath) as? TopViewCell
+        return collectionView.cellForItem(at: indexPath) as? MainTopView
     }
 
     private func quitOrContinueGame() {
@@ -989,7 +989,6 @@ class MinerGameController: UIViewController {
         autoPickAxeTimer?.invalidate()
         gameBackgroundImage.isUserInteractionEnabled = false
 
-        //TODO: what happens in case draw?
         guard let userPointsText = gameTimerView.leftPointView.pointLabel.text,
               let opponentCostText = gameTimerView.rightPointView.pointLabel.text,
               let userPoints = Int(userPointsText),
@@ -1062,13 +1061,15 @@ class MinerGameController: UIViewController {
             "user_level": userLevel ?? 1,
             "user_name": userName ?? "User_123",
             "opponent_image": "",
-            "opponent_level": opponentLevel ?? 1,
+            "opponent_level": opponentLevel ,
             "opponent_name": opponentName ?? "User_234",
             "user_game_score": userGameScore ?? 0,
             "opponent_game_score": opponentGameScore ?? 0,
             "date": currentDate,
-            "user_id": userId
+            "user_id": userId,
+            "game_type": 0
         ]
+
 
         let url = String.userGameHistoryPost()
         print("📡 Sending POST request to \(url) with parameters: \(parameters)")

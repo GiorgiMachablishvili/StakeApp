@@ -185,11 +185,9 @@ class SettingCell: UICollectionViewCell {
 
     }
 
-    //TODO: signin
     @objc private func clickSignInWithAppleButton() {
         pressSignInWithAppleButton?()
     }
-    //TODO: delete
     @objc private func clickDeleteButton() {
         pressDeleteButton?()
     }

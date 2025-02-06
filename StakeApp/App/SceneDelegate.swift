@@ -32,18 +32,49 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print(userId)
             let mainViewController = MainViewControllerTab()
             UserDefaults.standard.setValue(false, forKey: "isGuestUser")
-            window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+            let navigationController = UINavigationController(rootViewController: mainViewController)
+            changeRootViewController(navigationController)
             if let navigationController = window?.rootViewController as? UINavigationController {
                 navigationController.setNavigationBarHidden(true, animated: false)
             }
         } else {
             let signInViewController = SignInController()
-            window?.rootViewController = UINavigationController(rootViewController: signInViewController)
+            let navigationController = UINavigationController(rootViewController: signInViewController)
+            changeRootViewController(navigationController)
             if let navigationController = window?.rootViewController as? UINavigationController {
                 navigationController.setNavigationBarHidden(true, animated: false)
             }
         }
     }
+
+    func changeRootViewController(_ rootViewController: UIViewController, animated: Bool = true) {
+        // Get the current SceneDelegate's window
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else { return }
+
+        if animated {
+            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                window.rootViewController = rootViewController
+            })
+        } else {
+            window.rootViewController = rootViewController
+        }
+        window.makeKeyAndVisible()
+    }
+
+//    private func setupInitialRootViewController() {
+//        if let userId = UserDefaults.standard.string(forKey: "userId"), !userId.isEmpty {
+//            let mainViewController = MainViewControllerTab()
+//            UserDefaults.standard.setValue(false, forKey: "isGuestUser")
+//            let navigationController = UINavigationController(rootViewController: mainViewController)
+//            changeRootViewController(navigationController)
+//        } else {
+//            let signInViewController = SignInView()
+//            let navigationController = UINavigationController(rootViewController: signInViewController)
+//            changeRootViewController(navigationController)
+//        }
+//    }
 
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -178,6 +178,11 @@ class SignInController: UIViewController {
     }
 
     @objc private func clickSkipButton() {
+        UserDefaults.standard.setValue(true, forKey: "isGuestUser")
+
+        UserDefaults.standard.removeObject(forKey: "userId")
+        UserDefaults.standard.removeObject(forKey: "AccountCredential")
+
         let mainViewTabBarController = MainViewControllerTab()
         navigationController?.pushViewController(mainViewTabBarController, animated: true)
     }
@@ -219,7 +224,6 @@ class SignInController: UIViewController {
 
         // Make the network request
         NetworkManager.shared.post(
-//            url: String.userCreate(),
             url: String.userCreate(),
             parameters: parameters,
             headers: nil
@@ -231,7 +235,6 @@ class SignInController: UIViewController {
                 UserDefaults.standard.setValue(false, forKey: "isGuestUser")
             }
             print("\(parameters)")
-
             switch result {
             case .success(let userInfo):
                 DispatchQueue.main.async {
@@ -239,9 +242,11 @@ class SignInController: UIViewController {
                     UserDefaults.standard.setValue(userInfo.id, forKey: "userId")
                     print("Received User ID: \(userInfo.id)")
 
-                    let mainVC = MainViewControllerTab()
-                    self.navigationController?.isNavigationBarHidden = true
-                    self.navigationController?.pushViewController(mainVC, animated: true)
+                    if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                        let mainViewController = MainViewControllerTab()
+                        let navigationController = UINavigationController(rootViewController: mainViewController)
+                        sceneDelegate.changeRootViewController(navigationController)
+                    }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -250,9 +255,6 @@ class SignInController: UIViewController {
                 print("Error: \(error)")
             }
         }
-//        let mainVC = MainViewControllerTab()
-//        navigationController?.isNavigationBarHidden = true
-//        navigationController?.pushViewController(mainVC, animated: true)
     }
 
     private func showAlert(title: String, description: String) {

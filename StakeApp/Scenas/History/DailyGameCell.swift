@@ -258,18 +258,44 @@ class DailyGameCell: UICollectionViewCell {
         }
     }
 
+    private func formatDate(_ isoDate: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        inputFormatter.timeZone = TimeZone(abbreviation: "UTC")
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd/MMM/yy"
+        outputFormatter.timeZone = TimeZone.current
+        outputFormatter.locale = Locale(identifier: "en_US")
+
+        if let date = inputFormatter.date(from: isoDate) {
+            return outputFormatter.string(from: date).uppercased()
+        } else {
+            return "Invalid Date"
+        }
+    }
+
+
     func configure(with userData: UserGameHistory) {
         timeLabel.text = "\(userData.time)"
-        dataLabel.labelText = userData.date
+        dataLabel.labelText = formatDate(userData.date)
         gameTitle.text = userData.gameName
         winOrLossLabel.text = userData.result ? "WIN" : "LOSE"
-        userImage.kf.setImage(with: URL(string: userData.userImage ?? "avatar"))
+        userImage.kf.setImage(with: URL(string: userData.userImage ?? ""), placeholder: UIImage(named: "avatar"))
         userLevelLabel.text  = "\(userData.userLevel ?? 1)"
         userName.text = userData.userName
-        opponentImage.kf.setImage(with: URL(string: userData.opponentImage ?? "avatar"))
+        opponentImage.kf.setImage(with: URL(string: userData.opponentImage ?? ""), placeholder: UIImage(named: "avatar"))
         opponentLevelLabel.text = "\(userData.opponentLevel ?? 1)"
         opponentName.text = userData.opponentName
         leftPointView.pointLabel.text = "\(userData.userGameScore)"
         rightPointView.pointLabel.text = "\(userData.opponentGameScore)"
+
+        if userData.gameName == "MINERS" {
+            leftPointView.gameImage.image = UIImage(named: "gold")
+            rightPointView.gameImage.image = UIImage(named: "gold")
+        } else if userData.gameName == "PANDAS AND BABOONS" {
+            leftPointView.gameImage.image = UIImage(named: "bamboImage")
+            rightPointView.gameImage.image = UIImage(named: "bamboImage")
+        }
     }
 }

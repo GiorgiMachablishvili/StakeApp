@@ -11,6 +11,12 @@ import Kingfisher
 
 class LeaderBoardViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
 
+    var leaderboardUsers: [LeaderBoardStatic] = [] {
+        didSet {
+            leaderboardTableView.reloadData()
+        }
+    }
+
     private lazy var bonusesLabel: BonusesStringAttributed = {
         let view = BonusesStringAttributed()
         view.backgroundColor = .clear
@@ -26,15 +32,10 @@ class LeaderBoardViewCell: UICollectionViewCell, UITableViewDelegate, UITableVie
         view.showsVerticalScrollIndicator = false
         view.dataSource = self
         view.delegate = self
+        view.isScrollEnabled = false
         view.register(LeaderBoardUserCell.self, forCellReuseIdentifier: "LeaderBoardUserCell")
         return view
     }()
-
-    var leaderboardUsers: [LeaderBoardStatic] = [] {
-        didSet {
-            leaderboardTableView.reloadData()
-        }
-    }
 
     private var currentUserId: Int? {
         return UserDefaults.standard.value(forKey: "userId") as? Int
@@ -66,6 +67,12 @@ class LeaderBoardViewCell: UICollectionViewCell, UITableViewDelegate, UITableVie
         leaderboardTableView.snp.remakeConstraints { make in
             make.top.equalTo(bonusesLabel.snp.bottom).offset(16 * Constraint.yCoeff)
             make.leading.trailing.bottom.equalToSuperview().inset(16 * Constraint.xCoeff)
+        }
+    }
+
+    func reloadLeaderboard() {
+        DispatchQueue.main.async {
+            self.leaderboardTableView.reloadData()
         }
     }
 

@@ -113,6 +113,7 @@ class DailyBonusViewCell: UICollectionViewCell {
         }
     }
 
+    //TODO: time does not works good
     private func startTimer() {
         updateTimer()
 
@@ -174,6 +175,7 @@ class DailyBonusViewCell: UICollectionViewCell {
     }
 
     @objc private func pressGetDailyBonus() {
+        print( "did press GetDailyBonus button")
         didPressGetDailyBonus?()
         startTimer()
     }

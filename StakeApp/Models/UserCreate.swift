@@ -10,7 +10,7 @@ import UIKit
 public struct UserCreate: Codable {
     let id: Int
     let username: String
-    let image: String
+    let image: String?
     let appleToken: String
     let pushToken: String
     let level: Int
@@ -23,5 +23,3 @@ public struct UserCreate: Codable {
         case pushToken = "push_token"
     }
 }
-
-

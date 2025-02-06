@@ -69,9 +69,11 @@ class HistoryView: UIViewController {
         configureCompositionLayout()
 
         hideOrNotEmptyLabel()
-        
+
         viewModel?.didUpdataData = { [weak self] userData in
-            self?.topView.configure(with: userData)
+            DispatchQueue.main.async {
+                self?.topView.configure(with: userData)
+            }
         }
     }
 

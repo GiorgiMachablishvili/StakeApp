@@ -25,7 +25,6 @@ class HistoryViewModel: NSObject, HistoryViewModelType {
     private var collectionView: UICollectionView
     private var userHistoryList: [UserGameHistory] = []
 
-
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
     }

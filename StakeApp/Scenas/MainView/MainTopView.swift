@@ -164,11 +164,13 @@ class MainTopView: UIView {
 
     //TODO: write guard
     func configure(with userData: UserDataResponse?) {
-        nameLabel.text = userData?.username
-        userLevelLabel.text = "\(userData?.level)"
-        updateExperiencePoints(add: userData!.experience)
-        pointView.pointLabel.text = "\(userData?.points)"
-        if let imageUrl = URL(string: userData?.image ?? "") {
+        guard let userData = userData else { return }
+
+        nameLabel.text = userData.username
+        userLevelLabel.text = "\(userData.level)"
+        updateExperiencePoints(add: userData.experience)
+        pointView.pointLabel.text = "\(userData.points)"
+        if let imageUrl = URL(string: userData.image) {
             workoutImage.kf.setImage(
                 with: imageUrl,
                 placeholder: UIImage(named: "avatar"),

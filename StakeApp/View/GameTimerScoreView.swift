@@ -12,8 +12,15 @@ class GameTimerScoreView: UIView {
     var timerDidFinish: (() -> Void)?
     var onTimeUpdate: ((Int) -> Void)?
 
+    var opponentLevel: Int = Int.random(in: 1...30) // Store it in a property
+
+    private func setOpponentLevel() {
+        opponentLevel = Int.random(in: 1...30) // Generate once when setting up
+        opponentLevelLabel.text = "\(opponentLevel)"
+    }
+
     private var timer: Timer?
-    var remainingSeconds: Int = 60 {
+    var remainingSeconds: Int = 3 {
         didSet {
             timerLabel.text = "\(remainingSeconds)"
         }
@@ -67,6 +74,7 @@ class GameTimerScoreView: UIView {
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "blocked")
+        view.backgroundColor = .clear
         view.isHidden = true
         return view
     }()
@@ -110,6 +118,7 @@ class GameTimerScoreView: UIView {
         view.contentMode = .center
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "blocked")
+        view.backgroundColor = .clear
         view.isHidden = true
         return view
     }()
@@ -121,7 +130,6 @@ class GameTimerScoreView: UIView {
         view.textColor = .whiteColor
         view.textAlignment = .center
         view.makeRoundCorners(10)
-        view.text = "1"
         return view
     }()
 
@@ -261,47 +269,32 @@ class GameTimerScoreView: UIView {
         }
     }
     func startTimer() {
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-        }
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+    }
 
-        func pauseTimer() {
-            timer?.invalidate()
-            timer = nil
-        }
+    func pauseTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
 
-        func resetTimer(to seconds: Int) {
+    func resetTimer(to seconds: Int) {
+        pauseTimer()
+        remainingSeconds = seconds
+        startTimer()
+    }
+
+    @objc private func updateTimer() {
+        if remainingSeconds > 0 {
+            remainingSeconds -= 1
+            onTimeUpdate?(remainingSeconds)
+        } else {
             pauseTimer()
-            remainingSeconds = seconds
-            startTimer()
+            timerDidFinish?()
         }
+    }
 
-        @objc private func updateTimer() {
-            if remainingSeconds > 0 {
-                remainingSeconds -= 1
-                onTimeUpdate?(remainingSeconds)
-            } else {
-                pauseTimer()
-                timerDidFinish?()
-            }
-        }
-
-        deinit {
-            timer?.invalidate()
-        }
-
-
-    private func setOpponentLevel() {
-        if let userLevel = Int(useLevelLabel.text ?? "1") {
-            var opponentLevel: Int
-
-            if userLevel == 1 {
-                opponentLevel = Bool.random() ? userLevel + 1 : userLevel 
-            } else {
-                opponentLevel = Bool.random() ? userLevel + 1 : userLevel - 1
-            }
-
-            opponentLevelLabel.text = "\(opponentLevel)"
-        }
+    deinit {
+        timer?.invalidate()
     }
 }

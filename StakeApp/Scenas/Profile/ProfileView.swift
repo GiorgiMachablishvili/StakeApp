@@ -16,6 +16,11 @@ class ProfileView: UIViewController {
     private var userGameStats: UserGameStats?
     private var leaderboardUsers: [LeaderBoardStatic] = []
 
+    private lazy var topView: TopViewCell = {
+        let view = TopViewCell()
+        return view
+    }()
+
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -67,14 +72,21 @@ class ProfileView: UIViewController {
     }
 
     private func setup() {
+        view.addSubview(topView)
         view.addSubview(collectionView)
         view.addSubview(backgroundProfileView)
         backgroundProfileView.addSubview(profileView)
     }
 
     private func setupConstraint() {
+        topView.snp.remakeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(112)
+        }
+
         collectionView.snp.remakeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(topView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
 
         backgroundProfileView.snp.remakeConstraints { make in
@@ -89,7 +101,7 @@ class ProfileView: UIViewController {
     }
 
     func setupHierarchy() {
-        collectionView.register(TopCell.self, forCellWithReuseIdentifier: String(describing: TopCell.self))
+//        collectionView.register(TopCell.self, forCellWithReuseIdentifier: String(describing: TopCell.self))
         collectionView.register(EditProfileCell.self, forCellWithReuseIdentifier: String(describing: EditProfileCell.self))
         collectionView.register(StaticCell.self, forCellWithReuseIdentifier: String(describing: StaticCell.self))
         collectionView.register(SettingCell.self, forCellWithReuseIdentifier: String(describing: SettingCell.self))
@@ -108,6 +120,7 @@ class ProfileView: UIViewController {
             case .success(let userData):
                 self.userData = userData
                 DispatchQueue.main.async {
+                    self.topView.configure(with: userData)
                     self.collectionView.reloadData()
                 }
             case .failure(let error):
@@ -117,7 +130,7 @@ class ProfileView: UIViewController {
     }
 
     private func fetchUserGameStatistic() {
-        guard let userId = UserDefaults.standard.value(forKey: "userId") as? String else {
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
             return
         }
 
@@ -136,10 +149,10 @@ class ProfileView: UIViewController {
     }
 
     private func fetchLeaderboardData() {
-        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
-            print("userId not found or not an Int")
-            return
-        }
+//        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+//            print("userId not found or not an Int")
+//            return
+//        }
         let url = String.leaderBoard()
         NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[LeaderBoardStatic]>) in
             switch result {
@@ -177,15 +190,15 @@ class ProfileView: UIViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
 
             switch sectionIndex {
+//            case 0:
+//                return self?.topViewLayout()
             case 0:
-                return self?.topViewLayout()
-            case 1:
                 return self?.editProfileView()
-            case 2:
+            case 1:
                 return self?.staticView()
-            case 3:
+            case 2:
                 return self?.settingView()
-            case 4:
+            case 3:
                 return self?.leaderBoardLayout()
             default:
                 return self?.defaultLayout()
@@ -194,27 +207,27 @@ class ProfileView: UIViewController {
         self.collectionView.setCollectionViewLayout(layout, animated: false)
     }
 
-    func topViewLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(112 * Constraint.yCoeff))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(112 * Constraint.yCoeff)
-        )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(
-            top: -60 * Constraint.yCoeff,
-            leading: 0 * Constraint.xCoeff,
-            bottom: 0 * Constraint.yCoeff,
-            trailing: 0 * Constraint.xCoeff
-        )
-        return section
-    }
+//    func topViewLayout() -> NSCollectionLayoutSection {
+//        let itemSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1.0),
+//            heightDimension: .absolute(112 * Constraint.yCoeff))
+//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//
+//        let groupSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1.0),
+//            heightDimension: .absolute(112 * Constraint.yCoeff)
+//        )
+//        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+//
+//        let section = NSCollectionLayoutSection(group: group)
+//        section.contentInsets = .init(
+//            top: -60 * Constraint.yCoeff,
+//            leading: 0 * Constraint.xCoeff,
+//            bottom: 0 * Constraint.yCoeff,
+//            trailing: 0 * Constraint.xCoeff
+//        )
+//        return section
+//    }
 
     func editProfileView() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
@@ -495,11 +508,13 @@ class ProfileView: UIViewController {
 
 extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return 4
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
+//        case 0:
+//            return 1
         case 0:
             return 1
         case 1:
@@ -508,8 +523,6 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
             return 1
         case 3:
             return 1
-        case 4:
-            return 1
         default:
             return 0
         }
@@ -517,17 +530,17 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
+//        case 0:
+//            guard let cell = collectionView.dequeueReusableCell(
+//                withReuseIdentifier: String(describing: TopCell.self),
+//                for: indexPath) as? TopCell else {
+//                return UICollectionViewCell()
+//            }
+//            if let userData = userData {
+//                cell.configure(with: userData)
+//            }
+//            return cell
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: String(describing: TopCell.self),
-                for: indexPath) as? TopCell else {
-                return UICollectionViewCell()
-            }
-            if let userData = userData {
-                cell.configure(with: userData)
-            }
-            return cell
-        case 1:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: EditProfileCell.self),
                 for: indexPath) as? EditProfileCell else {
@@ -553,7 +566,7 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
 //                self.tabBarController?.tabBar.isHidden = true
             }
             return cell
-        case 2:
+        case 1:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: StaticCell.self),
                 for: indexPath) as? StaticCell else {
@@ -563,7 +576,7 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.configure(user: stats)
             }
             return cell
-        case 3:
+        case 2:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: SettingCell.self),
                 for: indexPath) as? SettingCell else {
@@ -577,7 +590,7 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
                 self?.deleteUserAccount()
             }
             return cell
-        case 4:
+        case 3:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: LeaderBoardViewCell.self),
                 for: indexPath) as? LeaderBoardViewCell else {

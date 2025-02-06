@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class TopViewCell: UICollectionViewCell {
+class TopViewCell: UIView {
     private lazy var backgroundTopView: UIView = {
         let view = UIView(frame: .zero)
         view.makeRoundCorners(24)
@@ -156,7 +156,7 @@ class TopViewCell: UICollectionViewCell {
         // Extract current experience and level
         let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
         let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
-        var newExp = currentExp + value
+        let newExp = value
 
         // Update the attributed text for experience points
         let updatedExpString = NSMutableAttributedString()

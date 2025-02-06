@@ -131,7 +131,7 @@ class StaticCell: UICollectionViewCell {
     }
 
     func configure(user data: UserGameStats) {
-        gamePlayedScore.text = "\(data.gamesPlayed)"
+        gamePlayedScore.text = "\(data.gamePlayedCount)"
         gameWonScore.text = "\(data.gamesWon)"
     }
 }

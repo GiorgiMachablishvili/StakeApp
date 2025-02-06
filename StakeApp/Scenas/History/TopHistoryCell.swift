@@ -145,7 +145,7 @@ class TopHistoryCell: UICollectionViewCell {
         // Extract current experience and level
         let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
         let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
-        var newExp = currentExp + value
+        var newExp = value
 
         // Update the attributed text for experience points
         let updatedExpString = NSMutableAttributedString()

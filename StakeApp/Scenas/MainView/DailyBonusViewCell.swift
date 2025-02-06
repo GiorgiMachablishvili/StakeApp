@@ -175,5 +175,6 @@ class DailyBonusViewCell: UICollectionViewCell {
 
     @objc private func pressGetDailyBonus() {
         didPressGetDailyBonus?()
+        startTimer()
     }
 }

@@ -262,7 +262,7 @@ class DailyGameCell: UICollectionViewCell {
         timeLabel.text = "\(userData.time)"
         dataLabel.labelText = userData.date
         gameTitle.text = userData.gameName
-        winOrLossLabel.text = "\(userData.result)"
+        winOrLossLabel.text = userData.result ? "WIN" : "LOSE"
         userImage.kf.setImage(with: URL(string: userData.userImage ?? "avatar"))
         userLevelLabel.text  = "\(userData.userLevel ?? 1)"
         userName.text = userData.userName

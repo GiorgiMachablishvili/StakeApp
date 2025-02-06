@@ -160,7 +160,7 @@ class EditProfileCell: UICollectionViewCell {
         // Extract current experience and level
         let currentExp = Int(expText.components(separatedBy: " ")[1].split(separator: "/")[0]) ?? 0
         let currentLevel = Int(userLevelLabel.text ?? "1") ?? 1
-        var newExp = currentExp + value
+        var newExp = value
 
 //        // Handle leveling up
 //        if newExp >= 20 {

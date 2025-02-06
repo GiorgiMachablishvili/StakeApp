@@ -1040,7 +1040,7 @@ class MinerGameController: UIViewController {
 
         let userName = gameTimerView.userName.text
 
-        let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1")
+        let opponentLevel = gameTimerView.opponentLevel
 
         let opponentName = gameTimerView.opponentName.text
 

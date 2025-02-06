@@ -13,7 +13,11 @@ class HistoryView: UIViewController {
     private var userData: UserDataResponse?
     private var userHistoryInfo: UserGameHistory?
     private var userHistoryList: [UserGameHistory] = []
-    
+
+    private lazy var topView: TopViewCell = {
+        let view = TopViewCell()
+        return view
+    }()
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -65,6 +69,7 @@ class HistoryView: UIViewController {
     }
 
     private func setup() {
+        view.addSubview(topView)
         view.addSubview(collectionView)
         view.addSubview(emptyLabel)
         view.addSubview(emptyLabelInfo)
@@ -72,8 +77,14 @@ class HistoryView: UIViewController {
     }
 
     private func setupConstraint() {
+        topView.snp.remakeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(112)
+        }
+
         collectionView.snp.remakeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(topView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
 
         emptyLabel.snp.remakeConstraints { make in
@@ -90,7 +101,7 @@ class HistoryView: UIViewController {
     }
 
     func setupHierarchy() {
-        collectionView.register(TopHistoryCell.self, forCellWithReuseIdentifier: String(describing: TopHistoryCell.self))
+//        collectionView.register(TopHistoryCell.self, forCellWithReuseIdentifier: String(describing: TopHistoryCell.self))
         collectionView.register(DailyGameCell.self, forCellWithReuseIdentifier: String(describing: DailyGameCell.self))
     }
 
@@ -116,6 +127,7 @@ class HistoryView: UIViewController {
             case .success(let userData):
                 self.userData = userData
                 DispatchQueue.main.async {
+                    self.topView.configure(with: userData)
                     self.collectionView.reloadData()
                 }
             case .failure(let error):
@@ -149,9 +161,9 @@ class HistoryView: UIViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
 
             switch sectionIndex {
+//            case 0:
+//                return self?.topHistoryLayout()
             case 0:
-                return self?.topHistoryLayout()
-            case 1:
                 return self?.dailyGameView()
             default:
                 return self?.defaultLayout()
@@ -226,14 +238,14 @@ class HistoryView: UIViewController {
 
 extension HistoryView: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
+//        case 0:
+//            return 1
         case 0:
-            return 1
-        case 1:
             return userHistoryList.count
         default:
             return 0
@@ -242,17 +254,17 @@ extension HistoryView: UICollectionViewDataSource, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
+//        case 0:
+//            guard let cell = collectionView.dequeueReusableCell(
+//                withReuseIdentifier: String(describing: TopHistoryCell.self),
+//                for: indexPath) as? TopHistoryCell else {
+//                return UICollectionViewCell()
+//            }
+//            if let userData = userData {
+//                cell.configure(with: userData)
+//            }
+//            return cell
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: String(describing: TopHistoryCell.self),
-                for: indexPath) as? TopHistoryCell else {
-                return UICollectionViewCell()
-            }
-            if let userData = userData {
-                cell.configure(with: userData)
-            }
-            return cell
-        case 1:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: DailyGameCell.self),
                 for: indexPath) as? DailyGameCell else {

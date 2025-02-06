@@ -15,6 +15,11 @@ class MainView: UIViewController {
     private var leaderboardUsers: [LeaderBoardStatic] = []
     private var bonusTimer: BonusTimer?
 
+    private lazy var topView: TopViewCell = {
+        let view = TopViewCell()
+        return view
+    }()
+
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -48,18 +53,25 @@ class MainView: UIViewController {
     }
 
     private func setup() {
+        view.addSubview(topView)
         view.addSubview(collectionView)
 
     }
 
     private func setupConstraint() {
+        topView.snp.remakeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(112)
+        }
+
         collectionView.snp.remakeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(topView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 
     func setupHierarchy() {
-        collectionView.register(TopViewCell.self, forCellWithReuseIdentifier: String(describing: TopViewCell.self))
+//        collectionView.register(TopViewCell.self, forCellWithReuseIdentifier: String(describing: TopViewCell.self))
         collectionView.register(DailyBonusViewCell.self, forCellWithReuseIdentifier: String(describing: DailyBonusViewCell.self))
         collectionView.register(GamesViewCell.self, forCellWithReuseIdentifier: String(describing: GamesViewCell.self))
         collectionView.register(LeaderBoardViewCell.self, forCellWithReuseIdentifier: String(describing: LeaderBoardViewCell.self))
@@ -77,6 +89,7 @@ class MainView: UIViewController {
             case .success(let userData):
                 self.userData = userData
                 DispatchQueue.main.async {
+                    self.topView.configure(with: userData)
                     self.collectionView.reloadData()
                 }
             case .failure(let error):
@@ -159,13 +172,13 @@ class MainView: UIViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
 
             switch sectionIndex {
+//            case 0:
+//                return self?.topViewLayout()
             case 0:
-                return self?.topViewLayout()
-            case 1:
                 return self?.dailyBonusView()
-            case 2:
+            case 1:
                 return self?.GameView()
-            case 3:
+            case 2:
                 return self?.LeaderBoardView()
             default:
                 return self?.defaultLayout()
@@ -174,27 +187,27 @@ class MainView: UIViewController {
         self.collectionView.setCollectionViewLayout(layout, animated: false)
     }
 
-    func topViewLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(112 * Constraint.yCoeff))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(112 * Constraint.yCoeff)
-        )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(
-            top: -60 * Constraint.yCoeff,
-            leading: 0 * Constraint.xCoeff,
-            bottom: 0 * Constraint.yCoeff,
-            trailing: 0 * Constraint.xCoeff
-        )
-        return section
-    }
+//    func topViewLayout() -> NSCollectionLayoutSection {
+//        let itemSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1.0),
+//            heightDimension: .absolute(112 * Constraint.yCoeff))
+//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//
+//        let groupSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1.0),
+//            heightDimension: .absolute(112 * Constraint.yCoeff)
+//        )
+//        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+//
+//        let section = NSCollectionLayoutSection(group: group)
+//        section.contentInsets = .init(
+//            top: -60 * Constraint.yCoeff,
+//            leading: 0 * Constraint.xCoeff,
+//            bottom: 0 * Constraint.yCoeff,
+//            trailing: 0 * Constraint.xCoeff
+//        )
+//        return section
+//    }
 
     func dailyBonusView() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
@@ -285,18 +298,18 @@ class MainView: UIViewController {
 
 extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return 3
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
+//        case 0:
+//            return 1
         case 0:
             return 1
         case 1:
             return 1
         case 2:
-            return 1
-        case 3:
             return 1
         default:
             return 0
@@ -305,17 +318,17 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
+//        case 0:
+//            guard let cell = collectionView.dequeueReusableCell(
+//                withReuseIdentifier: String(describing: TopViewCell.self),
+//                for: indexPath) as? TopViewCell else {
+//                return UICollectionViewCell()
+//            }
+//            if let userData = userData {
+//                cell.configure(with: userData)
+//            }
+//            return cell
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: String(describing: TopViewCell.self),
-                for: indexPath) as? TopViewCell else {
-                return UICollectionViewCell()
-            }
-            if let userData = userData {
-                cell.configure(with: userData)
-            }
-            return cell
-        case 1:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: DailyBonusViewCell.self),
                 for: indexPath) as? DailyBonusViewCell else {
@@ -325,7 +338,7 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
                 self?.postDailyBonus()
             }
             return cell
-        case 2:
+        case 1:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: GamesViewCell.self),
                 for: indexPath) as? GamesViewCell else {
@@ -347,7 +360,7 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
                 self.navigationController?.pushViewController(gamePreviewView, animated: true)
             }
             return cell
-        case 3:
+        case 2:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: LeaderBoardViewCell.self),
                 for: indexPath) as? LeaderBoardViewCell else {

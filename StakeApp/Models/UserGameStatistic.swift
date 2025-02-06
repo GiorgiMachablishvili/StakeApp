@@ -8,11 +8,17 @@
 import Foundation
 
 struct UserGameStats: Codable {
-    let gamesPlayed: Int
+    let userId: Int
+    let exp: Int
+    let gamePoints: Int
+    let gamePlayedCount: Int
     let gamesWon: Int
 
     enum CodingKeys: String, CodingKey {
-        case gamesPlayed = "games_played"
-        case gamesWon = "games_won"
+        case userId = "user_id"
+        case exp
+        case gamePoints = "game_points"
+        case gamePlayedCount
+        case gamesWon
     }
 }

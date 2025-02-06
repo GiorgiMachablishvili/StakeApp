@@ -45,7 +45,7 @@ extension String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
     }
 
-    static func getUserGameStatistic(userId: String) -> String {
+    static func getUserGameStatistic(userId: Int) -> String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/user_statistics/\(userId)"
     }
 }

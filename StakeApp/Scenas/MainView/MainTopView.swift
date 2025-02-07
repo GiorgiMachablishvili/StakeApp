@@ -162,7 +162,6 @@ class MainTopView: UIView {
         expLabel.attributedText = updatedExpString
     }
 
-    //TODO: write guard
     func configure(with userData: UserDataResponse?) {
         guard let userData = userData else { return }
 

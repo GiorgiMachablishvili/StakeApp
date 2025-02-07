@@ -577,7 +577,6 @@ class PandaAndBaboonsGameController: UIViewController {
         }
     }
 
-    //TODO: when press pressX2Buttons do not subtract user points
     @objc private func pressX2Buttons() {
             // Deduct the x2 button cost for the opponent
             guard let currentPointsText = gameTopView.pointView.pointLabel.text,
@@ -790,8 +789,73 @@ class PandaAndBaboonsGameController: UIViewController {
         UIApplication.shared.keyWindow?.rootViewController = navigationController
     }
 
+
+    func updatePandaAndBaboonsScoreWhenCancel() {
+        NetworkManager.shared.showProgressHud(true, animated: true)
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("❌ Error: No userId found in UserDefaults")
+            return
+        }
+
+        let resultString = currentLeftPoints >= (Int(gameTimerView.rightPointView.pointLabel.text ?? "0") ?? 0)
+
+        let userGameScore = Int(gameTimerView.leftPointView.pointLabel.text ?? "0")
+
+        let userLevel = Int(gameTimerView.useLevelLabel.text ?? "1")
+
+        let userName = gameTimerView.userName.text
+
+        let opponentLevel = gameTimerView.opponentLevel
+
+        let opponentName = gameTimerView.opponentName.text
+
+        let opponentGameScore = Int(gameTimerView.rightPointView.pointLabel.text ?? "0")
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let currentDate = dateFormatter.string(from: Date())
+
+        dateFormatter.dateFormat = "hh:mm a"
+        let currentTimeString = dateFormatter.string(from: Date())
+
+        // Prepare parameters
+        let parameters: [String: Any] = [
+            "time": currentTimeString,
+            "game_name": "PANDAS AND BABOONS",
+            "result": false,
+            "user_image": "",
+            "user_level": userLevel ?? 1,
+            "user_name": userName ?? "User_123",
+            "opponent_image": "",
+            "opponent_level": opponentLevel ,
+            "opponent_name": opponentName ?? "User_234",
+            "user_game_score": userGameScore ?? 0,
+            "opponent_game_score": opponentGameScore ?? 0,
+            "date": currentDate,
+            "user_id": userId,
+            "game_type": 0
+        ]
+
+
+        let url = String.userGameHistoryPost()
+        print("📡 Sending POST request to \(url) with parameters: \(parameters)")
+
+        NetworkManager.shared.showProgressHud(true, animated: true)
+        NetworkManager.shared.post(url: url, parameters: parameters, headers: nil) { (result: Result<UserGameHistory>) in
+            NetworkManager.shared.showProgressHud(false, animated: false)
+            switch result {
+            case .success(let response):
+                print("✅ Workout saved successfully: \(response)")
+            case .failure(let error):
+                print("❌ Error saving workout: \(error.localizedDescription)")
+                print("❌ Request Parameters: \(parameters)")
+            }
+        }
+    }
+
     private func quitOrContinueGame() {
         quitOrContinueView.isHidden = false
+
     }
 
     private func pressContinueGameButton() {
@@ -799,6 +863,7 @@ class PandaAndBaboonsGameController: UIViewController {
     }
 
     private func pressQuitGameButton() {
+        updatePandaAndBaboonsScoreWhenCancel()
         pressContinueButton()
     }
 }

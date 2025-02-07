@@ -113,7 +113,7 @@ class DailyBonusViewCell: UICollectionViewCell {
         }
     }
 
-    //TODO: time does not works good
+    //TODO: time does not works good it should not start to decline.
     private func startTimer() {
         updateTimer()
 
@@ -147,26 +147,6 @@ class DailyBonusViewCell: UICollectionViewCell {
         }
     }
 
-
-//    func startBonusTimer(with nextBonusTimestamp: TimeInterval) {
-//        let currentTime = Date().timeIntervalSince1970
-//        remainingTime = max(nextBonusTimestamp - currentTime, 0)
-//
-//        print("🕒 Timer starts with remainingTime: \(remainingTime) seconds")
-//
-//        // Update UI immediately
-//        updateTimer()
-//
-//        // Ensure any existing timer is invalidated before starting a new one
-//        timer?.invalidate()
-//
-//        if remainingTime > 0 {
-//            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-//                self?.updateTimer()
-//            }
-//        }
-//    }
-
     private func updateTimer() {
         guard remainingTime > 0 else {
             timer?.invalidate()
@@ -190,26 +170,6 @@ class DailyBonusViewCell: UICollectionViewCell {
 
         print("⏳ Timer updated: \(timerLabel.text!) - Remaining: \(remainingTime) seconds")
     }
-
-//
-//    private func updateTimer() {
-//        guard remainingTime > 0 else {
-//            timer?.invalidate()
-//            timer = nil
-//            timerLabel.text = "00:00:00"
-//
-//            print("✅ Timer finished, enabling Get Bonus button")
-//            return
-//        }
-//
-//        remainingTime -= 1
-//        let hours = Int(remainingTime) / 3600
-//        let minutes = (Int(remainingTime) % 3600) / 60
-//        let seconds = Int(remainingTime) % 60
-//        timerLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-//
-//        print("⏳ Timer updated: \(timerLabel.text!) - Remaining: \(remainingTime) seconds")
-//    }
 
     override func prepareForReuse() {
         super.prepareForReuse()

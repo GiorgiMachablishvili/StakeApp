@@ -36,7 +36,6 @@ class MainView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = UIColor.mainViewsBackViewBlack
 
         setup()
@@ -70,7 +69,6 @@ class MainView: UIViewController {
     }
 
     func setupHierarchy() {
-//        collectionView.register(TopViewCell.self, forCellWithReuseIdentifier: String(describing: TopViewCell.self))
         collectionView.register(DailyBonusViewCell.self, forCellWithReuseIdentifier: String(describing: DailyBonusViewCell.self))
         collectionView.register(GamesViewCell.self, forCellWithReuseIdentifier: String(describing: GamesViewCell.self))
         collectionView.register(LeaderBoardViewCell.self, forCellWithReuseIdentifier: String(describing: LeaderBoardViewCell.self))
@@ -159,20 +157,6 @@ class MainView: UIViewController {
         }
     }
 
-//    private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
-//        guard let indexPath = collectionView.indexPathsForVisibleItems.first(where: {
-//            collectionView.cellForItem(at: $0) is DailyBonusViewCell
-//        }) else {
-//            print("❌ No DailyBonusViewCell found in visible cells")
-//            return
-//        }
-//
-//        if let dailyBonusCell = collectionView.cellForItem(at: indexPath) as? DailyBonusViewCell {
-//            dailyBonusCell.startBonusTimer(with: nextBonusTimestamp)
-//        }
-//    }
-    
-
     private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
         print("⏳ Updating Bonus Timer with timestamp: \(nextBonusTimestamp)")
 
@@ -207,28 +191,6 @@ class MainView: UIViewController {
         }
         self.collectionView.setCollectionViewLayout(layout, animated: false)
     }
-
-//    func topViewLayout() -> NSCollectionLayoutSection {
-//        let itemSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1.0),
-//            heightDimension: .absolute(112 * Constraint.yCoeff))
-//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//
-//        let groupSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1.0),
-//            heightDimension: .absolute(112 * Constraint.yCoeff)
-//        )
-//        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-//
-//        let section = NSCollectionLayoutSection(group: group)
-//        section.contentInsets = .init(
-//            top: -60 * Constraint.yCoeff,
-//            leading: 0 * Constraint.xCoeff,
-//            bottom: 0 * Constraint.yCoeff,
-//            trailing: 0 * Constraint.xCoeff
-//        )
-//        return section
-//    }
 
     func dailyBonusView() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
@@ -339,16 +301,6 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-//        case 0:
-//            guard let cell = collectionView.dequeueReusableCell(
-//                withReuseIdentifier: String(describing: TopViewCell.self),
-//                for: indexPath) as? TopViewCell else {
-//                return UICollectionViewCell()
-//            }
-//            if let userData = userData {
-//                cell.configure(with: userData)
-//            }
-//            return cell
         case 0:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: DailyBonusViewCell.self),

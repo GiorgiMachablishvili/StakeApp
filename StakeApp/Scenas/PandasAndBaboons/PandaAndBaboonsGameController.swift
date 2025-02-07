@@ -16,7 +16,7 @@ class PandaAndBaboonsGameController: UIViewController {
     private let boxSize: CGFloat = 66.0
     private let images = ["bambuk", "beetle", "coin", "stick", "stone", "trapR"]
     private var shuffledImages: [String] = []
-    private var byUser: Bool = true
+    private var isUserTurn: Bool = true
 
     private let botName = "Bot"
     private let botImageName = "avatar"
@@ -109,6 +109,18 @@ class PandaAndBaboonsGameController: UIViewController {
         return view
     }()
 
+    private lazy var x2ButtonOpponent: UIButton = {
+        let view = UIButton(frame: .zero)
+        view.setImage(UIImage(named: "x2"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
+        view.contentMode = .scaleAspectFit
+        view.isHidden = true
+        view.addTarget(self, action: #selector(pressX2ButtonOpponent), for: .touchUpInside)
+        return view
+    }()
+
     private lazy var x2Cost: BonusCostView = {
         let view = BonusCostView()
         view.costLabel.text = "1"
@@ -140,6 +152,18 @@ class PandaAndBaboonsGameController: UIViewController {
         view.backgroundColor = .buttonBackgroundColor
         view.contentMode = .scaleAspectFit
         view.addTarget(self, action: #selector(pressMixButtons), for: .touchUpInside)
+        return view
+    }()
+
+    private lazy var mixButtonsOpponent: UIButton = {
+        let view = UIButton(frame: .zero)
+        view.setImage(UIImage(named: "mix"), for: .normal)
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .buttonBackgroundColor
+        view.contentMode = .scaleAspectFit
+        view.isHidden = true
+        view.addTarget(self, action: #selector(pressMixButtonsOpponent), for: .touchUpInside)
         return view
     }()
 
@@ -219,6 +243,9 @@ class PandaAndBaboonsGameController: UIViewController {
         gameBackgroundImage.addSubview(trapButtons)
         gameBackgroundImage.addSubview(mixButtons)
         gameBackgroundImage.addSubview(scannerButtons)
+        gameBackgroundImage.addSubview(x2ButtonOpponent)
+        gameBackgroundImage.addSubview(mixButtonsOpponent)
+
         view.addSubview(x2Cost)
         view.addSubview(trapCost)
         view.addSubview(mixCost)
@@ -263,6 +290,12 @@ class PandaAndBaboonsGameController: UIViewController {
             make.height.width.equalTo(72 * Constraint.yCoeff)
         }
 
+        x2ButtonOpponent.snp.remakeConstraints { make in
+            make.top.equalTo(x2Buttons.snp.bottom).offset(-30)
+            make.centerX.equalTo(x2Buttons.snp.centerX)
+            make.height.width.equalTo(72 * Constraint.yCoeff)
+        }
+
         x2Cost.snp.remakeConstraints { make in
             make.centerX.equalTo(x2Buttons.snp.centerX)
             make.bottom.equalTo(x2Buttons.snp.bottom).offset(5 * Constraint.yCoeff)
@@ -287,6 +320,13 @@ class PandaAndBaboonsGameController: UIViewController {
             make.leading.equalTo(trapButtons.snp.trailing).offset(16 * Constraint.yCoeff)
             make.centerY.equalTo(trapButtons.snp.centerY)
             make.height.width.equalTo(72 * Constraint.yCoeff)
+        }
+
+        mixButtonsOpponent.snp.remakeConstraints { make in
+            make.centerX.equalTo(mixButtons.snp.centerX)
+            make.bottom.equalTo(mixButtons.snp.bottom).offset(5 * Constraint.yCoeff)
+            make.height.equalTo(19 * Constraint.yCoeff)
+            make.width.greaterThanOrEqualTo(34 * Constraint.xCoeff)
         }
 
         mixCost.snp.remakeConstraints { make in
@@ -372,7 +412,6 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private func configureBotUI() {
         gameTimerView.opponentImage.image = UIImage(named: botImageName)
-//        gameTimerView.opponentName.text = botName
         gameTimerView.opponentLevelLabel.text = "\(botLevel)"
     }
 
@@ -387,10 +426,10 @@ class PandaAndBaboonsGameController: UIViewController {
 
     private func initializeTurn() {
         // Randomly determine whether it's the user's turn
-        byUser = Bool.random()
+        isUserTurn = Bool.random()
         updateTurnUI()
 
-        if !byUser {
+        if !isUserTurn {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.hideGameTimerView()
                 self.botMakeMove()
@@ -407,13 +446,13 @@ class PandaAndBaboonsGameController: UIViewController {
         if remainingSeconds == 0 {
             print("Time's up! Switching turns.")
             // Switch turns when time runs out
-            byUser.toggle()
+            isUserTurn.toggle()
             updateTurnUI()
 
             // Reset and restart the timer
             resetTimer()
 
-            if !byUser {
+            if !isUserTurn {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.botMakeMove()
                 }
@@ -423,17 +462,17 @@ class PandaAndBaboonsGameController: UIViewController {
             return
         }
         // Implement other time-based actions like auto-pressing buttons
-        if byUser {
-            let randomNumber = Int.random(in: 12...14)
-            if remainingSeconds == randomNumber {
-                
-                // Example of auto press logic for user
-            }
-        } else {
-            // Logic for bot auto actions
-        }
+//        if byUser {
+//            let randomNumber = Int.random(in: 12...14)
+//            if remainingSeconds == randomNumber {
+//                
+//                // Example of auto press logic for user
+//            }
+//        } else {
+//            // Logic for bot auto actions
+//        }
 
-        //MARK: auto press bomb button
+//        MARK: auto press x2 button
         let randomNumber = Int.random(in: 12...14)
         if remainingSeconds == randomNumber {
             if remainingSeconds == 13 {
@@ -446,18 +485,19 @@ class PandaAndBaboonsGameController: UIViewController {
             }
         }
 
-        //MARK: auto press trap button
-        let randomNumberTrap = Int.random(in: 12...14)
-        if remainingSeconds == randomNumberTrap {
-            if remainingSeconds == 13 {
-                //MARK: Generate a random number of bomb presses (0 to 1)
-                let trapPressCount = Int.random(in: 0...1)
-                print("Opponent will press x2 button \(trapPressCount) time(s)")
 
-                //MARK: Schedule the bomb presses over the remaining time
-                scheduleTrapPresses(count: trapPressCount, remainingTime: remainingSeconds)
-            }
-        }
+        //MARK: auto press trap button
+//        let randomNumberTrap = Int.random(in: 12...14)
+//        if remainingSeconds == randomNumberTrap {
+//            if remainingSeconds == 13 {
+//                //MARK: Generate a random number of bomb presses (0 to 1)
+//                let trapPressCount = Int.random(in: 0...1)
+//                print("Opponent will press x2 button \(trapPressCount) time(s)")
+//
+//                //MARK: Schedule the bomb presses over the remaining time
+//                scheduleTrapPresses(count: trapPressCount, remainingTime: remainingSeconds)
+//            }
+//        }
 
         //MARK: auto press mix button
         if remainingSeconds == randomNumber {
@@ -489,32 +529,32 @@ class PandaAndBaboonsGameController: UIViewController {
         for time in times {
             let delay = remainingTime - time
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
-                self?.pressX2Buttons()
+                self?.pressX2ButtonOpponent()
             }
         }
     }
 
     //MARK: schedule trap presses
-    private func scheduleTrapPresses(count: Int, remainingTime: Int)  {
-        guard count > 0, remainingTime > 1 else { return }
-
-        //MARK: Generate times ensuring at least 7 seconds between presses
-        var lastScheduledTime = 0
-        let times = (1...count).compactMap { _ -> Int? in
-            let minTime = lastScheduledTime + 7
-            guard minTime <= remainingTime else { return nil }
-            let time = Int.random(in: minTime...remainingTime)
-            lastScheduledTime = time
-            return time
-        }
-
-        for time in times {
-            let delay = remainingTime - time
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
-                self?.pressTrapButtons()
-            }
-        }
-    }
+//    private func scheduleTrapPresses(count: Int, remainingTime: Int)  {
+//        guard count > 0, remainingTime > 1 else { return }
+//
+//        //MARK: Generate times ensuring at least 7 seconds between presses
+//        var lastScheduledTime = 0
+//        let times = (1...count).compactMap { _ -> Int? in
+//            let minTime = lastScheduledTime + 7
+//            guard minTime <= remainingTime else { return nil }
+//            let time = Int.random(in: minTime...remainingTime)
+//            lastScheduledTime = time
+//            return time
+//        }
+//
+//        for time in times {
+//            let delay = remainingTime - time
+//            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
+//                self?.pressTrapButtons()
+//            }
+//        }
+//    }
 
     //MARK: schedule double point presses
     private func scheduleMixPresses(count: Int, remainingTime: Int) {
@@ -532,14 +572,13 @@ class PandaAndBaboonsGameController: UIViewController {
         for time in times {
             let delay = remainingTime - time
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay)) { [weak self] in
-                self?.pressMixButtons()
+                self?.pressMixButtonsOpponent()
             }
         }
     }
 
     //TODO: when press pressX2Buttons do not subtract user points
     @objc private func pressX2Buttons() {
-        if byUser {
             // Deduct the x2 button cost for the opponent
             guard let currentPointsText = gameTopView.pointView.pointLabel.text,
                   let x2CostText = x2Cost.costLabel.text,
@@ -549,33 +588,32 @@ class PandaAndBaboonsGameController: UIViewController {
                   let x2Cost = Int(x2CostText) else {
                 return
             }
-            // Update opponent's points
+        if isUserTurn {
+            print("User pressed X2 button")
             if currentPoints >= x2Cost {
-                // Deduct the x2 button cost from the user's points
                 let updatedPoints = currentPoints - x2Cost
-                // Double the left point view score
                 let doubledPoints = leftViewPoint * 2
                 DispatchQueue.main.async {
-                    // Update the UI
                     self.gameTopView.pointView.pointLabel.text = "\(updatedPoints)"
                     self.gameTimerView.leftPointView.pointLabel.text = "\(doubledPoints)"
                 }
             }
-        } else {
-            // Double the opponent's score
-            guard let opponentScoreText = gameTimerView.rightPointView.pointLabel.text,
-                  let opponentScore = Int(opponentScoreText) else {
-                return
-            }
-            let doubledScore = opponentScore * 2
-            DispatchQueue.main.async {
-                self.gameTimerView.rightPointView.pointLabel.text = "\(doubledScore)"
-            }
+        }
+    }
+
+    @objc private func pressX2ButtonOpponent() {
+        print("Opponent pressed X2 button")
+        guard let opponentScoreText = gameTimerView.rightPointView.pointLabel.text,
+              let opponentScore = Int(opponentScoreText) else {
+            return
+        }
+        let doubledScore = opponentScore * 2
+        DispatchQueue.main.async {
+            self.gameTimerView.rightPointView.pointLabel.text = "\(doubledScore)"
         }
     }
 
     @objc private func pressTrapButtons() {
-        if byUser {
             guard let currentPointsText = gameTopView.pointView.pointLabel.text,
                   let trapCostText = trapCost.costLabel.text,
                   let currentPoints = Int(currentPointsText),
@@ -584,6 +622,7 @@ class PandaAndBaboonsGameController: UIViewController {
                 print("Not enough points to press trap button!")
                 return
             }
+        if isUserTurn {
             // Deduct the trap button cost
             let updatedPoints = currentPoints - trapCostValue
             DispatchQueue.main.async {
@@ -595,8 +634,9 @@ class PandaAndBaboonsGameController: UIViewController {
         } 
     }
 
+
+
     @objc private func pressMixButtons() {
-        if byUser {
             // Check if the user has enough points to use the Mix button
             guard let currentPointsText = gameTopView.pointView.pointLabel.text,
                   let mixCostText = mixCost.costLabel.text,
@@ -606,7 +646,7 @@ class PandaAndBaboonsGameController: UIViewController {
                 print("Not enough points to press mix button!")
                 return
             }
-
+        if isUserTurn {
             // Deduct the cost of the Mix button
             let updatedPoints = currentPoints - mixCostValue
             DispatchQueue.main.async {
@@ -641,35 +681,38 @@ class PandaAndBaboonsGameController: UIViewController {
             DispatchQueue.main.async {
                 self.gameCollectionView.reloadItems(at: hiddenIndices)
             }
-        } else {
-            var revealedImages: [IndexPath: String] = [:]
-            var hiddenIndices: [IndexPath] = []
+        }
+    }
 
-            for index in 0..<(rows * columns) {
-                let indexPath = IndexPath(item: index, section: 0)
-                if let cell = gameCollectionView.cellForItem(at: indexPath) as? GameBoxCell {
-                    if cell.coverView.isHidden { // Image is revealed
-                        revealedImages[indexPath] = shuffledImages[indexPath.item]
-                    } else { // Image is hidden
-                        hiddenIndices.append(indexPath)
-                    }
+    @objc private func pressMixButtonsOpponent() {
+        var revealedImages: [IndexPath: String] = [:]
+        var hiddenIndices: [IndexPath] = []
+
+        for index in 0..<(rows * columns) {
+            let indexPath = IndexPath(item: index, section: 0)
+            if let cell = gameCollectionView.cellForItem(at: indexPath) as? GameBoxCell {
+                if cell.coverView.isHidden { // Image is revealed
+                    revealedImages[indexPath] = shuffledImages[indexPath.item]
+                } else { // Image is hidden
+                    hiddenIndices.append(indexPath)
                 }
             }
-
-            // Shuffle only the hidden images
-            var hiddenImages = hiddenIndices.map { shuffledImages[$0.item] }
-            hiddenImages.shuffle()
-
-            // Update `shuffledImages` for the hidden cells
-            for (index, indexPath) in hiddenIndices.enumerated() {
-                shuffledImages[indexPath.item] = hiddenImages[index]
-            }
-
-            // Reload only the hidden cells
-            DispatchQueue.main.async {
-                self.gameCollectionView.reloadItems(at: hiddenIndices)
-            }
         }
+
+        // Shuffle only the hidden images
+        var hiddenImages = hiddenIndices.map { shuffledImages[$0.item] }
+        hiddenImages.shuffle()
+
+        // Update `shuffledImages` for the hidden cells
+        for (index, indexPath) in hiddenIndices.enumerated() {
+            shuffledImages[indexPath.item] = hiddenImages[index]
+        }
+
+        // Reload only the hidden cells
+        DispatchQueue.main.async {
+            self.gameCollectionView.reloadItems(at: hiddenIndices)
+        }
+
     }
 
     @objc private func pressScannerButtons() {
@@ -781,7 +824,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard byUser else { return } // Ignore taps if it's the bot's turn
+        guard isUserTurn else { return } // Ignore taps if it's the bot's turn
         let cell = collectionView.cellForItem(at: indexPath) as? GameBoxCell
         guard cell?.coverView.isHidden == false else { return }
 
@@ -791,7 +834,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
     private func handleMove(imageName: String, indexPath: IndexPath) {
         // Update points based on the image revealed
         if imageName == "bambuk" {
-            if byUser {
+            if isUserTurn {
                 gameTimerView.leftPointView.incrementPoint(by: 1)
             } else {
                 gameTimerView.rightPointView.incrementPoint(by: 1)
@@ -799,19 +842,19 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         }
 
         // Increment points only when the user opens "coin"
-        if imageName == "coin" && byUser == true {
+        if imageName == "coin" && isUserTurn == true {
             gameTopView.pointView.incrementPoint(by: 1)
         }
 
         if imageName == "trapR" {
             // Block the other player for one move
-            if byUser {
+            if isUserTurn {
                 isOpponentBlocked = true
                 print("Trap revealed! Opponent will skip their next move.")
             } else {
                 gameCollectionView.isUserInteractionEnabled = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.byUser = false // Ensure the user is blocked for one move
+                    self.isUserTurn = false // Ensure the user is blocked for one move
                     self.gameCollectionView.isUserInteractionEnabled = true // Re-enable after the move
                     self.botMakeMove()
                 }
@@ -871,7 +914,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
 
              let userName = gameTimerView.userName.text
 
-             let opponentLevel = Int(gameTimerView.opponentLevelLabel.text ?? "1")
+             let opponentLevel = gameTimerView.opponentLevel
 
              let opponentName = gameTimerView.opponentName.text
 
@@ -893,7 +936,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                  "user_level": userLevel ?? 1,
                  "user_name": userName ?? "User_123",
                  "opponent_image": "",
-                 "opponent_level": opponentLevel ?? 1,
+                 "opponent_level": opponentLevel ,
                  "opponent_name": opponentName ?? "User_234",
                  "user_game_score": userGameScore ?? 0,
                  "opponent_game_score": opponentGameScore ?? 0,
@@ -901,6 +944,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                  "user_id": userId,
                  "game_type": 0
              ]
+
 
              let url = String.userGameHistoryPost()
              print("📡 Sending POST request to \(url) with parameters: \(parameters)")
@@ -916,13 +960,13 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
                      print("❌ Request Parameters: \(parameters)")
                  }
              }
-        }
+         }
 
         //MARK: Switch turns
-        byUser.toggle()
+        isUserTurn.toggle()
         updateTurnUI()
 
-        if !byUser {
+        if !isUserTurn {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.botMakeMove()
             }
@@ -937,7 +981,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
         if isOpponentBlocked {
             print("Opponent's move skipped due to trap.")
             isOpponentBlocked = false
-            byUser = true
+            isUserTurn = true
             updateTurnUI()
             return
         }
@@ -962,7 +1006,7 @@ extension PandaAndBaboonsGameController: UICollectionViewDelegate, UICollectionV
     }
 
     private func updateTurnUI() {
-        if byUser {
+        if isUserTurn {
             gameTimerView.userImage.layer.borderColor = UIColor.buttonBackgroundColor.cgColor
             gameTimerView.opponentImage.layer.borderColor = UIColor.userImageGrayBorderColor.cgColor
             gameTimerView.leftArrow.isHidden = false

@@ -43,12 +43,11 @@ class MainView: UIViewController {
         setupConstraint()
         setupHierarchy()
         configureCompositionLayout()
-
+        fetchBonusTimer()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         fetchUserData()
-        fetchBonusTimer()
         fetchLeaderboardData()
     }
 
@@ -119,22 +118,22 @@ class MainView: UIViewController {
         NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<BonusTimer>) in
             switch result {
             case .success(let response):
-                print("Raw next_bonus_time from backend: \(response.nextBonusTime)")
+                print("📡 Raw next_bonus_time from backend: \(response.nextBonusTime)")
 
                 let isoFormatter = ISO8601DateFormatter()
                 isoFormatter.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
 
                 if let date = isoFormatter.date(from: response.nextBonusTime) {
-                    print("Parsed date: \(date)")
+                    print("✅ Parsed date: \(date)")
                     let nextBonusTimestamp = date.timeIntervalSince1970
                     DispatchQueue.main.async {
                         self.updateBonusTimer(with: nextBonusTimestamp)
                     }
                 } else {
-                    print("Error: Failed to parse next_bonus_time as a valid date")
+                    print("❌ Failed to parse next_bonus_time: \(response.nextBonusTime)")
                 }
             case .failure(let error):
-                print("Failed to fetch bonus timer: \(error.localizedDescription)")
+                print("❌ Failed to fetch bonus timer: \(error.localizedDescription)")
             }
         }
     }
@@ -146,7 +145,7 @@ class MainView: UIViewController {
             return
         }
 
-        let url = String.dailyBonusPost()
+        let url = String.dailyBonusPost(userId: userId)
 
         NetworkManager.shared.showProgressHud(true, animated: true)
         NetworkManager.shared.post(url: url, parameters: nil, headers: nil) { (result: Result<DailyBonusPost>) in
@@ -160,13 +159,35 @@ class MainView: UIViewController {
         }
     }
 
+//    private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
+//        guard let indexPath = collectionView.indexPathsForVisibleItems.first(where: {
+//            collectionView.cellForItem(at: $0) is DailyBonusViewCell
+//        }) else {
+//            print("❌ No DailyBonusViewCell found in visible cells")
+//            return
+//        }
+//
+//        if let dailyBonusCell = collectionView.cellForItem(at: indexPath) as? DailyBonusViewCell {
+//            dailyBonusCell.startBonusTimer(with: nextBonusTimestamp)
+//        }
+//    }
+    
 
     private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
-        // Find the DailyBonusViewCell and update its timer
-        if let dailyBonusCell = collectionView.visibleCells.first(where: { $0 is DailyBonusViewCell }) as? DailyBonusViewCell {
-            dailyBonusCell.startBonusTimer(with: nextBonusTimestamp)
+        print("⏳ Updating Bonus Timer with timestamp: \(nextBonusTimestamp)")
+
+        for cell in collectionView.visibleCells {
+            if let dailyBonusCell = cell as? DailyBonusViewCell {
+                print("✅ Found visible DailyBonusViewCell. Updating Timer.")
+                dailyBonusCell.startBonusTimer(with: nextBonusTimestamp)
+                return
+            }
         }
+        // If the cell isn't visible, reload data to ensure it updates when it appears
+        collectionView.reloadData()
     }
+
+
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in

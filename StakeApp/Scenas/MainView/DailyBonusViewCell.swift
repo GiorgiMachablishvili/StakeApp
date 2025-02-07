@@ -125,22 +125,47 @@ class DailyBonusViewCell: UICollectionViewCell {
         getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
         getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
     }
+    
 
     func startBonusTimer(with nextBonusTimestamp: TimeInterval) {
-            let currentTime = Date().timeIntervalSince1970
-            remainingTime = max(nextBonusTimestamp - currentTime, 0)
+        let currentTime = Date().timeIntervalSince1970
+        remainingTime = max(nextBonusTimestamp - currentTime, 0)
 
-            updateTimer()
+        print("🕒 Timer starts with remainingTime: \(remainingTime) seconds")
 
+        // Ensure any existing timer is invalidated before starting a new one
+        timer?.invalidate()
+
+        // Update UI immediately
+        updateTimer()
+
+        // Start countdown timer
+        if remainingTime > 0 {
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
                 self?.updateTimer()
             }
-
-            // Disable the button initially
-            getDailyBonus.isUserInteractionEnabled = false
-            getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
-            getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
         }
+    }
+
+
+//    func startBonusTimer(with nextBonusTimestamp: TimeInterval) {
+//        let currentTime = Date().timeIntervalSince1970
+//        remainingTime = max(nextBonusTimestamp - currentTime, 0)
+//
+//        print("🕒 Timer starts with remainingTime: \(remainingTime) seconds")
+//
+//        // Update UI immediately
+//        updateTimer()
+//
+//        // Ensure any existing timer is invalidated before starting a new one
+//        timer?.invalidate()
+//
+//        if remainingTime > 0 {
+//            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+//                self?.updateTimer()
+//            }
+//        }
+//    }
 
     private func updateTimer() {
         guard remainingTime > 0 else {
@@ -148,9 +173,12 @@ class DailyBonusViewCell: UICollectionViewCell {
             timer = nil
             timerLabel.text = "00:00:00"
 
+            // Enable the "Get Bonus" button when the timer reaches zero
             getDailyBonus.isUserInteractionEnabled = true
             getDailyBonus.backgroundColor = UIColor.systemGreen
             getDailyBonus.setTitleColor(UIColor.black, for: .normal)
+
+            print("✅ Timer finished, enabling Get Bonus button")
             return
         }
 
@@ -159,14 +187,35 @@ class DailyBonusViewCell: UICollectionViewCell {
         let minutes = (Int(remainingTime) % 3600) / 60
         let seconds = Int(remainingTime) % 60
         timerLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+
+        print("⏳ Timer updated: \(timerLabel.text!) - Remaining: \(remainingTime) seconds")
     }
+
+//
+//    private func updateTimer() {
+//        guard remainingTime > 0 else {
+//            timer?.invalidate()
+//            timer = nil
+//            timerLabel.text = "00:00:00"
+//
+//            print("✅ Timer finished, enabling Get Bonus button")
+//            return
+//        }
+//
+//        remainingTime -= 1
+//        let hours = Int(remainingTime) / 3600
+//        let minutes = (Int(remainingTime) % 3600) / 60
+//        let seconds = Int(remainingTime) % 60
+//        timerLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+//
+//        print("⏳ Timer updated: \(timerLabel.text!) - Remaining: \(remainingTime) seconds")
+//    }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         timer?.invalidate()
         timer = nil
         remainingTime = 86400
-        timerLabel.text = "00:00:00"
 
         getDailyBonus.isUserInteractionEnabled = false
         getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
@@ -178,5 +227,5 @@ class DailyBonusViewCell: UICollectionViewCell {
         print( "did press GetDailyBonus button")
         didPressGetDailyBonus?()
         startTimer()
-    }
+    }    
 }

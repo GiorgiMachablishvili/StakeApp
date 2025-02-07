@@ -126,6 +126,8 @@ class MainView: UIViewController {
                     let nextBonusTimestamp = date.timeIntervalSince1970
                     DispatchQueue.main.async {
                         self.updateBonusTimer(with: nextBonusTimestamp)
+                        let indexSet = IndexSet(integer: 0)
+                        self.collectionView.reloadSections(indexSet)
                     }
                 } else {
                     print("❌ Failed to parse next_bonus_time: \(response.nextBonusTime)")
@@ -310,6 +312,7 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.didPressGetDailyBonus = { [weak self] in
                 self?.postDailyBonus()
             }
+            
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(

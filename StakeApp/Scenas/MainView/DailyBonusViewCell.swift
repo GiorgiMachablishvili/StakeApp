@@ -10,7 +10,7 @@ import SnapKit
 
 class DailyBonusViewCell: UICollectionViewCell {
     private var timer: Timer?
-    private var remainingTime: TimeInterval = 86400
+    private var remainingTime: TimeInterval = 0
 
     var didPressGetDailyBonus: (() -> Void)?
 
@@ -40,7 +40,7 @@ class DailyBonusViewCell: UICollectionViewCell {
 
     private lazy var timerLabel: UILabel = {
         let view = UILabel(frame: .zero)
-        view.text = "24:00:00"
+        view.text = "--:--:--" // Default text
         view.font = UIFont.montserratBold(size: 12)
         view.textColor = UIColor(hexString: "#687CFF")
         view.backgroundColor = UIColor(hexString: "#687CFF29").withAlphaComponent(0.1)
@@ -61,10 +61,8 @@ class DailyBonusViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         setup()
         setupConstraints()
-        startTimer()
     }
 
     required init?(coder: NSCoder) {
@@ -113,27 +111,13 @@ class DailyBonusViewCell: UICollectionViewCell {
         }
     }
 
-    //TODO: time does not works good it should not start to decline.
-    private func startTimer() {
-        updateTimer()
-
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.updateTimer()
-        }
-
-        getDailyBonus.isUserInteractionEnabled = false
-        getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
-        getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
-    }
-    
-
     func startBonusTimer(with nextBonusTimestamp: TimeInterval) {
         let currentTime = Date().timeIntervalSince1970
         remainingTime = max(nextBonusTimestamp - currentTime, 0)
 
         print("🕒 Timer starts with remainingTime: \(remainingTime) seconds")
 
-        // Ensure any existing timer is invalidated before starting a new one
+        // Invalidate existing timer
         timer?.invalidate()
 
         // Update UI immediately
@@ -151,14 +135,13 @@ class DailyBonusViewCell: UICollectionViewCell {
         guard remainingTime > 0 else {
             timer?.invalidate()
             timer = nil
-            timerLabel.text = "00:00:00"
-
-            // Enable the "Get Bonus" button when the timer reaches zero
-            getDailyBonus.isUserInteractionEnabled = true
-            getDailyBonus.backgroundColor = UIColor.systemGreen
-            getDailyBonus.setTitleColor(UIColor.black, for: .normal)
-
-            print("✅ Timer finished, enabling Get Bonus button")
+            DispatchQueue.main.async {
+                self.timerLabel.text = "00:00:00"
+                self.getDailyBonus.isUserInteractionEnabled = true
+                self.getDailyBonus.backgroundColor = UIColor.systemGreen
+                self.getDailyBonus.setTitleColor(UIColor.black, for: .normal)
+                print("✅ Timer finished, enabling Get Bonus button")
+            }
             return
         }
 
@@ -166,26 +149,33 @@ class DailyBonusViewCell: UICollectionViewCell {
         let hours = Int(remainingTime) / 3600
         let minutes = (Int(remainingTime) % 3600) / 60
         let seconds = Int(remainingTime) % 60
-        timerLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        let formattedTime = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
 
-        print("⏳ Timer updated: \(timerLabel.text!) - Remaining: \(remainingTime) seconds")
+        DispatchQueue.main.async {
+            self.timerLabel.text = formattedTime
+        }
+
+        print("⏳ Timer updated: \(formattedTime) - Remaining: \(remainingTime) seconds")
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         timer?.invalidate()
         timer = nil
-        remainingTime = 86400
+        remainingTime = 0
 
+        // Do not reset the timerLabel text here
         getDailyBonus.isUserInteractionEnabled = false
         getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
         getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
-
     }
 
     @objc private func pressGetDailyBonus() {
-        print( "did press GetDailyBonus button")
+        print("✅ GetDailyBonus button pressed")
         didPressGetDailyBonus?()
-        startTimer()
-    }    
+
+        // Reset timer to 24 hours when bonus is claimed
+        let nextBonusTimestamp = Date().timeIntervalSince1970 + 86400
+        startBonusTimer(with: nextBonusTimestamp)
+    }
 }

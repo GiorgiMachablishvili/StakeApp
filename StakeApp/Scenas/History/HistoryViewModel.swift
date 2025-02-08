@@ -60,8 +60,7 @@ class HistoryViewModel: NSObject, HistoryViewModelType {
             return
         }
 
-//        let url = String.userGameHistoryGet(userId: userId)
-        let url = "https://stake-us-66f6608d21e4.herokuapp.com/history/"
+        let url = String.userGameHistoryGet(userId: userId)
         NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<[UserGameHistory]>) in
             switch result {
             case .success(let userHistoryList):

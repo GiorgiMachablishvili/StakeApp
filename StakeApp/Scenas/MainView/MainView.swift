@@ -159,6 +159,20 @@ class MainView: UIViewController {
         }
     }
 
+//    private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
+//        print("⏳ Updating Bonus Timer with timestamp: \(nextBonusTimestamp)")
+//
+//        for cell in collectionView.visibleCells {
+//            if let dailyBonusCell = cell as? DailyBonusViewCell {
+//                print("✅ Found visible DailyBonusViewCell. Updating Timer.")
+//                dailyBonusCell.startBonusTimer(with: nextBonusTimestamp)
+//                return
+//            }
+//        }
+//        // If the cell isn't visible, reload data to ensure it updates when it appears
+//        collectionView.reloadData()
+//    }
+
     private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
         print("⏳ Updating Bonus Timer with timestamp: \(nextBonusTimestamp)")
 
@@ -169,18 +183,18 @@ class MainView: UIViewController {
                 return
             }
         }
-        // If the cell isn't visible, reload data to ensure it updates when it appears
-        collectionView.reloadData()
-    }
 
+        DispatchQueue.main.async {
+            let indexSet = IndexSet(integer: 0)
+            self.collectionView.reloadSections(indexSet)
+        }
+    }
 
 
     func configureCompositionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
 
             switch sectionIndex {
-//            case 0:
-//                return self?.topViewLayout()
             case 0:
                 return self?.dailyBonusView()
             case 1:

@@ -125,14 +125,14 @@ class SignInController: UIViewController {
     private func setupConstraints() {
         mainImageConsole.snp.remakeConstraints { make in
 //            make.top.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(-20)
-            make.leading.equalTo(view.snp.leading).offset(-20)
-            make.trailing.equalTo(view.snp.trailing).offset(20)
+            make.top.equalTo(view.snp.top).offset(-20 * Constraint.yCoeff)
+            make.leading.equalTo(view.snp.leading).offset(-20 * Constraint.xCoeff)
+            make.trailing.equalTo(view.snp.trailing).offset(20 * Constraint.xCoeff)
             make.height.equalTo(380 * Constraint.yCoeff)
         }
 
         signTitle.snp.remakeConstraints { make in
-            make.top.equalTo(view.snp.top).offset(368)
+            make.top.equalTo(view.snp.top).offset(368 * Constraint.yCoeff)
             make.leading.trailing.equalToSuperview().inset(32 * Constraint.xCoeff)
             make.height.equalTo(39 * Constraint.yCoeff)
         }

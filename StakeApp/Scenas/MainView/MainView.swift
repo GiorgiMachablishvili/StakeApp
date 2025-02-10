@@ -14,6 +14,7 @@ class MainView: UIViewController {
     private var userData: UserDataResponse?
     private var leaderboardUsers: [LeaderBoardStatic] = []
     private var bonusTimer: BonusTimer?
+    private var bonusTimerNext: DailyBonusPost?
 
     private lazy var topView: MainTopView = {
         let view = MainTopView()
@@ -123,11 +124,11 @@ class MainView: UIViewController {
 
                 if let date = isoFormatter.date(from: response.nextBonusTime) {
                     print("✅ Parsed date: \(date)")
+                    self.bonusTimer = response // ✅ Store BonusTimer data
                     let nextBonusTimestamp = date.timeIntervalSince1970
                     DispatchQueue.main.async {
                         self.updateBonusTimer(with: nextBonusTimestamp)
-                        let indexSet = IndexSet(integer: 0)
-                        self.collectionView.reloadSections(indexSet)
+                        self.collectionView.reloadSections(IndexSet(integer: 0))
                     }
                 } else {
                     print("❌ Failed to parse next_bonus_time: \(response.nextBonusTime)")
@@ -147,31 +148,24 @@ class MainView: UIViewController {
 
         let url = String.dailyBonusPost(userId: userId)
 
-        NetworkManager.shared.showProgressHud(true, animated: true)
         NetworkManager.shared.post(url: url, parameters: nil, headers: nil) { (result: Result<DailyBonusPost>) in
             NetworkManager.shared.showProgressHud(false, animated: false)
             switch result {
             case .success(let response):
-                print("✅ Workout saved successfully: \(response)")
+                print("✅ Daily bonus successfully claimed: \(response)")
+
+                self.bonusTimerNext = response
+
+                DispatchQueue.main.async {
+                    self.collectionView.reloadSections(IndexSet(integer: 0))
+                    self.fetchUserData()
+                }
             case .failure(let error):
-                print("❌ Error saving workout: \(error.localizedDescription)")
+                print("❌ Error claiming daily bonus: \(error.localizedDescription)")
             }
         }
     }
 
-//    private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
-//        print("⏳ Updating Bonus Timer with timestamp: \(nextBonusTimestamp)")
-//
-//        for cell in collectionView.visibleCells {
-//            if let dailyBonusCell = cell as? DailyBonusViewCell {
-//                print("✅ Found visible DailyBonusViewCell. Updating Timer.")
-//                dailyBonusCell.startBonusTimer(with: nextBonusTimestamp)
-//                return
-//            }
-//        }
-//        // If the cell isn't visible, reload data to ensure it updates when it appears
-//        collectionView.reloadData()
-//    }
 
     private func updateBonusTimer(with nextBonusTimestamp: TimeInterval) {
         print("⏳ Updating Bonus Timer with timestamp: \(nextBonusTimestamp)")
@@ -302,8 +296,6 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-//        case 0:
-//            return 1
         case 0:
             return 1
         case 1:
@@ -325,8 +317,17 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             cell.didPressGetDailyBonus = { [weak self] in
                 self?.postDailyBonus()
+                self?.fetchBonusTimer()
             }
-            
+
+            if let bonusData = bonusTimer {
+                cell.configure(with: bonusData)
+            }
+
+            if let dailyTime = bonusTimerNext {
+                cell.configureDailyBonus(with: dailyTime)
+            }
+
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(

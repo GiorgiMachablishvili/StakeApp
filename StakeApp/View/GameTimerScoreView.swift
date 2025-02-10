@@ -20,7 +20,7 @@ class GameTimerScoreView: UIView {
     }
 
     private var timer: Timer?
-    var remainingSeconds: Int = 3 {
+    var remainingSeconds: Int = 60 {
         didSet {
             timerLabel.text = "\(remainingSeconds)"
         }

@@ -112,7 +112,11 @@ class MainView: UIViewController {
     }
 
     private func fetchBonusTimer() {
-        let url = String.bonusTimer()
+        guard let userId = UserDefaults.standard.value(forKey: "userId") as? Int else {
+            print("❌ Error: No userId found in UserDefaults")
+            return
+        }
+        let url = String.bonusTimer(userId: userId)
 
         NetworkManager.shared.get(url: url, parameters: nil, headers: nil) { (result: Result<BonusTimer>) in
             switch result {

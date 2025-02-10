@@ -13,8 +13,8 @@ extension String {
         return "https://stake-us-66f6608d21e4.herokuapp.com/users/register"
     }
 
-    static func bonusTimer() -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/bonus/next"
+    static func bonusTimer(userId: Int) -> String {
+        return "https://stake-us-66f6608d21e4.herokuapp.com/bonus/next/\(userId)"
     }
 
     static func dailyBonusPost(userId: Int) -> String {

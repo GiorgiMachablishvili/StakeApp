@@ -87,6 +87,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C7C29F432DAD371D007643E8 /* BOVA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BOVA.entitlements; sourceTree = "<group>"; };
 		E32E36C92D3FA66900C434E3 /* QuitOrContinueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuitOrContinueView.swift; sourceTree = "<group>"; };
 		E361A2522D3BA36300E27466 /* DailyGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGameCell.swift; sourceTree = "<group>"; };
 		E361A2542D3BA5A000E27466 /* LeftGamePointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftGamePointView.swift; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 		E3CED6E92D395B1D00C5D2EF = {
 			isa = PBXGroup;
 			children = (
+				C7C29F432DAD371D007643E8 /* BOVA.entitlements */,
 				EBCFB71E2DAD2C1300A40FB6 /* GoogleService-Info.plist */,
 				E3CED6F42D395B1D00C5D2EF /* StakeApp */,
 				EB192E112DAD2EC400B46178 /* Frameworks */,
@@ -720,9 +722,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BOVA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q8SNAZ2J4N;
+				DEVELOPMENT_TEAM = QFNF2HV7DJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StakeApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BOVA Games";
@@ -736,7 +739,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = asd.StakeApp;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.bovagames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -753,9 +756,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BOVA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q8SNAZ2J4N;
+				DEVELOPMENT_TEAM = QFNF2HV7DJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StakeApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BOVA Games";
@@ -769,7 +773,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = asd.StakeApp;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.bovagames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

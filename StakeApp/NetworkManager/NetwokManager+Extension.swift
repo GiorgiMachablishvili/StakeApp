@@ -10,7 +10,7 @@ import Alamofire
 
 extension NetworkManager {
     func updateUserProfile(userId: Int, image: UIImage?, nickname: String?, completion: @escaping (Result<UserDataResponse>) -> Void) {
-        let url = "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
+        let url = "https://bovagames.fun/users/\(userId)"
 
         // Convert the image to Data
         var imageData: Data?

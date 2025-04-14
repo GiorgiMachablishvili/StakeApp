@@ -10,42 +10,42 @@ import Foundation
 
 extension String {
     static func userCreate() -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/users/register"
+        return "https://bovagames.fun/users/register"
     }
 
     static func bonusTimer(userId: Int) -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/bonus/next/\(userId)"
+        return "https://bovagames.fun/bonus/next/\(userId)"
     }
 
     static func dailyBonusPost(userId: Int) -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/bonus/give/\(userId)"
+        return "https://bovagames.fun/bonus/give/\(userId)"
     }
 
     static func userDataResponse(userId: Int) -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
+        return "https://bovagames.fun/users/\(userId)"
     }
 
     static func leaderBoard() -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/leaderboard"
+        return "https://bovagames.fun/leaderboard"
     }
 
     static func userUpdateDate(userId: Int) -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
+        return "https://bovagames.fun/users/\(userId)"
     }
 
     static func userGameHistoryPost() -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/history/"
+        return "https://bovagames.fun/history/"
     }
 
     static func userGameHistoryGet(userId: Int) -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/history/\(userId)"
+        return "https://bovagames.fun/history/\(userId)"
     }
 
     static func userDelete(userId: Int) -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/users/\(userId)"
+        return "https://bovagames.fun/users/\(userId)"
     }
 
     static func getUserGameStatistic(userId: Int) -> String {
-        return "https://stake-us-66f6608d21e4.herokuapp.com/user_statistics/\(userId)"
+        return "https://bovagames.fun/user_statistics/\(userId)"
     }
 }

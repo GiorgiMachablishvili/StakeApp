@@ -388,15 +388,15 @@ class ProfileView: UIViewController {
         
 
         // Call createUser to simulate user creation
-        createUser()
+//        createUser()
 
-        //        let authorizationProvider = ASAuthorizationAppleIDProvider()
-        //        let request = authorizationProvider.createRequest()
-        //        request.requestedScopes = [.email, .fullName]
-        //
-        //        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        //        authorizationController.delegate = self
-        //        authorizationController.performRequests()
+        let authorizationProvider = ASAuthorizationAppleIDProvider()
+        let request = authorizationProvider.createRequest()
+        request.requestedScopes = [.email, .fullName]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.performRequests()
         //        let mainView = MainDashboardScene()
         //        navigationController?.pushViewController(mainView, animated: true)
     }
@@ -684,7 +684,7 @@ extension ProfileView: ASAuthorizationControllerDelegate /*ASAuthorizationContro
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
 
         UserDefaults.standard.setValue(credential.user, forKey: "AccountCredential")
-//        createUser()
+        createUser()
     }
 
     //    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {

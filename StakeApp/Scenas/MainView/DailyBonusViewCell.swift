@@ -155,8 +155,6 @@ class DailyBonusViewCell: UICollectionViewCell {
         DispatchQueue.main.async {
             self.timerLabel.text = formattedTime
         }
-
-        print("⏳ Timer updated: \(formattedTime) - Remaining: \(remainingTime) seconds")
     }
 
     /// ✅ **Prevents flickering issue when the cell is reused**

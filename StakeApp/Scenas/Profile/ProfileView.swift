@@ -173,6 +173,7 @@ class ProfileView: UIViewController {
         let settingsIndexPath = IndexPath(item: 0, section: 2)
         DispatchQueue.main.async {
             if let cell = self.collectionView.cellForItem(at: settingsIndexPath) as? SettingCell {
+                cell.parentViewController = self
                 cell.configureButtons(forGuest: isGuestUser)
             }
         }

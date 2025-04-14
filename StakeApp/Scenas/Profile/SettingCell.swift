@@ -13,6 +13,9 @@ class SettingCell: UICollectionViewCell {
     var pressSignInWithAppleButton: (() -> Void)?
     var pressDeleteButton: (() -> Void)?
 
+    weak var parentViewController: UIViewController?
+
+    
     private lazy var bonusesLabel: BonusesStringAttributed = {
         let view = BonusesStringAttributed()
         view.backgroundColor = .clear
@@ -26,7 +29,7 @@ class SettingCell: UICollectionViewCell {
         view.makeRoundCorners(20)
         view.configureButton(
             leftImage: UIImage(named: "termOfUs"),
-            title: "Term of Use",
+            title: "Terms of Use",
             rightImage: UIImage(named: "rightErrow")
         )
         view.addTarget(self, action: #selector(pressTermOfUse), for: .touchUpInside)
@@ -170,24 +173,47 @@ class SettingCell: UICollectionViewCell {
 
     //TODO: add links
     @objc private func pressTermOfUse() {
-
+        parentViewController?.openHelper(url: "https://bovagames.fun/terms") { [weak self] button in
+            switch button {
+            case "close":
+                self?.parentViewController?.dismiss(animated: true)
+            default:
+                break
+            }
+        }
     }
 
     @objc private func pressPrivacyAndPolicy() {
-
-    }
-
-    @objc private func pressRateUs() {
-
+        parentViewController?.openHelper(url: "https://bovagames.fun/privacy") { [weak self] button in
+           switch button {
+           case "close":
+               self?.parentViewController?.dismiss(animated: true)
+           default:
+               break
+           }
+       }
     }
 
     @objc private func pressSupport() {
-
+        parentViewController?.openHelper(url: "https://bovagames.fun/support") { [weak self]  button in
+           switch button {
+           case "close":
+               self?.parentViewController?.dismiss(animated: true)
+           default:
+               break
+           }
+       }
     }
+
 
     @objc private func clickSignInWithAppleButton() {
         pressSignInWithAppleButton?()
     }
+    
+    @objc private func pressRateUs(){
+        
+    }
+    
     @objc private func clickDeleteButton() {
         pressDeleteButton?()
     }

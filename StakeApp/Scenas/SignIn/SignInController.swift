@@ -170,11 +170,25 @@ class SignInController: UIViewController {
     }
 
     @objc private func clickTermsButton() {
-
+        openHelper(url: "https://bovagames.fun/terms") { [weak self] button in
+            switch button {
+            case "close":
+                self?.dismiss(animated: true)
+            default:
+                break
+            }
+        }
     }
 
     @objc private func clickPrivacyPolicyButton() {
-
+        openHelper(url: "https://bovagames.fun/privacy") { [weak self] button in
+            switch button {
+            case "close":
+                self?.dismiss(animated: true)
+            default:
+                break
+            }
+        }
     }
 
     @objc private func clickSkipButton() {

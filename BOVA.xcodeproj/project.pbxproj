@@ -80,6 +80,7 @@
 		E3F3E4A92D3EA1E100B7C786 /* GameBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */; };
 		E3F3E4AC2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */; };
 		E3F3E4AE2D3ECD1800B7C786 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3F3E4AD2D3ECD1800B7C786 /* Montserrat-Black.ttf */; };
+		EBCFB71C2DAD0EFA00A40FB6 /* HelperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCFB71B2DAD0EFA00A40FB6 /* HelperViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +153,7 @@
 		E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoxCell.swift; sourceTree = "<group>"; };
 		E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingAnOpponentsController.swift; sourceTree = "<group>"; };
 		E3F3E4AD2D3ECD1800B7C786 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		EBCFB71B2DAD0EFA00A40FB6 /* HelperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +264,7 @@
 		E3CED7212D395D1100C5D2EF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EBCFB71B2DAD0EFA00A40FB6 /* HelperViewController.swift */,
 				E3CED7482D3976D200C5D2EF /* PointsView.swift */,
 				E361A2542D3BA5A000E27466 /* LeftGamePointView.swift */,
 				E361A2562D3BA5B300E27466 /* RightGamePointView.swift */,
@@ -545,6 +548,7 @@
 				E3CED7532D39B21800C5D2EF /* LeaderBoardView.swift in Sources */,
 				E3CED6F62D395B1D00C5D2EF /* AppDelegate.swift in Sources */,
 				E3CED72D2D395DF800C5D2EF /* UIColor+Extension.swift in Sources */,
+				EBCFB71C2DAD0EFA00A40FB6 /* HelperViewController.swift in Sources */,
 				E3DDA1092D3C6280000F7EA7 /* GameBonuseButton.swift in Sources */,
 				E32E36CA2D3FA66900C434E3 /* QuitOrContinueView.swift in Sources */,
 				E387A8302D4BCBDD006AD1DC /* UserGameHistory.swift in Sources */,

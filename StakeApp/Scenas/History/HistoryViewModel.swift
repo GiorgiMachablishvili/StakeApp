@@ -1,10 +1,3 @@
-//
-//  HistoryViewModel.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 06.02.25.
-//
-
 import UIKit
 
 protocol HistoryViewModelType {

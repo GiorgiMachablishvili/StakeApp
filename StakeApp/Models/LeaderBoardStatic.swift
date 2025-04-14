@@ -1,10 +1,3 @@
-//
-//  LeaderBoardStatic.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 02.02.25.
-//
-
 import UIKit
 
 struct LeaderBoardStatic: Codable {

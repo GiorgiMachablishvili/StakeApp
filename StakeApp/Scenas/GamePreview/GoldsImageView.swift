@@ -1,10 +1,3 @@
-//
-//  GoldsImageView.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 17.01.25.
-//
-
 import UIKit
 import SnapKit
 

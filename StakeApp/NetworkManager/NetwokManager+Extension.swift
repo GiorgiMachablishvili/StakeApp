@@ -1,10 +1,3 @@
-//
-//  NetwokManager+Extension.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 01.02.25.
-//
-
 import UIKit
 import Alamofire
 

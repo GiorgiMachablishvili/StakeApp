@@ -1,10 +1,3 @@
-//
-//  GameStartTimerView.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 19.01.25.
-//
-
 import UIKit
 import SnapKit
 

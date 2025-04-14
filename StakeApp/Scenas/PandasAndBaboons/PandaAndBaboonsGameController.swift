@@ -1,10 +1,3 @@
-//
-//  PandaAndBaboonsGameController.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 20.01.25.
-//
-
 import UIKit
 import SnapKit
 import Kingfisher

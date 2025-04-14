@@ -1,15 +1,9 @@
-//
-//  SignInController.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 16.01.25.
-//
-
 import UIKit
 import SnapKit
 import AuthenticationServices
 import Alamofire
 import ProgressHUD
+import StoreKit
 
 class SignInController: UIViewController {
     private lazy var mainImageConsole: UIImageView = {

@@ -1,10 +1,3 @@
-//
-//  MinerGameController.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 18.01.25.
-//
-//
 import UIKit
 import SnapKit
 import Kingfisher

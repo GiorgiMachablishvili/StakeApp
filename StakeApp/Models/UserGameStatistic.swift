@@ -1,10 +1,3 @@
-//
-//  UserGameStatistic.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 30.01.25.
-//
-
 import Foundation
 
 struct UserGameStats: Codable {

@@ -1,10 +1,3 @@
-//
-//  ExpLabel.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 21.01.25.
-//
-
 import UIKit
 
 class ExpLabel: UILabel {

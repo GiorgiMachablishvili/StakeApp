@@ -1,10 +1,3 @@
-//
-//  FindingAnOpponentsViewModel.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 04.02.25.
-//
-
 import Foundation
 
 class FindingAnOpponentsViewModel {

@@ -1,10 +1,3 @@
-//
-//  UITabBarHideOrNot+Extension.swift
-//  StakeApp
-//
-//  Created by Gio's Mac on 28.01.25.
-//
-
 import UIKit
 
 extension UITabBarController {

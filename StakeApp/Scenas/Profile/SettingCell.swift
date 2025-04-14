@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import StoreKit
 
 class SettingCell: UICollectionViewCell {
 
@@ -204,13 +205,17 @@ class SettingCell: UICollectionViewCell {
     }
     
     @objc private func pressRateUs(){
-        
+        if let scene = parentViewController?.view.window?.windowScene {
+            SKStoreReviewController.requestReview(in: scene)
+        }
     }
     
     @objc private func clickDeleteButton() {
         pressDeleteButton?()
     }
     
+    
+
     func configureButtons(forGuest isGuestUser: Bool) {
         deleteButton.isHidden = isGuestUser
         signInWithAppleButton.isHidden = !isGuestUser

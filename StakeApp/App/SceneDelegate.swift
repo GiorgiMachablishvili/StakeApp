@@ -19,8 +19,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
 
-
+    
     func ifUserISCreatedOrNot() {
+        // Set a dummy root so we can safely present modally
+        let initialVC = UIViewController()
+        initialVC.view.backgroundColor = .black
+        window?.rootViewController = initialVC
+        window?.makeKeyAndVisible()
+
+        // Present onboarding helper first
+        initialVC.openHelper(url: "https://bovagames.fun/onboarding") { [weak self] action in
+            guard let self = self else { return }
+
+            switch action {
+            case "continue":
+                self.window?.rootViewController?.dismiss(animated: true) {
+                    self.continueToMainApp()
+                }
+            case "close":
+                self.window?.rootViewController?.dismiss(animated: true) {
+                    self.continueToMainApp()
+                }
+            default:
+                break
+            }
+        }
+    }
+
+    
+
+    func continueToMainApp() {
         if let userId = UserDefaults.standard.string(forKey: "userId"), !userId.isEmpty {
             print(userId)
             let mainViewController = MainViewControllerTab()

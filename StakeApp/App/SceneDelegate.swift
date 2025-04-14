@@ -29,21 +29,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Present onboarding helper first
         initialVC.openHelper(url: "https://bovagames.fun/onboarding") { [weak self] action in
-            guard let self = self else { return }
-
+            print("DEBUG: action - \(action)")
+            guard let self = self else {
+                print("DEBUG: bro selfless - \(#function)")
+                return
+            }
+            print("DEBUG: action detecte - \(action)")
             switch action {
-            case "continue":
-                self.window?.rootViewController?.dismiss(animated: true) {
-                    self.continueToMainApp()
-                }
-            case "close":
-                self.window?.rootViewController?.dismiss(animated: true) {
-                    self.continueToMainApp()
-                }
+            case "continue", "close":
+                self.continueToMainApp()
             default:
                 break
             }
+
         }
+        
     }
 
     

@@ -1,5 +1,5 @@
 import UIKit
-import WebKit
+@preconcurrency import WebKit
 
 final class HelperViewController: UIViewController, WKNavigationDelegate {
     private let urlString: String
@@ -31,10 +31,11 @@ final class HelperViewController: UIViewController, WKNavigationDelegate {
         }
     }
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        if let fragment = webView.url?.fragment {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let fragment = navigationAction.request.url?.fragment {
             onHashAction?(fragment)
         }
+        decisionHandler(.allow)
     }
 }
 
@@ -45,3 +46,4 @@ extension UIViewController {
         present(vc, animated: true)
     }
 }
+

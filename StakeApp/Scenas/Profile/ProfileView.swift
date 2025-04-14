@@ -481,8 +481,17 @@ class ProfileView: UIViewController {
                             message: "Your account has been deleted successfully.",
                             preferredStyle: .alert
                         )
-                        successAlert.addAction(UIAlertAction(title: "Delete", style: .default) { _ in
-                            self.removeSignInControllerAndNavigate()
+                        successAlert.addAction(UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
+                            self?.removeSignInControllerAndNavigate()
+                            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                                  let window = windowScene.windows.first else { return }
+                            let signInViewController = SignInController()
+                            let navigationController = UINavigationController(rootViewController: signInViewController)
+                            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                                window.rootViewController = navigationController
+                            }, completion: nil)
+                            navigationController.setNavigationBarHidden(true, animated: false)
+                            window.makeKeyAndVisible()
                         })
                         self.present(successAlert, animated: true)
                     }
@@ -501,6 +510,35 @@ class ProfileView: UIViewController {
             }
         }
 
+        func setSignInVCAsRoot() {
+                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let window = windowScene.windows.first else { return }
+                let signInViewController = SignInController()
+                let navigationController = UINavigationController(rootViewController: signInViewController)
+                UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    window.rootViewController = navigationController
+                }, completion: nil)
+                navigationController.setNavigationBarHidden(true, animated: false)
+                window.makeKeyAndVisible()
+            }
+
+
+            
+            func changeRootViewController(_ rootViewController: UIViewController, animated: Bool = true) {
+                // Get the current SceneDelegate's window
+                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                      let window = sceneDelegate.window else { return }
+
+                if animated {
+                    UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                        window.rootViewController = rootViewController
+                    })
+                } else {
+                    window.rootViewController = rootViewController
+                }
+                window.makeKeyAndVisible()
+            }
         // Define the cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
 

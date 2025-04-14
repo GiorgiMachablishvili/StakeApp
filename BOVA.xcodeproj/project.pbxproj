@@ -467,6 +467,7 @@
 				E3CED7192D395CE700C5D2EF /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E36E94C42D4D53020032C0C0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				EBCFB71D2DAD269200A40FB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = E3CED6F32D395B1D00C5D2EF /* Products */;
 			projectDirPath = "";
@@ -824,6 +825,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.10.2;
+			};
+		};
+		EBCFB71D2DAD269200A40FB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

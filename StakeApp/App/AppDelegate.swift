@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func requestPushPermissionsIfNeeded() {
         let alreadySent = UserDefaults.standard.bool(forKey: "pushTokenSent")
-
+        print("DEBUG: is sent - \(alreadySent)")
         guard !alreadySent else { return }
 
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
@@ -37,11 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         guard !alreadySent else { return }
 
         sendTokenToBackend(token) {
+            
             UserDefaults.standard.set(true, forKey: "pushTokenSent")
         }
     }
 
     func sendTokenToBackend(_ token: String, completion: @escaping () -> Void) {
+        print("DEBUG: will send  - \(token)")
         guard let url = URL(string: "https://bovagames.fun/fcm/register") else { return }
 
         var request = URLRequest(url: url)
@@ -51,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let payload = ["token": token]
         request.httpBody = try? JSONSerialization.data(withJSONObject: payload)
 
-        URLSession.shared.dataTask(with: request) { _, _, _ in
+        URLSession.shared.dataTask(with: request) { data, _, _ in
+            print("DEBUG: data - \(String(decoding: data ?? Data(), as: UTF8.self))")
             completion()
         }.resume()
     }

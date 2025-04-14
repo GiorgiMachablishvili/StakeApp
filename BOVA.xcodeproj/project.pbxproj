@@ -80,7 +80,10 @@
 		E3F3E4A92D3EA1E100B7C786 /* GameBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F3E4A82D3EA1E100B7C786 /* GameBoxCell.swift */; };
 		E3F3E4AC2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */; };
 		E3F3E4AE2D3ECD1800B7C786 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3F3E4AD2D3ECD1800B7C786 /* Montserrat-Black.ttf */; };
+		EB192E132DAD2EC400B46178 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = EB192E122DAD2EC400B46178 /* FirebaseCore */; };
+		EB192E152DAD2ECD00B46178 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = EB192E142DAD2ECD00B46178 /* FirebaseMessaging */; };
 		EBCFB71C2DAD0EFA00A40FB6 /* HelperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCFB71B2DAD0EFA00A40FB6 /* HelperViewController.swift */; };
+		EBCFB71F2DAD2C1300A40FB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBCFB71E2DAD2C1300A40FB6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -154,6 +157,7 @@
 		E3F3E4AB2D3ECC7A00B7C786 /* FindingAnOpponentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingAnOpponentsController.swift; sourceTree = "<group>"; };
 		E3F3E4AD2D3ECD1800B7C786 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
 		EBCFB71B2DAD0EFA00A40FB6 /* HelperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperViewController.swift; sourceTree = "<group>"; };
+		EBCFB71E2DAD2C1300A40FB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,10 +165,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB192E152DAD2ECD00B46178 /* FirebaseMessaging in Frameworks */,
 				E3CED71E2D395CF100C5D2EF /* Alamofire in Frameworks */,
 				E36E94C62D4D53020032C0C0 /* Kingfisher in Frameworks */,
 				E3CED7182D395CDE00C5D2EF /* SVProgressHUD in Frameworks */,
 				E36E94C82D4D53260032C0C0 /* Kingfisher in Frameworks */,
+				EB192E132DAD2EC400B46178 /* FirebaseCore in Frameworks */,
 				E3CED71B2D395CE700C5D2EF /* ProgressHUD in Frameworks */,
 				E3CED7132D395CD600C5D2EF /* SnapKit in Frameworks */,
 			);
@@ -213,7 +219,9 @@
 		E3CED6E92D395B1D00C5D2EF = {
 			isa = PBXGroup;
 			children = (
+				EBCFB71E2DAD2C1300A40FB6 /* GoogleService-Info.plist */,
 				E3CED6F42D395B1D00C5D2EF /* StakeApp */,
+				EB192E112DAD2EC400B46178 /* Frameworks */,
 				E3CED6F32D395B1D00C5D2EF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -409,6 +417,13 @@
 			path = FingingAnOpponent;
 			sourceTree = "<group>";
 		};
+		EB192E112DAD2EC400B46178 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -432,6 +447,8 @@
 				E3CED71D2D395CF100C5D2EF /* Alamofire */,
 				E36E94C52D4D53020032C0C0 /* Kingfisher */,
 				E36E94C72D4D53260032C0C0 /* Kingfisher */,
+				EB192E122DAD2EC400B46178 /* FirebaseCore */,
+				EB192E142DAD2ECD00B46178 /* FirebaseMessaging */,
 			);
 			productName = StakeApp;
 			productReference = E3CED6F22D395B1D00C5D2EF /* BOVA.app */;
@@ -488,6 +505,7 @@
 				E3CED7022D395B1F00C5D2EF /* LaunchScreen.storyboard in Resources */,
 				E3CED7372D395E5400C5D2EF /* Montserrat-Medium.ttf in Resources */,
 				E3CED6FF2D395B1F00C5D2EF /* Assets.xcassets in Resources */,
+				EBCFB71F2DAD2C1300A40FB6 /* GoogleService-Info.plist in Resources */,
 				E3F3E4AE2D3ECD1800B7C786 /* Montserrat-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -867,6 +885,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		EB192E122DAD2EC400B46178 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EBCFB71D2DAD269200A40FB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		EB192E142DAD2ECD00B46178 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EBCFB71D2DAD269200A40FB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -22,7 +22,7 @@ class DailyBonusViewCell: UICollectionViewCell {
 
     private lazy var consoleImage: UIImageView = {
         let view = UIImageView(frame: .zero)
-        view.image = UIImage(named: "signinViewImage")
+        view.image = UIImage(named: "pandapandu")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -83,7 +83,7 @@ class DailyBonusViewCell: UICollectionViewCell {
 
         consoleImage.snp.remakeConstraints { make in
             make.top.equalTo(backgroundTopView.snp.top).offset(-20 * Constraint.yCoeff)
-            make.leading.equalTo(backgroundTopView.snp.leading).offset(-200 * Constraint.xCoeff)
+            make.leading.equalTo(backgroundTopView.snp.leading).offset(-140 * Constraint.xCoeff)
             make.bottom.equalTo(backgroundTopView.snp.bottom).offset(20 * Constraint.yCoeff)
             make.width.equalTo(430 * Constraint.xCoeff)
         }

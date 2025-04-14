@@ -22,11 +22,11 @@ extension UIColor {
 
     static let pointViewColor = UIColor(hexString: "#20242C")
 
-    static let buttonBackgroundColor = UIColor(hexString: "#5F73F8")
+    static let buttonBackgroundColor = UIColor(hexString: "#BE0707")
 
     static let backgroundColorGamePointView = UIColor(hexString: "#00000033")
 
-    static let bonusCostViewBackground = UIColor(hexString: "#4E65FD")
+    static let bonusCostViewBackground = UIColor(hexString: "#cc0000")
 
     static let userImageGrayBorderColor = UIColor(hexString: "#2B2F38")
 

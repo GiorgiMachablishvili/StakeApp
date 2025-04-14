@@ -54,11 +54,9 @@
 		E3CED7022D395B1F00C5D2EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3CED7002D395B1F00C5D2EF /* LaunchScreen.storyboard */; };
 		E3CED7102D395CBE00C5D2EF /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED70F2D395CBE00C5D2EF /* SignInController.swift */; };
 		E3CED7132D395CD600C5D2EF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED7122D395CD600C5D2EF /* SnapKit */; };
-		E3CED7152D395CD600C5D2EF /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED7142D395CD600C5D2EF /* SnapKit-Dynamic */; };
 		E3CED7182D395CDE00C5D2EF /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED7172D395CDE00C5D2EF /* SVProgressHUD */; };
 		E3CED71B2D395CE700C5D2EF /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED71A2D395CE700C5D2EF /* ProgressHUD */; };
 		E3CED71E2D395CF100C5D2EF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED71D2D395CF100C5D2EF /* Alamofire */; };
-		E3CED7202D395CF100C5D2EF /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E3CED71F2D395CF100C5D2EF /* AlamofireDynamic */; };
 		E3CED7282D395D6F00C5D2EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED7272D395D6F00C5D2EF /* NetworkManager.swift */; };
 		E3CED72B2D395DDE00C5D2EF /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED72A2D395DDE00C5D2EF /* Constraint.swift */; };
 		E3CED72D2D395DF800C5D2EF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CED72C2D395DF800C5D2EF /* UIColor+Extension.swift */; };
@@ -124,7 +122,7 @@
 		E3A732122D528D2600CE7627 /* FindingAnOpponentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingAnOpponentsViewModel.swift; sourceTree = "<group>"; };
 		E3A732142D528E9200CE7627 /* MinerGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerGameViewModel.swift; sourceTree = "<group>"; };
 		E3B48BE32D49674000B6FA01 /* UITabBarHideOrNot+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarHideOrNot+Extension.swift"; sourceTree = "<group>"; };
-		E3CED6F22D395B1D00C5D2EF /* StakeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StakeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3CED6F22D395B1D00C5D2EF /* BOVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BOVA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CED6F52D395B1D00C5D2EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E3CED6F72D395B1D00C5D2EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E3CED6FE2D395B1F00C5D2EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -162,13 +160,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3CED71E2D395CF100C5D2EF /* Alamofire in Frameworks */,
-				E3CED7202D395CF100C5D2EF /* AlamofireDynamic in Frameworks */,
 				E36E94C62D4D53020032C0C0 /* Kingfisher in Frameworks */,
 				E3CED7182D395CDE00C5D2EF /* SVProgressHUD in Frameworks */,
 				E36E94C82D4D53260032C0C0 /* Kingfisher in Frameworks */,
 				E3CED71B2D395CE700C5D2EF /* ProgressHUD in Frameworks */,
 				E3CED7132D395CD600C5D2EF /* SnapKit in Frameworks */,
-				E3CED7152D395CD600C5D2EF /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,7 +219,7 @@
 		E3CED6F32D395B1D00C5D2EF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E3CED6F22D395B1D00C5D2EF /* StakeApp.app */,
+				E3CED6F22D395B1D00C5D2EF /* BOVA.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -413,9 +409,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E3CED6F12D395B1D00C5D2EF /* StakeApp */ = {
+		E3CED6F12D395B1D00C5D2EF /* BOVA */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E3CED7062D395B1F00C5D2EF /* Build configuration list for PBXNativeTarget "StakeApp" */;
+			buildConfigurationList = E3CED7062D395B1F00C5D2EF /* Build configuration list for PBXNativeTarget "BOVA" */;
 			buildPhases = (
 				E3CED6EE2D395B1D00C5D2EF /* Sources */,
 				E3CED6EF2D395B1D00C5D2EF /* Frameworks */,
@@ -425,19 +421,17 @@
 			);
 			dependencies = (
 			);
-			name = StakeApp;
+			name = BOVA;
 			packageProductDependencies = (
 				E3CED7122D395CD600C5D2EF /* SnapKit */,
-				E3CED7142D395CD600C5D2EF /* SnapKit-Dynamic */,
 				E3CED7172D395CDE00C5D2EF /* SVProgressHUD */,
 				E3CED71A2D395CE700C5D2EF /* ProgressHUD */,
 				E3CED71D2D395CF100C5D2EF /* Alamofire */,
-				E3CED71F2D395CF100C5D2EF /* AlamofireDynamic */,
 				E36E94C52D4D53020032C0C0 /* Kingfisher */,
 				E36E94C72D4D53260032C0C0 /* Kingfisher */,
 			);
 			productName = StakeApp;
-			productReference = E3CED6F22D395B1D00C5D2EF /* StakeApp.app */;
+			productReference = E3CED6F22D395B1D00C5D2EF /* BOVA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -455,7 +449,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E3CED6ED2D395B1D00C5D2EF /* Build configuration list for PBXProject "StakeApp" */;
+			buildConfigurationList = E3CED6ED2D395B1D00C5D2EF /* Build configuration list for PBXProject "BOVA" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -475,7 +469,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E3CED6F12D395B1D00C5D2EF /* StakeApp */,
+				E3CED6F12D395B1D00C5D2EF /* BOVA */,
 			);
 		};
 /* End PBXProject section */
@@ -705,20 +699,21 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z8QVL3H8TQ;
+				DEVELOPMENT_TEAM = Q8SNAZ2J4N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StakeApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "BOVA Games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "-0.StakeApp";
+				PRODUCT_BUNDLE_IDENTIFIER = asd.StakeApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -737,20 +732,21 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z8QVL3H8TQ;
+				DEVELOPMENT_TEAM = Q8SNAZ2J4N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StakeApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "BOVA Games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "-0.StakeApp";
+				PRODUCT_BUNDLE_IDENTIFIER = asd.StakeApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -765,7 +761,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E3CED6ED2D395B1D00C5D2EF /* Build configuration list for PBXProject "StakeApp" */ = {
+		E3CED6ED2D395B1D00C5D2EF /* Build configuration list for PBXProject "BOVA" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3CED7042D395B1F00C5D2EF /* Debug */,
@@ -774,7 +770,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E3CED7062D395B1F00C5D2EF /* Build configuration list for PBXNativeTarget "StakeApp" */ = {
+		E3CED7062D395B1F00C5D2EF /* Build configuration list for PBXNativeTarget "BOVA" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3CED7072D395B1F00C5D2EF /* Debug */,
@@ -844,11 +840,6 @@
 			package = E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		E3CED7142D395CD600C5D2EF /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E3CED7112D395CD600C5D2EF /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
-		};
 		E3CED7172D395CDE00C5D2EF /* SVProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E3CED7162D395CDE00C5D2EF /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
@@ -863,11 +854,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		E3CED71F2D395CF100C5D2EF /* AlamofireDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E3CED71C2D395CF100C5D2EF /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -15,7 +15,7 @@ class SignInController: UIViewController {
     private lazy var mainImageConsole: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.image = UIImage(named: "signinViewImage")
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         return view
     }()
 
@@ -41,7 +41,7 @@ class SignInController: UIViewController {
 
     private lazy var signInWithAppleButton: UIButton = {
         let view = UIButton(frame: .zero)
-            view.setTitle("Tie the account to Apple. ", for: .normal)
+            view.setTitle("Sign in with apple", for: .normal)
         view.setTitleColor(UIColor.titlesBlack, for: .normal)
         view.backgroundColor = UIColor.whiteColor
             view.makeRoundCorners(16)
@@ -125,7 +125,7 @@ class SignInController: UIViewController {
     private func setupConstraints() {
         mainImageConsole.snp.remakeConstraints { make in
 //            make.top.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(-20 * Constraint.yCoeff)
+            make.top.equalTo(view.snp.top).offset(120 * Constraint.yCoeff)
             make.leading.equalTo(view.snp.leading).offset(-20 * Constraint.xCoeff)
             make.trailing.equalTo(view.snp.trailing).offset(20 * Constraint.xCoeff)
             make.height.equalTo(380 * Constraint.yCoeff)

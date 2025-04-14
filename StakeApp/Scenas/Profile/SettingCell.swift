@@ -71,7 +71,7 @@ class SettingCell: UICollectionViewCell {
 
     private lazy var signInWithAppleButton: UIButton = {
         let view = UIButton(frame: .zero)
-        view.setTitle("Tie the account to Apple. ", for: .normal)
+        view.setTitle("Sign in with apple", for: .normal)
         view.setTitleColor(UIColor.titlesBlack, for: .normal)
         view.backgroundColor = UIColor.whiteColor
         view.makeRoundCorners(16)

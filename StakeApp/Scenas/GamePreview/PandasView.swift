@@ -72,12 +72,14 @@ class PandasView: UIView {
     private lazy var trapView: UIView = {
         let view = UIView(frame: .zero)
         view.makeRoundCorners(24)
-        view.backgroundColor = .whiteColor.withAlphaComponent(0.25)
+        view.backgroundColor = .white.withAlphaComponent(0.25)
         view.configureView(
             image: UIImage(named: "trap"),
             title: "Trap",
             viewInfo: "Set it on a cell. If your opponent gets caught, they will miss a turn."
         )
+        // Apply gradient
+        view.applyGradient(colors: [UIColor.blue, UIColor.red])
         return view
     }()
 
@@ -206,3 +208,15 @@ class PandasView: UIView {
     }
 }
 
+
+extension UIView {
+    func applyGradient(colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0, y: 0), endPoint: CGPoint = CGPoint(x: 1, y: 1)) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.frame = self.bounds
+        gradientLayer.cornerRadius = self.layer.cornerRadius
+        self.layer.insertSublayer(gradientLayer, at: 0)
+    }
+}

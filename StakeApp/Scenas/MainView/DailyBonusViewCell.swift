@@ -168,7 +168,7 @@ class DailyBonusViewCell: UICollectionViewCell {
             self.timerLabel.text = "--:--:--"
         }
 
-        getDailyBonus.isUserInteractionEnabled = false
+        getDailyBonus.isUserInteractionEnabled = true
         getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
         getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
     }
@@ -176,10 +176,11 @@ class DailyBonusViewCell: UICollectionViewCell {
     /// ✅ **Handles "Get Bonus" button click**
     @objc private func pressGetDailyBonus() {
         print("✅ GetDailyBonus button pressed")
+        
 //        didPressGetDailyBonus?()
 
         // Disable button until next bonus time
-        getDailyBonus.isUserInteractionEnabled = false
+        getDailyBonus.isUserInteractionEnabled = true
         getDailyBonus.backgroundColor = UIColor.buttonBackgroundColor
         getDailyBonus.setTitleColor(UIColor.whiteColor, for: .normal)
 

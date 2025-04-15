@@ -313,6 +313,15 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             cell.didPressGetDailyBonus = { [weak self] in
+                guard let _ = UserDefaults.standard.value(forKey: "userId") else {
+                    print("DEBUG: no id")
+                    let alert = UIAlertController(title: "Authorization Required", message: "You need to be signed in to claim your daily bonus.", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default))
+                            if let topVC = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+                                topVC.present(alert, animated: true)
+                            }
+                    return
+                }
                 self?.postDailyBonus()
                 self?.fetchBonusTimer()
             }

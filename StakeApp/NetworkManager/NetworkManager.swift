@@ -58,7 +58,8 @@ class NetworkManager: NetworkManagerProtocol {
     func delete<T: Decodable>(url: String, parameters: Parameters?, headers: HTTPHeaders?, completion: @escaping (Result<T>) -> Void) {
         request(url: url, method: .delete, parameters: parameters, headers: headers, completion: completion)
     }
-
+    
+    
     func put<T: Decodable>(url: String, parameters: Parameters?, headers: HTTPHeaders?, completion: @escaping (Result<T>) -> Void) {
         request(url: url, method: .put, parameters: parameters, headers: headers, completion: completion)
     }

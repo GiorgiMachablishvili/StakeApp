@@ -475,6 +475,7 @@ class ProfileView: UIViewController {
                 case .success:
                     print("Account deleted successfully")
                     UserDefaults.standard.removeObject(forKey: "userId")
+                    
                     DispatchQueue.main.async {
                         let successAlert = UIAlertController(
                             title: "Account Deleted",
@@ -548,6 +549,36 @@ class ProfileView: UIViewController {
 
         // Present the alert controller
         self.present(alertController, animated: true)
+    }
+    
+    func setSignInVCAsRoot() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else { return }
+        let signInViewController = SignInController()
+        let navigationController = UINavigationController(rootViewController: signInViewController)
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            window.rootViewController = navigationController
+        }, completion: nil)
+        navigationController.setNavigationBarHidden(true, animated: false)
+        window.makeKeyAndVisible()
+    }
+
+
+    
+    func changeRootViewController(_ rootViewController: UIViewController, animated: Bool = true) {
+        // Get the current SceneDelegate's window
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else { return }
+
+        if animated {
+            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                window.rootViewController = rootViewController
+            })
+        } else {
+            window.rootViewController = rootViewController
+        }
+        window.makeKeyAndVisible()
     }
 
     private func removeSignInControllerAndNavigate() {
